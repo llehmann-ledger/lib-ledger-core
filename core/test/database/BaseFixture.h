@@ -59,6 +59,7 @@
 #include <soci.h>
 #include <api/Account.hpp>
 #include <api/BitcoinLikeAccount.hpp>
+#include <Uuid.hpp>
 
 using namespace ledger::core; // Only do that for testing
 using namespace ledger::core::test;
@@ -76,7 +77,7 @@ class BaseFixture : public ::testing::Test {
 public:
     void SetUp() override;
     void TearDown() override;
-    std::shared_ptr<WalletPool> newDefaultPool(std::string poolName = "my_ppol");
+    std::shared_ptr<WalletPool> newDefaultPool(std::string poolName = "my_pool");
     void createWallet(const std::shared_ptr<WalletPool>& pool,
                       const std::string& walletName,
                       const std::string& currencyName,

@@ -45,6 +45,8 @@
 #include "../../fixtures/http_cache_EthereumLikeWalletSynchronization_MediumXpubSynchronization_2.h"
 #include "../../fixtures/http_cache_EthereumLikeWalletSynchronization_MediumXpubSynchronization_3.h"
 #include "../../fixtures/http_cache_EthereumLikeWalletSynchronization_MediumXpubSynchronization_4.h"
+#include <Uuid.hpp>
+#include <chrono>
 
 using namespace std;
 
@@ -63,10 +65,11 @@ TEST_F(EthereumLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
     http->addCache(HTTP_CACHE_EthereumLikeWalletSynchronization_MediumXpubSynchronization_4::URL,
         HTTP_CACHE_EthereumLikeWalletSynchronization_MediumXpubSynchronization_4::BODY);
     
-    auto walletName = "e847815f-488a-4301-b67c-378a5e9c8a61";
+    auto poolName = uuid::generate_uuid_v4();
+    auto walletName = uuid::generate_uuid_v4();
     auto erc20Count = 0;
     {
-        auto pool = newDefaultPool();
+        auto pool = newDefaultPool(poolName);
         {
             auto configuration = DynamicObject::newInstance();
             configuration->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME,"44'/60'/0'/0/<account>'");
@@ -160,20 +163,21 @@ TEST_F(EthereumLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
     }
     // Recover account
     {
-        resetDispatcher();
-        auto pool = newDefaultPool();
+        auto pool = newDefaultPool(poolName);
         auto wallet = uv::wait(pool->getWallet(walletName));
         auto account = std::dynamic_pointer_cast<EthereumLikeAccount>(uv::wait(wallet->getAccount(0)));
         EXPECT_EQ(account->getERC20Accounts().size(), erc20Count);
-        uv::wait(pool->freshResetAll());
+
+        uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
     }
 }
 
 TEST_F(EthereumLikeWalletSynchronization, DISABLED_BalanceHistory) {
-    auto walletName = "e847815f-488a-4301-b67c-378a5e9c8a61";
+    auto walletName = uuid::generate_uuid_v4();
+    auto poolName = uuid::generate_uuid_v4();
     auto erc20Count = 0;
     {
-        auto pool = newDefaultPool();
+        auto pool = newDefaultPool(poolName);
         {
             auto configuration = DynamicObject::newInstance();
             configuration->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME,"44'/60'/0'/0/<account>'");
@@ -219,12 +223,12 @@ TEST_F(EthereumLikeWalletSynchronization, DISABLED_BalanceHistory) {
 }
 
 TEST_F(EthereumLikeWalletSynchronization, DISABLED_XpubSynchronization) {
-    auto pool = newDefaultPool();
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
         auto configuration = DynamicObject::newInstance();
         configuration->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME,"44'/60'/0'/0/<account>'");
         configuration->putString(api::Configuration::BLOCKCHAIN_EXPLORER_API_ENDPOINT,"https://explorers.api.live.ledger.com");
-        auto wallet = uv::wait(pool->createWallet("e847815f-488a-4301-b67c-378a5e9c8a61", "ethereum", configuration));
+        auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "ethereum", configuration));
         std::set<std::string> emittedOperations;
         {
             auto nextIndex = uv::wait(wallet->getNextAccountIndex());
@@ -290,11 +294,11 @@ TEST_F(EthereumLikeWalletSynchronization, DISABLED_XpubSynchronization) {
 }
 
 TEST_F(EthereumLikeWalletSynchronization, DISABLED_XpubETCSynchronization) {
-    auto pool = newDefaultPool();
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
         auto configuration = DynamicObject::newInstance();
         configuration->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME,"44'/60'/0'/<account>");
-        auto wallet = uv::wait(pool->createWallet("e847815f-488a-4301-b67c-378a5e9c8a61", "ethereum_classic", configuration));
+        auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(),"ethereum_classic", configuration));
         std::set<std::string> emittedOperations;
         {
             auto infos = uv::wait(wallet->getNextAccountCreationInfo());
@@ -367,7 +371,7 @@ std::pair<std::shared_ptr<LambdaEventReceiver>, ledger::core::Future<bool>> Ethe
 }
 
 TEST_F(EthereumLikeWalletSynchronization, ReorgLastBlock) {
-    auto walletName = "e847815f-488a-4301-b67c-378a5e9c8a61";
+    auto walletName = uuid::generate_uuid_v4();
     {
         auto fakeHttp = std::make_shared<test::FakeHttpClient>();
 

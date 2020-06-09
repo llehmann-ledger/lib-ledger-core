@@ -50,15 +50,16 @@
 #include <api/QueryFilter.hpp>
 
 #include "BaseFixture.h"
+#include <Uuid.hpp>
 
 class QueryBuilderTest : public BaseFixture {
 
 };
 
 TEST_F(QueryBuilderTest, SimpleOperationQuery) {
-    auto pool = newDefaultPool();
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
-        auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", api::DynamicObject::newInstance()));
+        auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin", api::DynamicObject::newInstance()));
         auto nextIndex = uv::wait(wallet->getNextAccountIndex());
         EXPECT_EQ(nextIndex, 0);
         auto account = createBitcoinLikeAccount(wallet, 0, P2PKH_MEDIUM_XPUB_INFO);

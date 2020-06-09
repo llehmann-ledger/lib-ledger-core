@@ -30,22 +30,31 @@
 
 #include <gtest/gtest.h>
 #include "BaseFixture.h"
+<<<<<<< HEAD
 #include <utils/FilesystemUtils.hpp>
+=======
+#include <utils/FilesystemUtils.h>
+#include <Uuid.hpp>
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
 #include <soci.h>
 #include <soci-sqlite3.h>
 #include <chrono>
 using namespace ledger::core;
 
-
 class SQLCipherTest : public BaseFixture {
 };
 
+<<<<<<< HEAD
 #ifdef RAM_DATABASE
 TEST_F(SQLCipherTest, DISABLED_SanityCheck) { // No persistence when using in-memory database
 #else
 TEST_F(SQLCipherTest, SanityCheck) {
 #endif
     auto dbName = fmt::format( "test_db_{}", std::chrono::system_clock::now().time_since_epoch().count());
+=======
+TEST(SQLCipherTest, SanityCheck) {
+    auto dbName = "test_db_" + uuid::generate_uuid_v4();
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     auto password = "test_key";
     auto newPassword = "test_key_new";
     {
@@ -108,7 +117,7 @@ TEST_F(SQLCipherTest, DISABLED_ThrowIfWrongPassword) { // No password when using
 #else
 TEST_F(SQLCipherTest, ThrowIfWrongPassword) {
 #endif
-    auto dbName = fmt::format( "test_db2_{}", std::chrono::system_clock::now().time_since_epoch().count());
+    auto dbName = "test_db2_" + uuid::generate_uuid_v4();
     auto password = "test_key";
     auto newPassword = "test_key_new";
     {
@@ -140,12 +149,17 @@ TEST_F(SQLCipherTest, ThrowIfWrongPassword) {
 }
 #endif
 
+<<<<<<< HEAD
 #if defined(_WIN32) || defined(RAM_DATABASE)
 TEST_F(SQLCipherTest, DISABLED_DisableEncryption) { //The "Remove encryption" doesn't work in windows
 #else
 TEST_F(SQLCipherTest, DisableEncryption) {
 #endif
     auto dbName = fmt::format( "test_db_{}", std::chrono::system_clock::now().time_since_epoch().count());
+=======
+TEST(SQLCipherTest, DisableEncryption) {
+    auto dbName = "test_db_" + uuid::generate_uuid_v4();
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     auto password = "test_key";
     auto newPassword = "test_key_new";
     {

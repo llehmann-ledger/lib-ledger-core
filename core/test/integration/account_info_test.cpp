@@ -30,15 +30,22 @@
  */
 
 #include "BaseFixture.h"
+#include <Uuid.hpp>
 
 class AccountInfoTests : public BaseFixture {
 
 };
 
 TEST_F(AccountInfoTests, FirstAccountInfo) {
+<<<<<<< HEAD
     auto pool = newDefaultPool();
     auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
+=======
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
+    auto info = wait(wallet->getNextAccountCreationInfo());
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     EXPECT_EQ(info.index, 0);
     EXPECT_EQ(info.owners[0], "main");
     EXPECT_EQ(info.derivations[0], "44'/0'");
@@ -48,9 +55,15 @@ TEST_F(AccountInfoTests, FirstAccountInfo) {
 }
 
 TEST_F(AccountInfoTests, FirstEthAccountInfo) {
+<<<<<<< HEAD
     auto pool = newDefaultPool();
     auto wallet = uv::wait(pool->createWallet("my_wallet", "ethereum", DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
+=======
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = wait(pool->createWallet("my_wallet", "ethereum", DynamicObject::newInstance()));
+    auto info = wait(wallet->getNextAccountCreationInfo());
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     EXPECT_EQ(info.index, 0);
     EXPECT_EQ(info.owners[0], "main");
     EXPECT_EQ(info.derivations[0], "44'/60'/0'");
@@ -59,9 +72,15 @@ TEST_F(AccountInfoTests, FirstEthAccountInfo) {
 }
 
 TEST_F(AccountInfoTests, FirstXRPAccountInfo) {
+<<<<<<< HEAD
     auto pool = newDefaultPool();
     auto wallet = uv::wait(pool->createWallet("my_wallet", "ripple", DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
+=======
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = wait(pool->createWallet("my_wallet", "ripple", DynamicObject::newInstance()));
+    auto info = wait(wallet->getNextAccountCreationInfo());
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     EXPECT_EQ(info.index, 0);
     EXPECT_EQ(info.owners.size(), 1);
     EXPECT_EQ(info.derivations.size(), 1);
@@ -71,9 +90,15 @@ TEST_F(AccountInfoTests, FirstXRPAccountInfo) {
 }
 
 TEST_F(AccountInfoTests, FirstXTZAccountInfo) {
+<<<<<<< HEAD
     auto pool = newDefaultPool();
     auto wallet = uv::wait(pool->createWallet("my_wallet", "tezos", DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
+=======
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = wait(pool->createWallet("my_wallet", "tezos", DynamicObject::newInstance()));
+    auto info = wait(wallet->getNextAccountCreationInfo());
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     EXPECT_EQ(info.index, 0);
     EXPECT_EQ(info.owners.size(), 1);
     EXPECT_EQ(info.derivations.size(), 1);
@@ -85,9 +110,15 @@ TEST_F(AccountInfoTests, FirstXTZAccountInfo) {
 TEST_F(AccountInfoTests, FirstEthCustomDerivationAccountInfo) {
     auto config = DynamicObject::newInstance();
     config->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME, "44'/<coin_type>'/<account>'/<node>/<address>");
+<<<<<<< HEAD
     auto pool = newDefaultPool();
     auto wallet = uv::wait(pool->createWallet("my_wallet", "ethereum", DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
+=======
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = wait(pool->createWallet("my_wallet", "ethereum", DynamicObject::newInstance()));
+    auto info = wait(wallet->getNextAccountCreationInfo());
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     EXPECT_EQ(info.index, 0);
     EXPECT_EQ(info.owners[0], "main");
     EXPECT_EQ(info.derivations[0], "44'/60'/0'");
@@ -95,9 +126,15 @@ TEST_F(AccountInfoTests, FirstEthCustomDerivationAccountInfo) {
 }
 
 TEST_F(AccountInfoTests, AnotherAccountInfo) {
+<<<<<<< HEAD
     auto pool = newDefaultPool();
     auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getAccountCreationInfo(20));
+=======
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
+    auto info = wait(wallet->getAccountCreationInfo(20));
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     EXPECT_EQ(info.index, 20);
     EXPECT_EQ(info.owners[0], "main");
     EXPECT_EQ(info.derivations[0], "44'/0'");
@@ -107,8 +144,13 @@ TEST_F(AccountInfoTests, AnotherAccountInfo) {
 }
 
 TEST_F(AccountInfoTests, GetAddressFromRange) {
+<<<<<<< HEAD
     auto pool = newDefaultPool();
     auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
+=======
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization
     auto account = createBitcoinLikeAccount(wallet, 0, P2PKH_MEDIUM_XPUB_INFO);
 
     auto freshAddresses = uv::wait(account->getFreshPublicAddresses());
@@ -126,5 +168,9 @@ TEST_F(AccountInfoTests, GetAddressFromRange) {
     }
 
     EXPECT_EQ(addresses[2 * (to - from + 1) - 1]->toString(), "1167QbGjTWVK3etniJwua6wybBKkS7Lr8w");
+<<<<<<< HEAD
     uv::wait(pool->deleteWallet("my_wallet"));
 }
+=======
+}
+>>>>>>> 982a01732... Randomize uids in tests to allow parallelization

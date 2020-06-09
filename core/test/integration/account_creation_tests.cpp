@@ -30,28 +30,31 @@
  */
 
 #include "BaseFixture.h"
+#include <Uuid.hpp>
 
 class AccountCreationTest : public BaseFixture {};
 
 TEST_F(AccountCreationTest, CreateBitcoinAccountWithInfo) {
-    auto pool = newDefaultPool();
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
-    auto account = std::dynamic_pointer_cast<BitcoinLikeAccount>(uv::wait(wallet->newAccountWithInfo(P2PKH_MEDIUM_KEYS_INFO)));
+    auto account = std::dynamic_pointer_cast<BitcoinLikeAccount>(wait(wallet->newAccountWithInfo(P2PKH_MEDIUM_KEYS_INFO)));
     auto address = uv::wait(account->getFreshPublicAddresses())[0]->toString();
     EXPECT_EQ(address, "1DDBzjLyAmDr4qLRC2T2WJ831cxBM5v7G7");
     uv::wait(pool->deleteWallet("my_wallet"));
 }
 
 TEST_F(AccountCreationTest, CreateBitcoinAccountWithInfoOnExistingWallet) {
+    auto poolName = uuid::generate_uuid_v4();
+    auto walletName = uuid::generate_uuid_v4();
     {
-        auto pool = newDefaultPool();
-        auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
+        auto pool = newDefaultPool(poolName);
+        auto wallet = uv::wait(pool->createWallet(walletName, "bitcoin", DynamicObject::newInstance()));
     }
     {
-        auto pool = newDefaultPool();
-        EXPECT_THROW(uv::wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance())), Exception);
-        auto wallet = uv::wait(pool->getWallet("my_wallet"));
-        auto account = std::dynamic_pointer_cast<BitcoinLikeAccount>(uv::wait(wallet->newAccountWithInfo(P2PKH_MEDIUM_KEYS_INFO)));
+        auto pool = newDefaultPool(poolName);
+        EXPECT_THROW(uv::wait(pool->createWallet(walletName, "bitcoin", DynamicObject::newInstance())), Exception);
+        auto wallet = wait(pool->getWallet(walletName));
+        auto account = std::dynamic_pointer_cast<BitcoinLikeAccount>(wait(wallet->newAccountWithInfo(P2PKH_MEDIUM_KEYS_INFO)));
         auto address = uv::wait(account->getFreshPublicAddresses())[0]->toString();
         EXPECT_EQ(address, "1DDBzjLyAmDr4qLRC2T2WJ831cxBM5v7G7");
         uv::wait(pool->deleteWallet("my_wallet"));
@@ -67,7 +70,7 @@ TEST_F(AccountCreationTest, ChangePassword) {
     auto newPassword = "new_test";
 
     // Create wallet, account ... in plain DB
-    auto pool = newDefaultPool("my_pool", oldPassword);
+    auto pool = newDefaultPool(uuid::generate_uuid_v4(), oldPassword);
     {
         auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", DynamicObject::newInstance()));
         auto account = std::dynamic_pointer_cast<BitcoinLikeAccount>(uv::wait(wallet->newAccountWithInfo(P2PKH_MEDIUM_KEYS_INFO)));
@@ -88,5 +91,4 @@ TEST_F(AccountCreationTest, ChangePassword) {
     changePasswordAndGetInfos(pool, "", "new_test");
     changePasswordAndGetInfos(pool, "new_test", "new_test_0");
     changePasswordAndGetInfos(pool, "new_test_0", "");
-    uv::wait(pool->deleteWallet("my_wallet"));
 }
