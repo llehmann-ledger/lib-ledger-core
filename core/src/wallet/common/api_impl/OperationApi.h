@@ -37,6 +37,7 @@
 
 namespace ledger {
     namespace core {
+
         class AbstractAccount;
         class OperationApi : public api::Operation, public std::enable_shared_from_this<OperationApi> {
         public:
@@ -71,6 +72,7 @@ namespace ledger {
             bool isComplete() override;
             api::WalletType getWalletType() override;
             ledger::core::Operation& getBackend();
+            const ledger::core::Operation& getBackend() const;
             const std::shared_ptr<AbstractAccount>& getAccount() const;
 
             api::Currency getCurrency() override;

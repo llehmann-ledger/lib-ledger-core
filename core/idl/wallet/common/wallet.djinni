@@ -8,6 +8,7 @@
 @import "../ethereum/ethereum_like_wallet.djinni"
 @import "../../bitcoin/addresses.djinni"
 @import "../../cosmos/addresses.djinni"
+@import "../algorand/idl.djinni"
 @import "currency.djinni"
 @import "../../collections/dynamic.djinni"
 
@@ -491,6 +492,9 @@ Wallet = interface +c {
     # Tell whether wallet is a Bitcoin one.
     # @return bool
     isInstanceOfBitcoinLikeWallet(): bool;
+    # Tell whether wallet is an Algorand one.
+    # @return bool
+    isInstanceOfAlgorandLikeWallet(): bool;
     # Tell whether wallet is a Cosmos one.
     # @return bool
     isInstanceOfCosmosLikeWallet(): bool;
