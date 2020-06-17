@@ -31,7 +31,7 @@
 
 #include "StellarLikeOperation.hpp"
 #include "StellarLikeAddress.hpp"
-#include <api/StellarLikeOperationType.hpp>
+#include <core/api/StellarLikeOperationType.hpp>
 #include <wallet/common/Amount.h>
 #include <wallet/common/AbstractAccount.hpp>
 #include <wallet/stellar/xdr/models.hpp>

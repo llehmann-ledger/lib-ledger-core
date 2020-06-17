@@ -29,11 +29,11 @@
  *
  */
 
-#include "StellarLikeAddress.hpp"
-#include <bytes/BytesWriter.h>
-#include <crypto/CRC.hpp>
-#include <math/BaseConverter.hpp>
-#include <bytes/BytesReader.h>
+#include <stellar/StellarLikeAddress.hpp>
+#include <core/bytes/BytesWriter.hpp>
+#include <core/crypto/CRC.hpp>
+#include <core/math/BaseConverter.hpp>
+#include <core/bytes/BytesReader.hpp>
 
 namespace ledger {
     namespace core {

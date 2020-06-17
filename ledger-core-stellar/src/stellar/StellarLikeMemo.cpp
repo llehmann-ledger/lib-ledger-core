@@ -30,10 +30,10 @@
  */
 
 #include "StellarLikeMemo.hpp"
-#include <api/StellarLikeMemoType.hpp>
+#include <core/api/StellarLikeMemoType.hpp>
 #include <fmt/format.h>
-#include <utils/hex.h>
-#include <utils/Exception.hpp>
+#include <core/utils/Hex.hpp>
+#include <core/utils/Exception.hpp>
 #include <api_impl/BigIntImpl.hpp>
 
 namespace ledger {

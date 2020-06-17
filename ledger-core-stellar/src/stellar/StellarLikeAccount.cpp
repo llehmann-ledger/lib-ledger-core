@@ -30,7 +30,7 @@
  */
 
 #include "StellarLikeAccount.hpp"
-#include <wallet/stellar/StellarLikeWallet.hpp>
+#include <stellar/StellarLikeWallet.hpp>
 #include <utils/DateUtils.hpp>
 #include <events/Event.hpp>
 #include "database/StellarLikeAccountDatabaseHelper.hpp"
