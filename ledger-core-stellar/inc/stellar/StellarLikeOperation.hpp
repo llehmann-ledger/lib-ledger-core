@@ -32,9 +32,9 @@
 #ifndef LEDGER_CORE_STELLARLIKEOPERATION_HPP
 #define LEDGER_CORE_STELLARLIKEOPERATION_HPP
 
-#include <core/api/StellarLikeOperation.hpp>
+#include <stellar/api/StellarLikeOperation.hpp>
 #include <wallet/common/api_impl/OperationApi.h>
-#include <core/api/StellarLikeOperationRecord.hpp>
+#include <stellar/api/StellarLikeOperationRecord.hpp>
 #include <stellar/transaction_builders/StellarLikeTransaction.hpp>
 
 namespace ledger {

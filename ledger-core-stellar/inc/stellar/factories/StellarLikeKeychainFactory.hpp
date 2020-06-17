@@ -33,12 +33,12 @@
 #define LEDGER_CORE_STELLARLIKEKEYCHAINFACTORY_HPP
 
 
-#include <api/AccountCreationInfo.hpp>
-#include <collections/DynamicObject.hpp>
-#include <utils/DerivationPath.hpp>
-#include <preferences/Preferences.hpp>
-#include <api/Currency.hpp>
-#include <wallet/stellar/keychains/StellarLikeKeychain.hpp>
+#include <core/api/AccountCreationInfo.hpp>
+#include <core/collections/DynamicObject.hpp>
+#include <core/utils/DerivationPath.hpp>
+#include <core/preferences/Preferences.hpp>
+#include <core/api/Currency.hpp>
+#include <stellar/keychains/StellarLikeKeychain.hpp>
 
 namespace ledger {
     namespace core {

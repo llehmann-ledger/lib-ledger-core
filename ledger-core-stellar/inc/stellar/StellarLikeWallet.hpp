@@ -32,7 +32,7 @@
 #ifndef LEDGER_CORE_STELLARLIKEWALLET_HPP
 #define LEDGER_CORE_STELLARLIKEWALLET_HPP
 
-#include <core/api/StellarLikeWallet.hpp>
+#include <stellar/api/StellarLikeWallet.hpp>
 #include <core/wallet/AbstractWallet.hpp>
 #include <stellar/factories/StellarLikeKeychainFactory.hpp>
 #include <stellar/explorers/StellarLikeBlockchainExplorer.hpp>

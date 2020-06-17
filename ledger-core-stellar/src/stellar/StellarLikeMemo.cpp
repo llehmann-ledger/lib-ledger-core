@@ -30,7 +30,7 @@
  */
 
 #include <stellar/StellarLikeMemo.hpp>
-#include <core/api/StellarLikeMemoType.hpp>
+#include <stellar/api/StellarLikeMemoType.hpp>
 #include <fmt/format.h>
 #include <core/utils/Hex.hpp>
 #include <core/utils/Exception.hpp>

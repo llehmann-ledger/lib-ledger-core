@@ -37,8 +37,8 @@
 #include <core/math/BigInt.hpp>
 #include <chrono>
 #include <stellar/xdr/models.hpp>
-#include <core/api/StellarLikeNetworkParameters.hpp>
-#include <core/api/StellarLikeAccountSigner.hpp>
+#include <stellar/api/StellarLikeNetworkParameters.hpp>
+#include <stellar/api/StellarLikeAccountSigner.hpp>
 
 namespace ledger {
     namespace core {

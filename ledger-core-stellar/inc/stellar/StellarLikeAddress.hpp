@@ -33,7 +33,8 @@
 #define LEDGER_CORE_STELLARLIKEADDRESS_HPP
 
 #include <core/address/Address.hpp>
-#include <core/api/StellarLikeAddress.hpp>
+#include <stellar/api/StellarLikeAddress.hpp>
+#include <stellar/api/StellarLikeNetworkParameters.hpp>
 #include <stellar/xdr/models.hpp>
 
 namespace ledger {

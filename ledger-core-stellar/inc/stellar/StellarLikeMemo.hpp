@@ -32,9 +32,9 @@
 #ifndef LEDGER_CORE_STELLARLIKEMEMO_HPP
 #define LEDGER_CORE_STELLARLIKEMEMO_HPP
 
-#include "stellar.hpp"
-#include <api/StellarLikeMemo.hpp>
-#include <utils/Try.hpp>
+#include <stellar/stellar.hpp>
+#include <core/api/StellarLikeMemo.hpp>
+#include <core/utils/Try.hpp>
 
 namespace ledger {
     namespace core {
