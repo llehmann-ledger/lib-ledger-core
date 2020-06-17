@@ -32,11 +32,11 @@
 #ifndef LEDGER_CORE_STELLARLIKEWALLET_HPP
 #define LEDGER_CORE_STELLARLIKEWALLET_HPP
 
-#include <api/StellarLikeWallet.hpp>
-#include <wallet/common/AbstractWallet.hpp>
-#include <wallet/stellar/factories/StellarLikeKeychainFactory.hpp>
-#include <wallet/stellar/explorers/StellarLikeBlockchainExplorer.hpp>
-#include <wallet/stellar/synchronizers/StellarLikeAccountSynchronizer.h>
+#include <core/api/StellarLikeWallet.hpp>
+#include <core/wallet/AbstractWallet.hpp>
+#include <stellar/factories/StellarLikeKeychainFactory.hpp>
+#include <stellar/explorers/StellarLikeBlockchainExplorer.hpp>
+#include <stellar/synchronizers/StellarLikeAccountSynchronizer.h>
 
 namespace ledger {
     namespace core {

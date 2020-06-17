@@ -114,7 +114,7 @@ target_include_directories(
     ${PROJECT_SOURCE_DIR}/lib/date
     ${PROJECT_SOURCE_DIR}/lib/secp256k1
     ${PROJECT_SOURCE_DIR}/lib/ethash/src
-    ${PROJECT_SOURCE_DIR}/lib/ethash/src
+    ${PROJECT_SOURCE_DIR}/lib/CRCpp/inc
     ${PROJECT_SOURCE_DIR}/lib/fmt/include
     ${PROJECT_SOURCE_DIR}/lib/spdlog/include
     # PG support

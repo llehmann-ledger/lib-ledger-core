@@ -1,9 +1,9 @@
 /*
  *
- * StellarLikeOperation.hpp
+ * CRC.cpp
  * ledger-core
  *
- * Created by Pierre Pollastri on 13/02/2019.
+ * Created by Pierre Pollastri on 28/02/2019.
  *
  * The MIT License (MIT)
  *
@@ -29,31 +29,22 @@
  *
  */
 
-#ifndef LEDGER_CORE_STELLARLIKEOPERATION_HPP
-#define LEDGER_CORE_STELLARLIKEOPERATION_HPP
-
-#include <core/api/StellarLikeOperation.hpp>
-#include <wallet/common/api_impl/OperationApi.h>
-#include <core/api/StellarLikeOperationRecord.hpp>
-#include <stellar/transaction_builders/StellarLikeTransaction.hpp>
+#include <core/crypto/CRC.hpp>
+#include <CRC.h>
+#include <mutex>
 
 namespace ledger {
     namespace core {
-        class StellarLikeOperation : public api::StellarLikeOperation {
-        public:
-            explicit StellarLikeOperation(const std::shared_ptr<OperationApi>& api);
 
-            api::StellarLikeOperationRecord getRecord() override;
-
-            std::shared_ptr<api::StellarLikeTransaction> getTransaction() override;
-
-        private:
-            api::StellarLikeOperationRecord _record;
-            stellar::xdr::TransactionEnvelope _envelope;
-            api::Currency _currency;
+        struct CRC::CRC16Profile {
+            explicit CRC16Profile(const ::CRC::Parameters<uint16_t, 16>& params) : table(params.MakeTable()) {}
+            const ::CRC::Table<uint16_t, 16> table;
         };
+
+        CRC::CRC16Profile CRC::XMODEM {::CRC::CRC_16_XMODEM()};
+
+        uint16_t CRC::calculate(const std::vector<uint8_t> &bytes, CRC16Profile& profile) {
+            return ::CRC::Calculate(bytes.data(), bytes.size(), profile.table);
+        }
     }
 }
-
-
-#endif //LEDGER_CORE_STELLARLIKEOPERATION_HPP

@@ -31,14 +31,14 @@
 #ifndef LEDGER_CORE_STELLARLIKE_STELLAR_HPP
 #define LEDGER_CORE_STELLARLIKE_STELLAR_HPP
 
-#include <utils/Option.hpp>
+#include <core/utils/Option.hpp>
 #include <cstdint>
 #include <unordered_map>
-#include <math/BigInt.h>
+#include <core/math/BigInt.hpp>
 #include <chrono>
-#include <wallet/stellar/xdr/models.hpp>
-#include <api/StellarLikeNetworkParameters.hpp>
-#include <api/StellarLikeAccountSigner.hpp>
+#include <stellar/xdr/models.hpp>
+#include <core/api/StellarLikeNetworkParameters.hpp>
+#include <core/api/StellarLikeAccountSigner.hpp>
 
 namespace ledger {
     namespace core {

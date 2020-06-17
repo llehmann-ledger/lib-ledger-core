@@ -1,9 +1,9 @@
 /*
  *
- * StellarLikeOperation.hpp
+ * CRC.hpp
  * ledger-core
  *
- * Created by Pierre Pollastri on 13/02/2019.
+ * Created by Pierre Pollastri on 28/02/2019.
  *
  * The MIT License (MIT)
  *
@@ -29,31 +29,38 @@
  *
  */
 
-#ifndef LEDGER_CORE_STELLARLIKEOPERATION_HPP
-#define LEDGER_CORE_STELLARLIKEOPERATION_HPP
+#ifndef LEDGER_CORE_CRC_HPP
+#define LEDGER_CORE_CRC_HPP
 
-#include <core/api/StellarLikeOperation.hpp>
-#include <wallet/common/api_impl/OperationApi.h>
-#include <core/api/StellarLikeOperationRecord.hpp>
-#include <stellar/transaction_builders/StellarLikeTransaction.hpp>
+#include <cstdint>
+#include <core/utils/Exception.hpp>
 
 namespace ledger {
     namespace core {
-        class StellarLikeOperation : public api::StellarLikeOperation {
+
+        class CRC {
         public:
-            explicit StellarLikeOperation(const std::shared_ptr<OperationApi>& api);
+            /**
+            * The CRC profile holds all constants and parameters used by the CRC calcultation algorithm for 16bits versions
+            */
+            struct CRC16Profile;
 
-            api::StellarLikeOperationRecord getRecord() override;
+            /**
+             * CRC XMODEM profile (Poly: 0x1021, Init: 0x0000, RefIn: false, RefOut: false, XorOut: false)
+             */
+            static CRC16Profile XMODEM;
 
-            std::shared_ptr<api::StellarLikeTransaction> getTransaction() override;
+            /**
+             * Calculate the cyclic redundancy check for the given bytes using a 16bits CRC profile.
+             * @param bytes The data on which you want to compute the checksum.
+             * @param profile The profile used by the algorithm.
+             * @return The cyclic redundancy check of the given bytes.
+             */
+            static uint16_t calculate(const std::vector<uint8_t>& bytes, CRC16Profile& profile);
 
-        private:
-            api::StellarLikeOperationRecord _record;
-            stellar::xdr::TransactionEnvelope _envelope;
-            api::Currency _currency;
         };
     }
 }
 
 
-#endif //LEDGER_CORE_STELLARLIKEOPERATION_HPP
+#endif //LEDGER_CORE_CRC_HPP

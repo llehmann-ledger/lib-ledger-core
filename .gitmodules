@@ -28,3 +28,6 @@
 [submodule "msgpack-c"]
 	path = ledger-core-algorand/src/thirdparty/msgpack-c
 	url = https://github.com/ledgerHQ/msgpack-c
+[submodule "ledger-core/lib/CRCpp"]
+	path = ledger-core/lib/CRCpp
+	url = https://github.com/d-bahr/CRCpp.git

@@ -29,13 +29,13 @@
  *
  */
 
-#include "StellarLikeOperation.hpp"
-#include "StellarLikeAddress.hpp"
+#include <stellar/StellarLikeOperation.hpp>
+#include <stellar/StellarLikeAddress.hpp>
 #include <core/api/StellarLikeOperationType.hpp>
-#include <wallet/common/Amount.h>
-#include <wallet/common/AbstractAccount.hpp>
-#include <wallet/stellar/xdr/models.hpp>
-#include <wallet/stellar/StellarLikeMemo.hpp>
+#include <core/api/Amount.hpp>
+#include <core/wallet/AbstractAccount.hpp>
+#include <stellar/xdr/models.hpp>
+#include <stellar/StellarLikeMemo.hpp>
 
 namespace ledger {
     namespace core {

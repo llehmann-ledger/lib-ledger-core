@@ -32,13 +32,13 @@
 #ifndef LEDGER_CORE_STELLARLIKEADDRESS_HPP
 #define LEDGER_CORE_STELLARLIKEADDRESS_HPP
 
-#include <wallet/common/AbstractAddress.h>
-#include <api/StellarLikeAddress.hpp>
-#include <wallet/stellar/xdr/models.hpp>
+#include <core/address/Address.hpp>
+#include <core/api/StellarLikeAddress.hpp>
+#include <stellar/xdr/models.hpp>
 
 namespace ledger {
     namespace core {
-        class StellarLikeAddress : public virtual api::StellarLikeAddress, public virtual AbstractAddress {
+        class StellarLikeAddress : public virtual api::StellarLikeAddress, public virtual Address {
         public:
             StellarLikeAddress( const std::vector<uint8_t>& pubKey,
                                 const api::Currency& currency,

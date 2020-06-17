@@ -42,13 +42,13 @@ namespace ledger {
         static const std::size_t CHECKSUM_SIZE = 2;
 
         StellarLikeAddress::StellarLikeAddress(const std::string &address, const api::Currency &currency,
-                                               const Option<std::string> &path) :   AbstractAddress(currency, path),
+                                               const Option<std::string> &path) :   Address(currency, path),
                                                                                     _address(address) {
 
         }
 
         StellarLikeAddress::StellarLikeAddress(const std::vector<uint8_t> &pubKey, const api::Currency &currency,
-                                               const Option<std::string> &path) : AbstractAddress(currency, path),
+                                               const Option<std::string> &path) : Address(currency, path),
                                                _address(convertPubkeyToAddress(pubKey, *currency.stellarLikeNetworkParameters)) {
         }
 

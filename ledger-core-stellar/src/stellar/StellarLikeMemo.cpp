@@ -29,12 +29,12 @@
  *
  */
 
-#include "StellarLikeMemo.hpp"
+#include <stellar/StellarLikeMemo.hpp>
 #include <core/api/StellarLikeMemoType.hpp>
 #include <fmt/format.h>
 #include <core/utils/Hex.hpp>
 #include <core/utils/Exception.hpp>
-#include <api_impl/BigIntImpl.hpp>
+#include <core/api/BigInt.hpp>
 
 namespace ledger {
     namespace core {
