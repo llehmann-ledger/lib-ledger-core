@@ -1,4 +1,5 @@
 @import "ledger-core/amount.djinni"
+@import "addresses.djinni"
 
 StellarLikeOperationType = enum {
     CREATE_ACCOUNT; PAYMENT; PATH_PAYMENT; MANAGE_OFFER; CREATE_PASSIVE_OFFER; SET_OPTIONS;
