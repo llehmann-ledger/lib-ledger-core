@@ -30,7 +30,8 @@
  */
 
 #include <stellar/StellarLikeAddress.hpp>
-#include <stellar/stellarNetworks.hpp>
+#include <stellar/StellarLikeAccount.hpp>
+#include <stellar/stellarNetworks.h>
 #include <core/bytes/BytesWriter.hpp>
 #include <core/crypto/CRC.hpp>
 #include <core/math/BaseConverter.hpp>
@@ -61,7 +62,7 @@ namespace ledger {
             std::vector<uint8_t> bytes;
             BaseConverter::decode(_address, BaseConverter::BASE32_RFC4648_NO_PADDING, bytes);
             BytesReader reader(bytes);
-            reader.seek(networks::getStellarLikeNetworkParameters(currency.name).Version.size(), BytesReader::Seek::CUR);
+            reader.seek(networks::getStellarLikeNetworkParameters(getCurrency().name).Version.size(), BytesReader::Seek::CUR);
             return reader.read(32);
         }
 

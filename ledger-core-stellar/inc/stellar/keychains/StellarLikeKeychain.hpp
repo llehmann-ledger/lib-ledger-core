@@ -32,14 +32,13 @@
 #ifndef LEDGER_CORE_STELLARLIKEKEYCHAIN_HPP
 #define LEDGER_CORE_STELLARLIKEKEYCHAIN_HPP
 
-#include <api/Keychain.hpp>
-#include <wallet/stellar/StellarLikeAddress.hpp>
-#include <collections/DynamicObject.hpp>
-#include <preferences/Preferences.hpp>
+#include <stellar/StellarLikeAddress.hpp>
+#include <core/collections/DynamicObject.hpp>
+#include <core/preferences/Preferences.hpp>
 
 namespace ledger {
     namespace core {
-        class StellarLikeKeychain: public api::Keychain  {
+        class StellarLikeKeychain  {
         public:
             using Address = std::shared_ptr<StellarLikeAddress>;
 
