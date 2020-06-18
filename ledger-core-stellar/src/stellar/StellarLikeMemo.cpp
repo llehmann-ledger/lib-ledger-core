@@ -34,7 +34,7 @@
 #include <fmt/format.h>
 #include <core/utils/Hex.hpp>
 #include <core/utils/Exception.hpp>
-#include <core/api/BigInt.hpp>
+#include <core/math/BigInt.hpp>
 
 namespace ledger {
     namespace core {
@@ -62,7 +62,7 @@ namespace ledger {
 
         std::shared_ptr<api::BigInt> StellarLikeMemo::getMemoId() {
             if (_memo.type == stellar::xdr::MemoType::MEMO_ID)
-                return std::make_shared<api::BigIntImpl>(
+                return std::make_shared<BigInt>(
                         BigInt::fromScalar(boost::get<uint64_t>(_memo.content))
                 );
             throw make_exception(api::ErrorCode::INVALID_STELLAR_MEMO_TYPE, "Memo type is not MEMO_ID");
