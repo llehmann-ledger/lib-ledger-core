@@ -212,5 +212,22 @@ namespace ledger {
                 seek(1, Seek::CUR);
             }
         }
+    
+        uint16_t BytesReader::readNextBeUint16() {
+            return readNextValue<uint16_t, endianness::Endianness::BIG>();
+        }
+
+        uint16_t BytesReader::readNextLeUint16() {
+            return readNextValue<uint16_t, endianness::Endianness::LITTLE>();
+        }
+
+        int16_t BytesReader::readNextBeInt16() {
+            return readNextValue<int16_t, endianness::Endianness::BIG>();
+        }
+
+        int16_t BytesReader::readNextLeInt16() {
+            return readNextValue<int16_t, endianness::Endianness::LITTLE>();
+        }
+
     }
 }

@@ -30,6 +30,7 @@
  */
 
 #include <stellar/StellarLikeAddress.hpp>
+#include <stellar/stellarNetworks.hpp>
 #include <core/bytes/BytesWriter.hpp>
 #include <core/crypto/CRC.hpp>
 #include <core/math/BaseConverter.hpp>
@@ -49,7 +50,7 @@ namespace ledger {
 
         StellarLikeAddress::StellarLikeAddress(const std::vector<uint8_t> &pubKey, const api::Currency &currency,
                                                const Option<std::string> &path) : Address(currency, path),
-                                               _address(convertPubkeyToAddress(pubKey, *currency.stellarLikeNetworkParameters)) {
+                                               _address(convertPubkeyToAddress(pubKey, networks::getStellarLikeNetworkParameters(currency.name))) {
         }
 
         std::string StellarLikeAddress::toString() {
@@ -60,7 +61,7 @@ namespace ledger {
             std::vector<uint8_t> bytes;
             BaseConverter::decode(_address, BaseConverter::BASE32_RFC4648_NO_PADDING, bytes);
             BytesReader reader(bytes);
-            reader.seek(getCurrency().stellarLikeNetworkParameters.value().Version.size(), BytesReader::Seek::CUR);
+            reader.seek(networks::getStellarLikeNetworkParameters(currency.name).Version.size(), BytesReader::Seek::CUR);
             return reader.read(32);
         }
 
@@ -95,7 +96,7 @@ namespace ledger {
         }
 
         bool StellarLikeAddress::isValid(const std::string &address, const api::Currency& currency) {
-            const auto &networkParams = currency.stellarLikeNetworkParameters.value();
+            const auto &networkParams = networks::getStellarLikeNetworkParameters(currency.name);
             std::vector<uint8_t> bytes;
             try {
                 BaseConverter::decode(address, BaseConverter::BASE32_RFC4648_NO_PADDING, bytes);

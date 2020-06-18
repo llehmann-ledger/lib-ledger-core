@@ -114,6 +114,25 @@ namespace ledger {
              */
             uint32_t readNextLeUint();
             /**
+             * Reads the next big endian unsigned short (unsigned 16bits integer)
+             */
+             uint16_t readNextBeUint16();
+
+            /**
+             * Reads the next little endian unsigned short (unsigned 16bits integer)
+             */
+            uint16_t readNextLeUint16();
+
+            /**
+             * Reads the next big endian signed short (signed 16bits integer)
+             */
+            int16_t readNextBeInt16();
+
+            /**
+             * Reads the next little endian signed short (signed 16bits integer)
+             */
+            int16_t readNextLeInt16();
+            /**
              * Reads the next little endian int.
              * @return
              */
@@ -156,6 +175,23 @@ namespace ledger {
 
 
         private:
+
+            /**
+             * Read a value (int, long, short, byte, struct) from the reader using big endian bytes ordering.
+             * @return
+             */
+            template<typename T, endianness::Endianness endianness> T readNextValue() {
+                T result;
+                auto ptr = reinterpret_cast<uint8_t *>(&result);
+                for (auto i = 0; i < sizeof(result); i++) {
+                    ptr[i] = readNextByte();
+                }
+                ledger::core::endianness::swapToEndianness(ptr, sizeof(result),
+                                                            endianness,
+                                                            endianness::getSystemEndianness());
+                return result;
+            }
+
             std::vector<uint8_t> _bytes;
             unsigned long _cursor;
             unsigned long _offset;
