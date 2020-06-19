@@ -38,6 +38,8 @@
 #include <stellar/explorers/StellarLikeBlockchainExplorer.hpp>
 #include <stellar/synchronizers/StellarLikeAccountSynchronizer.h>
 
+#include <core/Services.hpp>
+
 namespace ledger {
     namespace core {
 
@@ -49,11 +51,10 @@ namespace ledger {
 
         class StellarLikeWallet : public virtual api::StellarLikeWallet, public virtual AbstractWallet {
         public:
-            static const api::WalletType type;
 
             StellarLikeWallet(  const std::string& walletName,
                                 const api::Currency& currency,
-                                const std::shared_ptr<WalletPool>& pool,
+                                const std::shared_ptr<Services> &services,
                                 const std::shared_ptr<DynamicObject>& configuration,
                                 const DerivationScheme& derivationScheme,
                                 const StellarLikeWalletParams& params);
@@ -61,10 +62,6 @@ namespace ledger {
             bool isSynchronizing() override;
 
             std::shared_ptr<api::EventBus> synchronize() override;
-
-            bool isInstanceOfStellarLikeWallet() const override;
-
-            std::shared_ptr<api::StellarLikeWallet> asStellarLikeWallet() override;
 
             FuturePtr<api::Account> newAccountWithInfo(const api::AccountCreationInfo &info) override;
 

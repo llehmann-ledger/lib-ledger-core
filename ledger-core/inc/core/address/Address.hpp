@@ -41,6 +41,7 @@ namespace ledger {
         public:
             explicit Address(const api::Currency& currency, const Option<std::string>& path);
             api::Currency getCurrency() override;
+            api::Currency getCurrency() const;
 
             optional<std::string> getDerivationPath() override;
 

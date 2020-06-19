@@ -44,11 +44,11 @@ namespace ledger {
         const api::WalletType StellarLikeWallet::type = api::WalletType::STELLAR;
 
         StellarLikeWallet::StellarLikeWallet(const std::string &walletName, const api::Currency &currency,
-                                             const std::shared_ptr<WalletPool> &pool,
+                                             const std::shared_ptr<Services> &services,
                                              const std::shared_ptr<DynamicObject> &configuration,
                                              const DerivationScheme &derivationScheme,
                                              const StellarLikeWalletParams &params) :
-                                             AbstractWallet(walletName, currency, pool, configuration, derivationScheme),
+                                             AbstractWallet(walletName, currency, services, configuration, derivationScheme),
                                              _params(params) {
 
         }

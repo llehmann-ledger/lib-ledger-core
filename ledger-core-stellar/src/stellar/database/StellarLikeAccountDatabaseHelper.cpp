@@ -29,15 +29,15 @@
  *
  */
 
-#include "StellarLikeAccountDatabaseHelper.hpp"
+#include <stellar/database/StellarLikeAccountDatabaseHelper.hpp>
 #include <boost-tuple.h>
 #include <boost/tuple/tuple.hpp>
-#include <wallet/common/database/AccountDatabaseHelper.h>
-#include "StellarLikeAssetDatabaseHelper.hpp"
+#include <core/wallet/AccountDatabaseHelper.hpp>
+#include <stellar/database/StellarLikeAssetDatabaseHelper.hpp>
 #include <fmt/format.h>
-#include <crypto/SHA256.hpp>
-#include <database/soci-option.h>
-#include <database/soci-number.h>
+#include <core/crypto/SHA256.hpp>
+#include <core/database/SociOption.hpp>
+#include <core/database/SociNumber.hpp>
 
 using namespace soci;
 using namespace boost::tuples;

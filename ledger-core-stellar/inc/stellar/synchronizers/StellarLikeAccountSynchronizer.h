@@ -32,7 +32,7 @@
 #ifndef LEDGER_CORE_STELLARLIKEACCOUNTSYNCHRONIZER_H
 #define LEDGER_CORE_STELLARLIKEACCOUNTSYNCHRONIZER_H
 
-#include <wallet/common/synchronizers/AbstractAccountSynchronizer.h>
+#include <core/synchronizers/AbstractAccountSynchronizer.hpp>
 
 namespace ledger {
     namespace core {

@@ -32,7 +32,7 @@
 #ifndef LEDGER_CORE_STELLARLIKEACCOUNTDATABASEHELPER_HPP
 #define LEDGER_CORE_STELLARLIKEACCOUNTDATABASEHELPER_HPP
 
-#include <wallet/stellar/stellar.hpp>
+#include <stellar/stellar.hpp>
 #include <soci.h>
 
 namespace ledger {

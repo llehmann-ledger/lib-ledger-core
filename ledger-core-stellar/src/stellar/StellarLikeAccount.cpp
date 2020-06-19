@@ -518,8 +518,5 @@ namespace ledger {
             });
         }
 
-        std::shared_ptr<api::Keychain> StellarLikeAccount::getAccountKeychain() {
-            return _params.keychain;
-        }
     }
 }

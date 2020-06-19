@@ -45,6 +45,10 @@ namespace ledger {
             return _currency;
         }
 
+        api::Currency Address::getCurrency() const {
+            return _currency;
+        }
+
         optional<std::string> Address::getDerivationPath() {
             return _path.toOptional();
         }
