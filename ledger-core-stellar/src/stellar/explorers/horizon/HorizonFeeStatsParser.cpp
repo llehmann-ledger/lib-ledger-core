@@ -29,7 +29,7 @@
  *
  */
 
-#include "HorizonFeeStatsParser.hpp"
+#include <stellar/explorers/horizon/HorizonFeeStatsParser.hpp>
 
 using namespace ledger::core;
 

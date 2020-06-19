@@ -28,7 +28,7 @@
  *
  */
 
-#include "HorizonAssetParser.hpp"
+#include <stellar/explorers/horizon/HorizonAssetParser.hpp>
 
 using namespace ledger::core;
 

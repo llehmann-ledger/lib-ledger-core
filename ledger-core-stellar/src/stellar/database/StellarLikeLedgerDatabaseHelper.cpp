@@ -40,7 +40,7 @@ namespace ledger {
     namespace core {
 
         bool StellarLikeLedgerDatabaseHelper::putLedger(soci::session &sql, const api::Currency& currency, const stellar::Ledger &ledger) {
-            Block block;
+            api::Block block;
             block.blockHash = ledger.hash;
             block.height = ledger.height;
             block.time = ledger.time;

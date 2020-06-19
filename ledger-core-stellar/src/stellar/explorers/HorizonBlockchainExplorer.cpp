@@ -28,20 +28,20 @@
  *
  */
 
-#include "HorizonBlockchainExplorer.hpp"
-#include <utils/Exception.hpp>
-#include <utils/JSONUtils.h>
-#include <wallet/stellar/explorers/horizon/HorizonApiParser.hpp>
-#include "horizon/HorizonApiParser.hpp"
-#include "horizon/HorizonAccountParser.hpp"
-#include "horizon/HorizonLedgerParser.hpp"
-#include "horizon/HorizonAssetParser.hpp"
-#include "horizon/HorizonTransactionParser.hpp"
-#include "horizon/HorizonOperationParser.hpp"
-#include "horizon/HorizonFeeStatsParser.hpp"
-#include <utils/Exception.hpp>
-#include <math/BaseConverter.hpp>
-#include <utils/URL.h>
+#include <stellar/explorers/HorizonBlockchainExplorer.hpp>
+#include <core/utils/Exception.hpp>
+#include <core/utils/JSONUtils.hpp>
+#include <stellar/explorers/horizon/HorizonApiParser.hpp>
+#include <stellar/explorers/horizon/HorizonApiParser.hpp>
+#include <stellar/explorers/horizon/HorizonAccountParser.hpp>
+#include <stellar/explorers/horizon/HorizonLedgerParser.hpp>
+#include <stellar/explorers/horizon/HorizonAssetParser.hpp>
+#include <stellar/explorers/horizon/HorizonTransactionParser.hpp>
+#include <stellar/explorers/horizon/HorizonOperationParser.hpp>
+#include <stellar/explorers/horizon/HorizonFeeStatsParser.hpp>
+#include <core/utils/Exception.hpp>
+#include <core/math/BaseConverter.hpp>
+#include <core/utils/URL.h>
 
 namespace ledger {
     namespace core {

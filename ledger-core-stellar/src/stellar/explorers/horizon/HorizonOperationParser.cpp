@@ -29,8 +29,8 @@
  *
  */
 
-#include "HorizonOperationParser.hpp"
-#include <utils/DateUtils.hpp>
+#include <stellar/explorers/horizon/HorizonOperationParser.hpp>
+#include <core/utils/DateUtils.hpp>
 
 using namespace ledger::core;
 

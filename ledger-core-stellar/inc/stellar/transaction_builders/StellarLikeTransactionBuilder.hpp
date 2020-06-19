@@ -32,11 +32,11 @@
 #ifndef LEDGER_CORE_STELLARLIKETRANSACTIONBUILDER_HPP
 #define LEDGER_CORE_STELLARLIKETRANSACTIONBUILDER_HPP
 
-#include <api/StellarLikeTransactionBuilder.hpp>
-#include <async/Future.hpp>
-#include <wallet/stellar/xdr/models.hpp>
-#include <wallet/stellar/stellar.hpp>
-#include "StellarLikeTransaction.hpp"
+#include <stellar/api/StellarLikeTransactionBuilder.hpp>
+#include <core/async/Future.hpp>
+#include <stellar/xdr/models.hpp>
+#include <stellar/stellar.hpp>
+#include <stellar/transaction_builders/StellarLikeTransaction.hpp>
 
 namespace ledger {
     namespace core {

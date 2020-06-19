@@ -56,5 +56,9 @@ namespace ledger {
         const std::shared_ptr<Preferences> &StellarLikeKeychain::getPreferences() const {
             return _preferences;
         }
+
+        bool StellarLikeKeychain::contains(const std::string &address) const {
+            return _address->toString() == address;
+        }
     }
 }

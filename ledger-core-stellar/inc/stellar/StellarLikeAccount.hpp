@@ -41,7 +41,8 @@
 #include <stellar/api/StellarLikeFeeStats.hpp>
 #include <stellar/api/StellarLikeFeeStatsCallback.hpp>
 #include <stellar/api/StellarLikeAccountSignerListCallback.hpp>
-
+#include <stellar/StellarLikeOperation.hpp>
+#include <stellar/StellarLikeOperationQuery.hpp>
 
 namespace ledger {
     namespace core {

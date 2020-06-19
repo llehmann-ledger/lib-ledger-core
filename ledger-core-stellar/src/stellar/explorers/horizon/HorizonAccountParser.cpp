@@ -29,7 +29,7 @@
  *
  */
 
-#include "HorizonAccountParser.hpp"
+#include <stellar/explorers/horizon/HorizonAccountParser.hpp>
 using namespace ledger::core;
 
 static const JsonParserPathMatcher ACCOUNT_ID_MATCHER("/account_id");

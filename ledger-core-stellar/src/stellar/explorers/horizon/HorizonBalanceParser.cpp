@@ -29,7 +29,7 @@
  *
  */
 
-#include "HorizonBalanceParser.hpp"
+#include <stellar/explorers/horizon/HorizonBalanceParser.hpp>
 
 using namespace ledger::core;
 

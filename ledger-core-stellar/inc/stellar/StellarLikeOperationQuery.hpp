@@ -1,9 +1,8 @@
 /*
  *
- * StellarLikeLedgerDatabaseHelper.hpp
- * ledger-core
+ * StellarLikeOperationQuery
  *
- * Created by Pierre Pollastri on 15/07/2019.
+ * Created by Léo Lehmann on 2020/06/19
  *
  * The MIT License (MIT)
  *
@@ -29,23 +28,16 @@
  *
  */
 
-#ifndef LEDGER_CORE_STELLARLIKELEDGERDATABASEHELPER_HPP
-#define LEDGER_CORE_STELLARLIKELEDGERDATABASEHELPER_HPP
+#pragma once
 
-#include <soci.h>
-#include <stellar/stellar.hpp>
-#include <core/api/Currency.hpp>
-#include <core/api/Block.hpp>
+#include <core/operation/OperationQuery.hpp>
+
+#include <stellar/StellarLikeOperation.hpp>
 
 namespace ledger {
     namespace core {
-        class StellarLikeLedgerDatabaseHelper {
-        public:
-            static bool putLedger(soci::session& sql, const api::Currency& currency, const stellar::Ledger& ledger);
-            static bool getLastLedger(soci::session& sql, const api::Currency& currency, stellar::Ledger& out);
-        };
+
+//TODO
+
     }
 }
-
-
-#endif //LEDGER_CORE_STELLARLIKELEDGERDATABASEHELPER_HPP

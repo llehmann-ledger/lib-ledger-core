@@ -29,12 +29,12 @@
  *
  */
 
-#include "StellarLikeTransactionDatabaseHelper.hpp"
-#include <crypto/SHA256.hpp>
+#include <stellar/database/StellarLikeTransactionDatabaseHelper.hpp>
+#include <core/crypto/SHA256.hpp>
 #include <fmt/format.h>
-#include "StellarLikeAssetDatabaseHelper.hpp"
-#include <database/soci-date.h>
-#include <database/soci-option.h>
+#include <stellar/database/StellarLikeAssetDatabaseHelper.hpp>
+#include <core/database/SociDate.hpp>
+#include <core/database/SociOption.hpp>
 
 using namespace soci;
 

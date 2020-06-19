@@ -48,6 +48,7 @@
 #include <core/database/SociDate.hpp>
 #include <core/api/StringCallback.hpp>
 #include <stellar/api/StellarLikeOperationType.hpp>
+#include <stellar/stellarNetworks.h>
 
 
 using namespace ledger::core;
@@ -65,7 +66,7 @@ namespace ledger {
 
         StellarLikeAccount::StellarLikeAccount(const std::shared_ptr<StellarLikeWallet> &wallet,
                                                const StellarLikeAccountParams &params)
-                                               : AbstractAccount(wallet, params.index), _params(params) {
+                                               : AbstractAccount(wallet->getServices(), wallet, params.index), _params(params) {
 
         }
 
@@ -183,7 +184,7 @@ namespace ledger {
 
                 const auto &uid = self->getAccountUid();
                 soci::session sql(self->getWallet()->getDatabase()->getPool());
-                std::vector<Operation> operations;
+                std::vector<StellarLikeOperation> operations;
 
                 auto keychain = self->getKeychain();
                 std::function<bool(const std::string &)> filter = [&keychain](const std::string addr) -> bool {
@@ -265,23 +266,22 @@ namespace ledger {
             operation.accountUid = getAccountUid();
             operation.currencyName = getWallet()->getCurrency().name;
             operation.date = tx.createdAt;
-            operation.walletType = getWallet()->getWalletType();
             operation.walletUid = getWallet()->getWalletUid();
             operation.trust = std::make_shared<TrustIndicator>();
             operation.trust->setTrustLevel(api::TrustLevel::TRUSTED);
 
-            Block block;
+            api::Block block;
             block.currencyName = getWallet()->getCurrency().name;
             block.time = tx.createdAt;
             block.height = tx.ledger;
-            block.hash = fmt::format("{}", block.height);
+            block.blockHash = fmt::format("{}", block.height);
 
             operation.block = block;
             operation.fees = tx.feePaid;
             operation.senders.emplace_back(tx.sourceAccount);
 
             auto accountAddress = getKeychain()->getAddress()->toString();
-             auto networkParams = getWallet()->getCurrency().stellarLikeNetworkParameters.value();
+            auto networkParams = networks::getStellarLikeNetworkParameters(self->getWallet()->getCurrency().name);
             auto toAddr = [&] (const stellar::xdr::AccountID& accountId) {
                 return StellarLikeAddress::convertXdrAccountToAddress(accountId, networkParams);
             };
@@ -409,7 +409,7 @@ namespace ledger {
         }
 
         std::shared_ptr<api::OperationQuery> StellarLikeAccount::queryOperations() {
-            auto query = std::make_shared<OperationQuery>(
+            auto query = std::make_shared<StellarLikeOperationQuery>(
                     api::QueryFilter::accountEq(getAccountUid()),
                     getWallet()->getDatabase(),
                     getWallet()->getContext(),
@@ -492,8 +492,8 @@ namespace ledger {
         }
 
         void StellarLikeAccount::getSequence(const std::shared_ptr<api::BigIntCallback> &callback) {
-            getSequence().mapPtr<api::BigInt>(getContext(), [=] (const BigInt& i) -> std::shared_ptr<api::BigInt> {
-                return std::make_shared<api::BigIntImpl>(i);
+            getSequence().mapPtr<BigInt>(getContext(), [=] (const BigInt& i) -> std::shared_ptr<BigInt> {
+                return std::make_shared<BigInt>(i);
             }).callback(getMainExecutionContext(), callback);
         }
 

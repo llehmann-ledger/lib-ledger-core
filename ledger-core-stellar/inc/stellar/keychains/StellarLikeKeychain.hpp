@@ -50,6 +50,8 @@ namespace ledger {
             virtual Address getAddress() const = 0;
             virtual std::string getRestoreKey() const = 0;
 
+            bool contains(const std::string &address) const;
+
         protected:
             const std::shared_ptr<api::DynamicObject>& getConfiguration() const;
             const std::shared_ptr<Preferences>& getPreferences() const;
