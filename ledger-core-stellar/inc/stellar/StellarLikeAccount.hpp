@@ -32,15 +32,15 @@
 #ifndef LEDGER_CORE_STELLARLIKEACCOUNT_HPP
 #define LEDGER_CORE_STELLARLIKEACCOUNT_HPP
 
-#include <wallet/common/AbstractAccount.hpp>
-#include <api/StellarLikeAccount.hpp>
-#include <wallet/stellar/keychains/StellarLikeKeychain.hpp>
-#include "synchronizers/StellarLikeAccountSynchronizer.h"
-#include "explorers/StellarLikeBlockchainExplorer.hpp"
-#include <api/StellarLikeTransactionBuilder.hpp>
-#include <api/StellarLikeFeeStats.hpp>
-#include <api/StellarLikeFeeStatsCallback.hpp>
-#include <api/StellarLikeAccountSignerListCallback.hpp>
+#include <core/wallet/AbstractAccount.hpp>
+#include <stellar/api/StellarLikeAccount.hpp>
+#include <stellar/keychains/StellarLikeKeychain.hpp>
+#include <stellar/synchronizers/StellarLikeAccountSynchronizer.h>
+#include <stellar/explorers/StellarLikeBlockchainExplorer.hpp>
+#include <stellar/api/StellarLikeTransactionBuilder.hpp>
+#include <stellar/api/StellarLikeFeeStats.hpp>
+#include <stellar/api/StellarLikeFeeStatsCallback.hpp>
+#include <stellar/api/StellarLikeAccountSignerListCallback.hpp>
 
 
 namespace ledger {

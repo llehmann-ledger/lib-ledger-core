@@ -32,9 +32,9 @@
 #ifndef LEDGER_CORE_STELLARLIKETRANSACTION_HPP
 #define LEDGER_CORE_STELLARLIKETRANSACTION_HPP
 
-#include <api/StellarLikeTransaction.hpp>
-#include <wallet/stellar/xdr/models.hpp>
-#include <api/Currency.hpp>
+#include <stellar/api/StellarLikeTransaction.hpp>
+#include <stellar/xdr/models.hpp>
+#include <core/api/Currency.hpp>
 
 namespace ledger {
     namespace core {

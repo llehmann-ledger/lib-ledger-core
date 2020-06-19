@@ -31,15 +31,15 @@
 #ifndef LEDGER_CORE_STELLARLIKEBLOCKCHAIN_EXPLORER_HPP
 #define LEDGER_CORE_STELLARLIKEBLOCKCHAIN_EXPLORER_HPP
 
-#include "../stellar.hpp"
+#include <stellar/stellar.hpp>
 #include <string>
-#include <async/Future.hpp>
-#include <math/BigInt.h>
-#include <utils/Option.hpp>
-#include <net/HttpClient.hpp>
-#include <api/DynamicObject.hpp>
-#include <collections/DynamicObject.hpp>
-#include <async/DedicatedContext.hpp>
+#include <core/async/Future.hpp>
+#include <core/math/BigInt.hpp>
+#include <core/utils/Option.hpp>
+#include <core/net/HttpClient.hpp>
+#include <core/api/DynamicObject.hpp>
+#include <core/collections/DynamicObject.hpp>
+#include <core/async/DedicatedContext.hpp>
 
 
 namespace ledger {

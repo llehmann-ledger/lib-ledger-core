@@ -29,14 +29,14 @@
  *
  */
 
-#include "StellarLikeWallet.hpp"
-#include <async/Promise.hpp>
-#include "StellarLikeAccount.hpp"
-#include "explorers/HorizonBlockchainExplorer.hpp"
-#include "synchronizers/StellarLikeBlockchainExplorerAccountSynchronizer.hpp"
-#include <wallet/common/database/AccountDatabaseHelper.h>
-#include "database/StellarLikeAccountDatabaseHelper.hpp"
-#include <api/BoolCallback.hpp>
+#include <stellar/StellarLikeWallet.hpp>
+#include <core/async/Promise.hpp>
+#include <stellar/StellarLikeAccount.hpp>
+#include <stellar/explorers/HorizonBlockchainExplorer.hpp>
+#include <stellar/synchronizers/StellarLikeBlockchainExplorerAccountSynchronizer.hpp>
+#include <core/wallet/AccountDatabaseHelper.hpp>
+#include <stellar/database/StellarLikeAccountDatabaseHelper.hpp>
+#include <core/api/BoolCallback.hpp>
 
 namespace ledger {
     namespace core {

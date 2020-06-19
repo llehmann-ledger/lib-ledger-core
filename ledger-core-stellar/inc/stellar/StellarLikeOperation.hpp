@@ -33,21 +33,23 @@
 #define LEDGER_CORE_STELLARLIKEOPERATION_HPP
 
 #include <stellar/api/StellarLikeOperation.hpp>
-#include <wallet/common/api_impl/OperationApi.h>
+#include <core/api/Operation.hpp>
 #include <stellar/api/StellarLikeOperationRecord.hpp>
+#include <stellar/stellar.hpp>
 #include <stellar/transaction_builders/StellarLikeTransaction.hpp>
 
 namespace ledger {
     namespace core {
-        class StellarLikeOperation : public api::StellarLikeOperation {
+        class StellarLikeOperation : public api::StellarLikeOperation , public api::Operation {
         public:
-            explicit StellarLikeOperation(const std::shared_ptr<OperationApi>& api);
+            explicit StellarLikeOperation(const std::shared_ptr<Operation>& api);
 
             api::StellarLikeOperationRecord getRecord() override;
 
             std::shared_ptr<api::StellarLikeTransaction> getTransaction() override;
 
         private:
+            stellar::OperationWithParentTransaction _operationWithTransaction;
             api::StellarLikeOperationRecord _record;
             stellar::xdr::TransactionEnvelope _envelope;
             api::Currency _currency;
