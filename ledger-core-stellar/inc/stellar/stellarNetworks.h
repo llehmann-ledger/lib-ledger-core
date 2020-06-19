@@ -41,7 +41,7 @@
     #endif
 #endif
 
-#include <api/StellarLikeNetworkParameters.hpp>
+#include <stellar/api/StellarLikeNetworkParameters.hpp>
 namespace ledger {
     namespace core {
         namespace networks {

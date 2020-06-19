@@ -29,25 +29,25 @@
  *
  */
 
-#include "StellarLikeAccount.hpp"
+#include <stellar/StellarLikeAccount.hpp>
 #include <stellar/StellarLikeWallet.hpp>
-#include <utils/DateUtils.hpp>
-#include <events/Event.hpp>
-#include "database/StellarLikeAccountDatabaseHelper.hpp"
-#include <wallet/common/database/AccountDatabaseHelper.h>
-#include "database/StellarLikeLedgerDatabaseHelper.hpp"
-#include "database/StellarLikeTransactionDatabaseHelper.hpp"
-#include <wallet/common/database/OperationDatabaseHelper.h>
+#include <core/utils/DateUtils.hpp>
+#include <core/events/Event.hpp>
+#include <stellar/database/StellarLikeAccountDatabaseHelper.hpp>
+#include <core/wallet/AccountDatabaseHelper.hpp>
+#include <stellar/database/StellarLikeLedgerDatabaseHelper.hpp>
+#include <stellar/database/StellarLikeTransactionDatabaseHelper.hpp>
+#include <core/operation/OperationDatabaseHelper.hpp>
 #include <set>
-#include <wallet/common/BalanceHistory.hpp>
-#include <api/BoolCallback.hpp>
-#include <api/AmountCallback.hpp>
-#include <events/LambdaEventReceiver.hpp>
-#include "transaction_builders/StellarLikeTransactionBuilder.hpp"
-#include <api/BigIntCallback.hpp>
-#include <database/soci-date.h>
-#include <api/StringCallback.hpp>
-#include <api/StellarLikeOperationType.hpp>
+#include <core/wallet/BalanceHistory.hpp>
+#include <core/api/BoolCallback.hpp>
+#include <core/api/AmountCallback.hpp>
+#include <core/events/LambdaEventReceiver.hpp>
+#include <stellar/transaction_builders/StellarLikeTransactionBuilder.hpp>
+#include <core/api/BigIntCallback.hpp>
+#include <core/database/SociDate.hpp>
+#include <core/api/StringCallback.hpp>
+#include <stellar/api/StellarLikeOperationType.hpp>
 
 
 using namespace ledger::core;

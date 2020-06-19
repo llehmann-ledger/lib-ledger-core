@@ -43,11 +43,11 @@ namespace ledger {
     namespace core {
 
         StellarLikeBlockchainExplorerAccountSynchronizer::StellarLikeBlockchainExplorerAccountSynchronizer(
-                const std::shared_ptr<WalletPool> &pool,
+                const std::shared_ptr<Services> &services,
                 const std::shared_ptr<StellarLikeBlockchainExplorer> &explorer) :
-                DedicatedContext(pool->getDispatcher()->getSerialExecutionContext("stellar_like_account_synchronizer")),
+                DedicatedContext(services->getDispatcher()->getSerialExecutionContext("stellar_like_account_synchronizer")),
                 _explorer(explorer),
-                _database(pool->getDatabaseSessionPool()) {
+                _database(services->getDatabaseSessionPool()) {
 
         }
 

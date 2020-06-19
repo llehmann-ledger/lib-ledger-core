@@ -32,10 +32,10 @@
 #ifndef LEDGER_CORE_STELLARLIKEBLOCKCHAINEXPLORERACCOUNTSYNCHRONIZER_HPP
 #define LEDGER_CORE_STELLARLIKEBLOCKCHAINEXPLORERACCOUNTSYNCHRONIZER_HPP
 
-#include "StellarLikeAccountSynchronizer.h"
-#include <wallet/stellar/explorers/StellarLikeBlockchainExplorer.hpp>
-#include <wallet/pool/WalletPool.hpp>
-#include <events/EventPublisher.hpp>
+#include <stellar/synchronizers/StellarLikeAccountSynchronizer.h>
+#include <stellar/explorers/StellarLikeBlockchainExplorer.hpp>
+#include <core/Services.hpp>
+#include <core/events/EventPublisher.hpp>
 
 namespace ledger {
     namespace core {
@@ -66,7 +66,7 @@ namespace ledger {
             };
 
             StellarLikeBlockchainExplorerAccountSynchronizer(
-                    const std::shared_ptr<WalletPool>& pool,
+                    const std::shared_ptr<Services> &services,
                     const std::shared_ptr<StellarLikeBlockchainExplorer>& explorer
                     );
             void reset(const std::shared_ptr<StellarLikeAccount> &account,

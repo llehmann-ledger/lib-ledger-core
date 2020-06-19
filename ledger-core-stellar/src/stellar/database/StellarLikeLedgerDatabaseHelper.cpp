@@ -29,10 +29,10 @@
  *
  */
 
-#include "StellarLikeLedgerDatabaseHelper.hpp"
-#include <wallet/common/database/BlockDatabaseHelper.h>
-#include <database/soci-date.h>
-#include <database/soci-number.h>
+#include <stellar/database/StellarLikeLedgerDatabaseHelper.hpp>
+#include <core/wallet/BlockDatabaseHelper.hpp>
+#include <core/database/SociDate.hpp>
+#include <core/database/SociNumber.hpp>
 
 using namespace soci;
 
@@ -41,7 +41,7 @@ namespace ledger {
 
         bool StellarLikeLedgerDatabaseHelper::putLedger(soci::session &sql, const api::Currency& currency, const stellar::Ledger &ledger) {
             Block block;
-            block.hash = ledger.hash;
+            block.blockHash = ledger.hash;
             block.height = ledger.height;
             block.time = ledger.time;
             block.currencyName = currency.name;
