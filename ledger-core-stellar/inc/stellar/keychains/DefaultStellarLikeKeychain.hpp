@@ -32,7 +32,7 @@
 #ifndef LEDGER_CORE_DEFAULTSTELLARLIKEKEYCHAIN_HPP
 #define LEDGER_CORE_DEFAULTSTELLARLIKEKEYCHAIN_HPP
 
-#include "StellarLikeKeychain.hpp"
+#include <stellar/keychains/StellarLikeKeychain.hpp>
 
 namespace ledger {
     namespace core {

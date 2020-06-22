@@ -29,8 +29,8 @@
  *
  */
 
-#include "StellarLikeKeychainFactory.hpp"
-#include "../keychains/DefaultStellarLikeKeychain.hpp"
+#include <stellar/factories/StellarLikeKeychainFactory.hpp>
+#include <stellar/keychains/DefaultStellarLikeKeychain.hpp>
 
 namespace ledger {
     namespace core {

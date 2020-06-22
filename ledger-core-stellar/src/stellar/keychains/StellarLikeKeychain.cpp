@@ -29,7 +29,8 @@
  *
  */
 
-#include "StellarLikeKeychain.hpp"
+#include <stellar/keychains/StellarLikeKeychain.hpp>
+#include <stellar/stellarNetworks.h>
 
 namespace ledger {
     namespace core {
@@ -41,8 +42,8 @@ namespace ledger {
 
         }
 
-        const api::StellarLikeNetworkParameters &StellarLikeKeychain::getNetworkParams() const {
-            return _currency.stellarLikeNetworkParameters.value();
+        const api::StellarLikeNetworkParameters StellarLikeKeychain::getNetworkParams() const {
+            return networks::getStellarLikeNetworkParameters(_currency.name);
         }
 
         const api::Currency &StellarLikeKeychain::getCurrency() const {
@@ -57,8 +58,5 @@ namespace ledger {
             return _preferences;
         }
 
-        bool StellarLikeKeychain::contains(const std::string &address) const {
-            return _address->toString() == address;
-        }
     }
 }

@@ -32,14 +32,14 @@
 #ifndef LEDGER_CORE_STELLARLIKEWALLETFACTORY_HPP
 #define LEDGER_CORE_STELLARLIKEWALLETFACTORY_HPP
 
-#include <wallet/common/AbstractWalletFactory.hpp>
-#include <wallet/stellar/explorers/StellarLikeBlockchainExplorer.hpp>
+#include <core/wallet/AbstractWalletFactory.hpp>
+#include <stellar/explorers/StellarLikeBlockchainExplorer.hpp>
 
 namespace ledger {
     namespace core {
         class StellarLikeWalletFactory : public AbstractWalletFactory {
         public:
-            StellarLikeWalletFactory(const api::Currency& currency, const std::shared_ptr<WalletPool>& pool);
+            StellarLikeWalletFactory(const api::Currency& currency, const std::shared_ptr<Services> &services);
             std::shared_ptr<AbstractWallet> build(const WalletDatabaseEntry &entry) override;
 
         protected:

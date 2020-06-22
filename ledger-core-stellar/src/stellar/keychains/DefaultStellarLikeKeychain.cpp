@@ -29,7 +29,7 @@
  *
  */
 
-#include "DefaultStellarLikeKeychain.hpp"
+#include <stellar/keychains/DefaultStellarLikeKeychain.hpp>
 
 namespace ledger {
     namespace core {

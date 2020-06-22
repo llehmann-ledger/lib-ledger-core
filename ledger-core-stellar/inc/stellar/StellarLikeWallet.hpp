@@ -76,6 +76,8 @@ namespace ledger {
             void exists(const std::string &address, const std::shared_ptr<api::BoolCallback> &callback) override;
             Future<bool> exists(const std::string& address);
 
+            bool hasMultipleAddresses() const override;
+
         protected:
             std::shared_ptr<AbstractAccount>
             createAccountInstance(soci::session &sql, const std::string &accountUid) override;

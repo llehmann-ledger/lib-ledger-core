@@ -45,12 +45,11 @@ namespace ledger {
             StellarLikeKeychain(const std::shared_ptr<api::DynamicObject>& configuration,
                                 const api::Currency& currency,
                                 const std::shared_ptr<Preferences>& preferences);
-            const api::StellarLikeNetworkParameters& getNetworkParams() const;
+            const api::StellarLikeNetworkParameters getNetworkParams() const;
             const api::Currency& getCurrency() const;
             virtual Address getAddress() const = 0;
             virtual std::string getRestoreKey() const = 0;
-
-            bool contains(const std::string &address) const;
+            virtual bool contains(const std::string &address) const = 0;
 
         protected:
             const std::shared_ptr<api::DynamicObject>& getConfiguration() const;

@@ -29,8 +29,8 @@
  *
  */
 
-#include "stellar.hpp"
-#include "StellarLikeAddress.hpp"
+#include <stellar/stellar.hpp>
+#include <stellar/StellarLikeAddress.hpp>
 
 namespace ledger {
     namespace core {

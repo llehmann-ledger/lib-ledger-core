@@ -154,5 +154,9 @@ namespace ledger {
             });
         }
 
+        bool StellarLikeWallet::hasMultipleAddresses() const {
+            // TODO check if XLM accepts multiple addresses
+            return false;
+        }
     }
 }
