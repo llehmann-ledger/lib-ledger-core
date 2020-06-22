@@ -32,10 +32,10 @@
 #define LEDGER_CORE_HORIZONASSETPARSER_HPP
 
 #include <rapidjson/reader.h>
-#include <wallet/stellar/stellar.hpp>
-#include <utils/JsonParserPath.hpp>
-#include "HorizonFlagsParser.hpp"
-#include "HorizonArrayParser.hpp"
+#include <stellar/stellar.hpp>
+#include <core/utils/JsonParserPath.hpp>
+#include <stellar/explorers/horizon/HorizonFlagsParser.hpp>
+#include <stellar/explorers/horizon/HorizonArrayParser.hpp>
 
 namespace ledger {
     namespace core {

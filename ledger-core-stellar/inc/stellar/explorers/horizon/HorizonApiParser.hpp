@@ -32,7 +32,7 @@
 #define HORIZON_API_PARSER_HPP
 
 #include <rapidjson/reader.h>
-#include <utils/JsonParserPath.hpp>
+#include <core/utils/JsonParserPath.hpp>
 
 namespace ledger {
     namespace core {

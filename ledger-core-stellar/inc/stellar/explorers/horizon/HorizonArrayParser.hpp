@@ -33,7 +33,7 @@
 #define LEDGER_CORE_HORIZONARRAYPARSER_HPP
 
 #include <rapidjson/reader.h>
-#include <utils/JsonParserPath.hpp>
+#include <core/utils/JsonParserPath.hpp>
 #include <fmt/printf.h>
 
 namespace ledger {

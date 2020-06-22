@@ -32,8 +32,8 @@
 #ifndef LEDGER_CORE_HORIZONFLAGSPARSER_HPP
 #define LEDGER_CORE_HORIZONFLAGSPARSER_HPP
 
-#include <wallet/stellar/stellar.hpp>
-#include <utils/JsonParserPath.hpp>
+#include <stellar/stellar.hpp>
+#include <core/utils/JsonParserPath.hpp>
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/reader.h>
 

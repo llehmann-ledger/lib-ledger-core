@@ -33,8 +33,8 @@
 #define LEDGER_CORE_HORIZONFEESTATSPARSER_HPP
 
 #include <rapidjson/reader.h>
-#include <utils/JsonParserPath.hpp>
-#include <wallet/stellar/stellar.hpp>
+#include <core/utils/JsonParserPath.hpp>
+#include <stellar/stellar.hpp>
 
 namespace ledger {
     namespace core {
