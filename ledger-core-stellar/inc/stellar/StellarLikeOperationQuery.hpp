@@ -37,7 +37,26 @@
 namespace ledger {
     namespace core {
 
-//TODO
+        class StellarLikeOperationQuery : public OperationQuery<StellarLikeOperation> {
+        public:
+            StellarLikeOperationQuery(
+                const std::shared_ptr<api::QueryFilter>& headFilter,
+                const std::shared_ptr<DatabaseSessionPool>& pool,
+                const std::shared_ptr<api::ExecutionContext>& context,
+                const std::shared_ptr<api::ExecutionContext>& mainContext
+            );
+
+        protected:
+            std::shared_ptr<StellarLikeOperation> createOperation(
+                std::shared_ptr<AbstractAccount> &account
+            ) override;
+
+            void inflateCompleteTransaction(
+                soci::session& sql,
+                const std::string &accountUid,
+                StellarLikeOperation& operation
+            ) override;
+        };
 
     }
 }
