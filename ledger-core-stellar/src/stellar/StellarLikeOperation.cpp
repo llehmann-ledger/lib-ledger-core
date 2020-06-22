@@ -37,10 +37,23 @@
 #include <stellar/xdr/models.hpp>
 #include <stellar/StellarLikeMemo.hpp>
 
+#include <core/operation/OperationDatabaseHelper.hpp>
+
 namespace ledger {
     namespace core {
 
-        StellarLikeOperation::StellarLikeOperation(const std::shared_ptr<Operation> &api) : _currency(api->getCurrency()) {
+        StellarLikeOperation::StellarLikeOperation(api::Currency const & currency
+            ) : _currency(currency) {
+        }
+
+        StellarLikeOperation::StellarLikeOperation(api::Currency const & currency, 
+            stellar::OperationWithParentTransaction const & operationWithTransaction
+            ) : _currency(currency) {
+                setoperationWithTransaction(operationWithTransaction);
+        }
+
+        void StellarLikeOperation::setoperationWithTransaction(stellar::OperationWithParentTransaction const & operationWithTransaction) {
+            _operationWithTransaction = operationWithTransaction;
             // Create record from API backend
             const auto& op = _operationWithTransaction.operation;
             const auto& tx = _operationWithTransaction.transaction;
@@ -67,7 +80,7 @@ namespace ledger {
             );
 
             // Create the envelope object
-            _envelope.tx.sourceAccount = StellarLikeAddress(op.from, api->getCurrency(), Option<std::string>::NONE).toXdrPublicKey();
+            _envelope.tx.sourceAccount = StellarLikeAddress(op.from, _currency, Option<std::string>::NONE).toXdrPublicKey();
             _envelope.tx.seqNum = op.transactionSequence.toUint64();
             _envelope.tx.fee = op.transactionFee.toUnsignedInt();
             _envelope.tx.memo.type = stellar::xdr::MemoType::MEMO_NONE;
@@ -87,5 +100,12 @@ namespace ledger {
            return std::make_shared<StellarLikeTransaction>(_currency, _envelope);
         }
 
+        void StellarLikeOperation::refreshUid(std::string const&) {
+          uid = OperationDatabaseHelper::createUid(
+              accountUid,
+              _operationWithTransaction.operation.transactionHash,
+              type
+          );
+        }
     }
 }

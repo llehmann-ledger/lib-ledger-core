@@ -262,7 +262,7 @@ namespace ledger {
         int StellarLikeAccount::putTransaction(soci::session &sql, const stellar::Transaction &tx) {
             int createdOperations = 0;
             StellarLikeTransactionDatabaseHelper::putTransaction(sql, getWallet()->getCurrency(), tx);
-            Operation operation;
+            StellarLikeOperation operation(getWallet()->getCurrency());
             operation.accountUid = getAccountUid();
             operation.currencyName = getWallet()->getCurrency().name;
             operation.date = tx.createdAt;
@@ -281,7 +281,7 @@ namespace ledger {
             operation.senders.emplace_back(tx.sourceAccount);
 
             auto accountAddress = getKeychain()->getAddress()->toString();
-            auto networkParams = networks::getStellarLikeNetworkParameters(self->getWallet()->getCurrency().name);
+            auto networkParams = networks::getStellarLikeNetworkParameters(getWallet()->getCurrency().name);
             auto toAddr = [&] (const stellar::xdr::AccountID& accountId) {
                 return StellarLikeAddress::convertXdrAccountToAddress(accountId, networkParams);
             };
@@ -291,7 +291,7 @@ namespace ledger {
                 stellarOperation.from = operation.senders[0];
                 if (!operation.recipients.empty())
                     stellarOperation.to = operation.recipients[0];
-                operation.stellarOperation = {stellarOperation, tx};
+                operation.setoperationWithTransaction({stellarOperation, tx});
                 operation.refreshUid();
                 OperationDatabaseHelper::putOperation(sql, operation);
                 createdOperations += 1;
