@@ -48,6 +48,8 @@ namespace ledger {
                                                            const std::shared_ptr<Services> &services)
                 : AbstractWalletFactory(currency, services) {
 
+                    // create the DB structure if not already created
+                    services->getDatabaseSessionPool()->forwardMigration<StellarMigration>();
         }
 
         std::shared_ptr<AbstractWallet> StellarLikeWalletFactory::build(const WalletDatabaseEntry &entry) {
