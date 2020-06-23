@@ -114,6 +114,10 @@ namespace ledger {
             return oss.str();
         }
 
+        int32_t BytesReader::readNextBeInt() {
+            return readNextValue<int32_t, endianness::Endianness::BIG>();
+        }
+
         uint32_t BytesReader::readNextBeUint() {
             uint32_t result;
             uint8_t* ptr = reinterpret_cast<uint8_t *>(&result);
@@ -138,6 +142,9 @@ namespace ledger {
             return result;
         }
 
+        int64_t BytesReader::readNextBeLong() {
+            return readNextValue<int64_t, endianness::Endianness::BIG>();
+        }
         uint64_t BytesReader::readNextBeUlong() {
             uint64_t result;
             uint8_t* ptr = reinterpret_cast<uint8_t *>(&result);

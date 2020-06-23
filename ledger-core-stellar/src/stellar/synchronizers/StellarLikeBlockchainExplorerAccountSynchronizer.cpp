@@ -29,8 +29,8 @@
  *
  */
 
-#include "StellarLikeBlockchainExplorerAccountSynchronizer.hpp"
-#include <wallet/stellar/StellarLikeAccount.hpp>
+#include <stellar/synchronizers/StellarLikeBlockchainExplorerAccountSynchronizer.hpp>
+#include <stellar/StellarLikeAccount.hpp>
 
 /**
  * Current version of the synchronization. Please keep this field up to date to ensure that we have proper migration

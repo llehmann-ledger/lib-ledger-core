@@ -29,7 +29,7 @@
  *
  */
 
-#include "XDRDecoder.hpp"
+#include <stellar/xdr/XDRDecoder.hpp>
 #include <cmath>
 
 using namespace ledger::core::stellar::xdr;

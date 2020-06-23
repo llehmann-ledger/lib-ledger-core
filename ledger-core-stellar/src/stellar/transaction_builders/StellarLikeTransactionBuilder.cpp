@@ -29,11 +29,11 @@
  *
  */
 
-#include "StellarLikeTransactionBuilder.hpp"
-#include <wallet/stellar/StellarLikeAccount.hpp>
-#include <api/StellarLikeTransactionCallback.hpp>
+#include <stellar/transaction_builders/StellarLikeTransactionBuilder.hpp>
+#include <stellar/StellarLikeAccount.hpp>
+#include <stellar/api/StellarLikeTransactionCallback.hpp>
 #include <algorithm>
-#include <api_impl/BigIntImpl.hpp>
+#include <core/math/BigInt.hpp>
 
 namespace ledger {
     namespace core {
@@ -171,13 +171,13 @@ namespace ledger {
         std::shared_ptr<api::StellarLikeTransactionBuilder>
         StellarLikeTransactionBuilder::setNumberMemo(const std::shared_ptr<api::BigInt> &number) {
             _envelope.tx.memo.type = stellar::xdr::MemoType::MEMO_ID;
-            _envelope.tx.memo.content = std::static_pointer_cast<api::BigIntImpl>(number)->backend().toUint64();
+            _envelope.tx.memo.content = std::static_pointer_cast<BigInt>(number)->toUint64();
             return shared_from_this();;
         }
 
         std::shared_ptr<api::StellarLikeTransactionBuilder>
         StellarLikeTransactionBuilder::setSequence(const std::shared_ptr<api::BigInt> &sequence) {
-            _envelope.tx.seqNum = std::static_pointer_cast<api::BigIntImpl>(sequence)->backend().toInt64();
+            _envelope.tx.seqNum = std::static_pointer_cast<BigInt>(sequence)->toInt64();
             return shared_from_this();
         }
 

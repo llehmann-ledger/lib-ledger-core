@@ -38,6 +38,7 @@
 #include <stellar/synchronizers/StellarLikeBlockchainExplorerAccountSynchronizer.hpp>
 #include <core/api/Configuration.hpp>
 #include <stellar/stellarNetworks.h>
+#include <stellar/database/Migrations.hpp>
 
 #define STRING(key, def) entry.configuration->getString(key).value_or(def)
 

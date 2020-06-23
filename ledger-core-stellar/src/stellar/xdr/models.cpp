@@ -29,9 +29,9 @@
  *
  */
 
-#include "models.hpp"
-#include "XDREncoder.hpp"
-#include "XDRDecoder.hpp"
+#include <stellar/xdr/models.hpp>
+#include <stellar/xdr/XDREncoder.hpp>
+#include <stellar/xdr/XDRDecoder.hpp>
 
 namespace ledger { namespace core { namespace stellar { namespace xdr {
 

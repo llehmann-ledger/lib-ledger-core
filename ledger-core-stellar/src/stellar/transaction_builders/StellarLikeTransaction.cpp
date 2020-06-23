@@ -29,16 +29,17 @@
  *
  */
 
-#include "StellarLikeTransaction.hpp"
-#include <api/ErrorCode.hpp>
-#include <wallet/stellar/xdr/XDREncoder.hpp>
-#include <wallet/stellar/xdr/XDRDecoder.hpp>
-#include <crypto/SHA256.hpp>
-#include <wallet/stellar/StellarLikeAddress.hpp>
-#include <utils/Exception.hpp>
-#include <wallet/common/Amount.h>
-#include <api_impl/BigIntImpl.hpp>
-#include <wallet/stellar/StellarLikeMemo.hpp>
+#include <stellar/transaction_builders/StellarLikeTransaction.hpp>
+#include <core/api/ErrorCode.hpp>
+#include <stellar/xdr/XDREncoder.hpp>
+#include <stellar/xdr/XDRDecoder.hpp>
+#include <core/crypto/SHA256.hpp>
+#include <stellar/StellarLikeAddress.hpp>
+#include <core/utils/Exception.hpp>
+#include <core/wallet/Amount.hpp>
+#include <core/math/BigInt.hpp>
+#include <stellar/StellarLikeMemo.hpp>
+#include <stellar/stellarNetworks.h>
 
 namespace ledger {
     namespace core {
@@ -57,7 +58,7 @@ namespace ledger {
         StellarLikeTransaction::parseSignatureBase(const api::Currency & currency,
                                                    const std::vector<uint8_t> & signatureBase)
         {
-            auto networkId = SHA256::stringToBytesHash(currency.stellarLikeNetworkParameters.value().NetworkPassphrase);
+            auto networkId = SHA256::stringToBytesHash(networks::getStellarLikeNetworkParameters(currency.name).NetworkPassphrase);
 
             stellar::xdr::Encoder envTypeEncoder;
             envTypeEncoder << static_cast<int32_t>(stellar::xdr::EnvelopeType::ENVELOPE_TYPE_TX);
@@ -83,7 +84,7 @@ namespace ledger {
         }
 
         std::vector<uint8_t> StellarLikeTransaction::toSignatureBase() {
-            auto networkId = SHA256::stringToBytesHash(_currency.stellarLikeNetworkParameters.value().NetworkPassphrase);
+            auto networkId = SHA256::stringToBytesHash(networks::getStellarLikeNetworkParameters(_currency.name).NetworkPassphrase);
             stellar::xdr::Encoder envTypeEncoder;
             envTypeEncoder << static_cast<int32_t>(stellar::xdr::EnvelopeType::ENVELOPE_TYPE_TX);
             auto encodedEnvType = envTypeEncoder.toByteArray();
@@ -120,7 +121,7 @@ namespace ledger {
         }
 
         std::shared_ptr<api::BigInt> StellarLikeTransaction::getSourceAccountSequence() {
-            return std::make_shared<api::BigIntImpl>(BigInt(_envelope.tx.seqNum));
+            return std::make_shared<BigInt>(BigInt(_envelope.tx.seqNum));
         }
 
         std::shared_ptr<api::Amount> StellarLikeTransaction::getFee() {

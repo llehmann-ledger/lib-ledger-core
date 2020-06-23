@@ -103,6 +103,12 @@ namespace ledger {
             std::string readNextString();
 
             /**
+             * Reads the next big endian int.
+             * @return
+             */
+            int32_t readNextBeInt();
+
+            /**
              * Reads the next big endian unsigned int.
              * @return
              */
@@ -132,6 +138,13 @@ namespace ledger {
              * Reads the next little endian signed short (signed 16bits integer)
              */
             int16_t readNextLeInt16();
+
+            /**
+             * Reads the next little endian long.
+             * @return
+             */
+            int64_t readNextBeLong();
+
             /**
              * Reads the next little endian int.
              * @return

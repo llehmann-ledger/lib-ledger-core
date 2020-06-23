@@ -29,8 +29,8 @@
  */
 
 
-#include "stellarNetworks.h"
-#include <utils/Exception.hpp>
+#include <stellar/stellarNetworks.h>
+#include <core/utils/Exception.hpp>
 
 namespace ledger {
     namespace core {

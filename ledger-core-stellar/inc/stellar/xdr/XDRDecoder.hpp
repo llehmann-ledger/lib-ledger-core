@@ -32,11 +32,11 @@
 #ifndef LEDGER_CORE_XDRDECODER_HPP
 #define LEDGER_CORE_XDRDECODER_HPP
 
-#include <bytes/BytesReader.h>
+#include <core/bytes/BytesReader.hpp>
 #include <list>
 #include <boost/variant/variant.hpp>
 #include <array>
-#include <utils/Option.hpp>
+#include <core/utils/Option.hpp>
 #include <typeinfo>
 
 namespace ledger {

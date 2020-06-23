@@ -29,7 +29,7 @@
  *
  */
 
-#include "XDREncoder.hpp"
+#include <stellar/xdr/XDREncoder.hpp>
 #include <cmath>
 
 using namespace ledger::core::stellar::xdr;
