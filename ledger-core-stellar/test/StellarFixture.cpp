@@ -31,6 +31,8 @@
 
 #include "StellarFixture.hpp"
 
+
+using namespace ledger::core; // don't do this at home. Only for testing contexts
 static std::vector<api::CurrencyUnit> UNITS {};
 
 api::AccountCreationInfo StellarFixture::defaultAccount() const {

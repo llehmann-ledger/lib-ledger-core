@@ -41,28 +41,26 @@
 #include <core/api/AccountCreationInfo.hpp>
 #include <integration/IntegrationEnvironment.hpp>
 
-using namespace ledger::core; // don't do this at home. Only for testing contexts
-
-static api::Currency STELLAR =
-        CurrencyBuilder("stellar")
+static ledger::core::api::Currency STELLAR =
+        ledger::core::CurrencyBuilder("stellar")
         .bip44(148)
         .paymentUri("web+stellar")
         .unit("stroops", 0, "stroops")
         .unit("lumen", 7, "XLM");
 
-static api::StellarLikeNetworkParameters STELLAR_PARAMS {
+static ledger::core::api::StellarLikeNetworkParameters STELLAR_PARAMS {
     "xlm", {6 << 3}, 5000000, 100, {}, "Public Global Stellar Network ; September 2015"
 };
 
 class StellarFixture {
 public:
 
-    api::AccountCreationInfo accountInfo(const std::string& pubKey) const;
-    api::AccountCreationInfo defaultAccount() const;
-    api::AccountCreationInfo emptyAccount() const;
-    api::AccountCreationInfo accountInfoFromAddress(const std::string& address) const;
+    ledger::core::api::AccountCreationInfo accountInfo(const std::string& pubKey) const;
+    ledger::core::api::AccountCreationInfo defaultAccount() const;
+    ledger::core::api::AccountCreationInfo emptyAccount() const;
+    ledger::core::api::AccountCreationInfo accountInfoFromAddress(const std::string& address) const;
 
-    api::Currency getCurrency() const;
+    ledger::core::api::Currency getCurrency() const;
 };
 
 
