@@ -34,9 +34,9 @@
 #include <core/collections/DynamicObject.hpp>
 #include <core/utils/DateUtils.hpp>
 #include <stellar/factories/StellarLikeWalletFactory.hpp>
-#include <integration/WalletFixture.hpp>
+#include <integration/BaseFixture.hpp>
 
-struct StellarExplorer : public WalletFixture<StellarLikeWalletFactory>, public StellarFixture  {
+struct StellarExplorer : public BaseFixture, public StellarFixture  {
 
 };
 
