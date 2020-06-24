@@ -35,7 +35,7 @@
 namespace ledger {
     namespace core {
         namespace networks {
-            const api::StellarLikeNetworkParameters getStellarLikeNetworkParameters(const std::string &networkName) {
+            const api::StellarLikeNetworkParameters& getStellarLikeNetworkParameters(const std::string &networkName) {
                 if (networkName == "stellar") {
                     static const api::StellarLikeNetworkParameters STELLAR(
                         "xlm", {6 << 3}, 5000000, 100, {}, "Public Global Stellar Network ; September 2015"
@@ -45,10 +45,14 @@ namespace ledger {
                 throw make_exception(api::ErrorCode::INVALID_ARGUMENT, "No network parameters set for {}", networkName);
             }
 
-            const std::vector<api::StellarLikeNetworkParameters> ALL_STELLAR
-                    ({
+            const std::vector<api::StellarLikeNetworkParameters>& ALL_STELLAR()
+            {
+                static const std::vector<api::StellarLikeNetworkParameters> STELLARS
+                {
                              getStellarLikeNetworkParameters("stellar")
-                     });
+                };
+                return STELLARS;
+            };
         }
     }
 }

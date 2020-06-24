@@ -45,8 +45,8 @@
 namespace ledger {
     namespace core {
         namespace networks {
-            extern LIBCORE_EXPORT const api::StellarLikeNetworkParameters getStellarLikeNetworkParameters(const std::string &networkName);
-            extern LIBCORE_EXPORT const std::vector<api::StellarLikeNetworkParameters> ALL_STELLAR;
+            extern LIBCORE_EXPORT const api::StellarLikeNetworkParameters& getStellarLikeNetworkParameters(const std::string &networkName);
+            extern LIBCORE_EXPORT const std::vector<api::StellarLikeNetworkParameters>& ALL_STELLAR();
 
             template<class Archive>
             void serialize(Archive & archive,
