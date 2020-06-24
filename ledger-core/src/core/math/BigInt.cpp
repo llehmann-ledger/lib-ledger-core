@@ -472,6 +472,10 @@ namespace ledger {
                 return std::shared_ptr<BigInt>(new ::ledger::core::BigInt(ledger::core::BigInt::fromHex(s)));
             }
         }
+        
+        std::shared_ptr<api::BigInt> api::BigInt::fromLong(int64_t value) {
+                return std::shared_ptr<BigInt>(new ::ledger::core::BigInt(ledger::core::BigInt::fromScalar(value)));
+        }
 
         bool BigInt::all_digits(std::string const& s) {
             auto it = s.cbegin();

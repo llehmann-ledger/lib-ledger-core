@@ -33,16 +33,22 @@
 #include <stellar/explorers/HorizonBlockchainExplorer.hpp>
 #include <core/collections/DynamicObject.hpp>
 #include <core/utils/DateUtils.hpp>
+#include <stellar/factories/StellarLikeWalletFactory.hpp>
+#include <integration/WalletFixture.hpp>
+
+struct StellarExplorer : public WalletFixture<StellarLikeWalletFactory>, public StellarFixture  {
+
+};
 
 static const auto BASE_URL = "https://horizon-testnet.stellar.org";
 static const auto MAINNET_URL = "https://horizon.stellar.org";
 
 
-TEST_F(StellarFixture, GetAsset) {
-    auto pool = newPool();
+TEST_F(StellarExplorer, GetAsset) {
+    auto services = newDefaultServices();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
-            pool->getDispatcher()->getSerialExecutionContext("explorer"),
-            pool->getHttpClient(BASE_URL),
+            services->getDispatcher()->getSerialExecutionContext("explorer"),
+            services->getHttpClient(BASE_URL),
             std::make_shared<DynamicObject>()
             );
     auto asset = wait(explorer->getAsset("USD", "GDZJPY2OAJROO5LTIBRHOGU33QSPBMIM6VO46G5IEYYRKZXGE4YEJG45"));
@@ -57,11 +63,11 @@ TEST_F(StellarFixture, GetAsset) {
      */
 }
 
-TEST_F(StellarFixture, GetAccount) {
-    auto pool = newPool();
+TEST_F(StellarExplorer, GetAccount) {
+    auto services = newDefaultServices();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
-            pool->getDispatcher()->getSerialExecutionContext("explorer"),
-            pool->getHttpClient(MAINNET_URL),
+            services->getDispatcher()->getSerialExecutionContext("explorer"),
+            services->getHttpClient(MAINNET_URL),
             std::make_shared<DynamicObject>()
     );
     auto accountId = "GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3";
@@ -82,11 +88,11 @@ TEST_F(StellarFixture, GetAccount) {
 }
 
 
-TEST_F(StellarFixture, GetLastLedger) {
-    auto pool = newPool();
+TEST_F(StellarExplorer, GetLastLedger) {
+    auto services = newDefaultServices();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
-            pool->getDispatcher()->getSerialExecutionContext("explorer"),
-            pool->getHttpClient(BASE_URL),
+            services->getDispatcher()->getSerialExecutionContext("explorer"),
+            services->getHttpClient(BASE_URL),
             std::make_shared<DynamicObject>()
     );
     auto ledger = wait(explorer->getLastLedger());
@@ -97,11 +103,11 @@ TEST_F(StellarFixture, GetLastLedger) {
 }
 
 
-TEST_F(StellarFixture, GetTransactions) {
-    auto pool = newPool();
+TEST_F(StellarExplorer, GetTransactions) {
+    auto services = newDefaultServices();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
-            pool->getDispatcher()->getSerialExecutionContext("explorer"),
-            pool->getHttpClient(MAINNET_URL),
+            services->getDispatcher()->getSerialExecutionContext("explorer"),
+            services->getHttpClient(MAINNET_URL),
             std::make_shared<DynamicObject>()
     );
     auto accountId = "GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3";
@@ -121,11 +127,11 @@ TEST_F(StellarFixture, GetTransactions) {
     EXPECT_EQ(tx->pagingToken, "98448948301160448");
 }
 
-TEST_F(StellarFixture, GetOperations) {
-    auto pool = newPool();
+TEST_F(StellarExplorer, GetOperations) {
+    auto services = newDefaultServices();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
-            pool->getDispatcher()->getSerialExecutionContext("explorer"),
-            pool->getHttpClient(MAINNET_URL),
+            services->getDispatcher()->getSerialExecutionContext("explorer"),
+            services->getHttpClient(MAINNET_URL),
             std::make_shared<DynamicObject>()
     );
     auto accountId = "GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3";
@@ -160,11 +166,11 @@ TEST_F(StellarFixture, GetOperations) {
     }
 }
 
-TEST_F(StellarFixture, GetRecommendedFees) {
-    auto pool = newPool();
+TEST_F(StellarExplorer, GetRecommendedFees) {
+    auto services = newDefaultServices();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
-            pool->getDispatcher()->getSerialExecutionContext("explorer"),
-            pool->getHttpClient(MAINNET_URL),
+            services->getDispatcher()->getSerialExecutionContext("explorer"),
+            services->getHttpClient(MAINNET_URL),
             std::make_shared<DynamicObject>()
     );
     auto fees = wait(explorer->getRecommendedFees());

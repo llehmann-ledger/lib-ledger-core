@@ -32,14 +32,30 @@
 #ifndef LEDGER_CORE_STELLARFIXTURE_HPP
 #define LEDGER_CORE_STELLARFIXTURE_HPP
 
-#include <integration/BaseFixture.hpp>
+#include <gtest/gtest.h>
 #include <stellar/StellarLikeWallet.hpp>
 #include <stellar/StellarLikeAccount.hpp>
 #include <stellar/StellarLikeOperation.hpp>
+#include <core/wallet/CurrencyBuilder.hpp>
+#include <core/api/Account.hpp>
+#include <core/api/AccountCreationInfo.hpp>
+#include <integration/IntegrationEnvironment.hpp>
 
-class StellarFixture : public BaseFixture {
+using namespace ledger::core; // don't do this at home. Only for testing contexts
+
+static api::Currency STELLAR =
+        CurrencyBuilder("stellar")
+        .bip44(148)
+        .paymentUri("web+stellar")
+        .unit("stroops", 0, "stroops")
+        .unit("lumen", 7, "XLM");
+
+static api::StellarLikeNetworkParameters STELLAR_PARAMS {
+    "xlm", {6 << 3}, 5000000, 100, {}, "Public Global Stellar Network ; September 2015"
+};
+
+class StellarFixture {
 public:
-    std::shared_ptr<Services> newPool(std::string poolName = "default_pool");
 
     api::AccountCreationInfo accountInfo(const std::string& pubKey) const;
     api::AccountCreationInfo defaultAccount() const;

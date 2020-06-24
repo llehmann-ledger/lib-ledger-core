@@ -33,18 +33,6 @@
 
 static std::vector<api::CurrencyUnit> UNITS {};
 
-static api::StellarLikeNetworkParameters STELLAR_PARAMS {
-    "xlm", {6 << 3}, 5000000, 100, {}, "Public Global Stellar Network ; September 2015"
-};
-
-static api::Currency STELLAR =
-        Currency("stellar")
-        .forkOfStellar(STELLAR_PARAMS)
-        .bip44(148)
-        .paymentUri("web+stellar")
-        .unit("stroops", 0, "stroops")
-        .unit("lumen", 7, "XLM");
-
 api::AccountCreationInfo StellarFixture::defaultAccount() const {
     return accountInfo("a1083d11720853a2c476a07e29b64e0f9eb2ff894f1e485628faa7b63de77a4f");
 }
@@ -65,10 +53,6 @@ api::AccountCreationInfo StellarFixture::accountInfoFromAddress(const std::strin
             Option<std::string>::NONE
     );
     return accountInfo(hex::toString(addr.toPublicKey()));
-}
-
-std::shared_ptr<Services> StellarFixture::newPool(std::string poolName) {
-    return BaseFixture::newDefaultServices();
 }
 
 api::Currency StellarFixture::getCurrency() const {

@@ -34,6 +34,8 @@
 #include <core/math/BigInt.hpp>
 #include <stellar/StellarLikeMemo.hpp>
 #include <stellar/api/StellarLikeMemoType.hpp>
+#include <stellar/factories/StellarLikeWalletFactory.hpp>
+#include <integration/WalletFixture.hpp>
 
 using namespace ledger::core;
 
@@ -47,7 +49,12 @@ inline void expectThrowInvalidMemoType(StellarLikeMemo* obj, T (StellarLikeMemo:
     EXPECT_EQ(result.getFailure().getErrorCode(), api::ErrorCode::INVALID_STELLAR_MEMO_TYPE);
 }
 
-TEST_F(StellarFixture, GetMemoText) {
+struct StellarMemo : public WalletFixture<StellarLikeWalletFactory>, public StellarFixture {
+
+};
+
+
+TEST_F(StellarMemo, GetMemoText) {
     stellar::xdr::Memo memo;
     memo.type = stellar::xdr::MemoType::MEMO_TEXT;
     memo.content = "Hello world";
@@ -64,7 +71,7 @@ TEST_F(StellarFixture, GetMemoText) {
 
 }
 
-TEST_F(StellarFixture, GetMemoId) {
+TEST_F(StellarMemo, GetMemoId) {
     stellar::xdr::Memo memo;
     memo.type = stellar::xdr::MemoType::MEMO_ID;
     memo.content = 12345678901234567890UL;
@@ -80,7 +87,7 @@ TEST_F(StellarFixture, GetMemoId) {
     expectThrowInvalidMemoType(&api, &StellarLikeMemo::getMemoReturn);
 }
 
-TEST_F(StellarFixture, GetMemoHash) {
+TEST_F(StellarMemo, GetMemoHash) {
     auto bytesHex = std::string("1cc91667fc80e79caae59d3e5b29551ee528e9a4548307d1428901db71e459f6");
     auto bytesVector = hex::toByteArray(bytesHex);
     stellar::xdr::Hash bytesArray;
@@ -100,7 +107,7 @@ TEST_F(StellarFixture, GetMemoHash) {
     expectThrowInvalidMemoType(&api, &StellarLikeMemo::getMemoReturn);
 }
 
-TEST_F(StellarFixture, GetMemoReturn) {
+TEST_F(StellarMemo, GetMemoReturn) {
     auto bytesHex = std::string("1cc91667fc80e79caae59d3e5b29551ee528e9a4548307d1428901db71e459f6");
     auto bytesVector = hex::toByteArray(bytesHex);
     stellar::xdr::Hash bytesArray;
@@ -120,7 +127,7 @@ TEST_F(StellarFixture, GetMemoReturn) {
     expectThrowInvalidMemoType(&api, &StellarLikeMemo::getMemoId);
 }
 
-TEST_F(StellarFixture, GetMemoNone) {
+TEST_F(StellarMemo, GetMemoNone) {
     stellar::xdr::Memo memo;
     memo.type = stellar::xdr::MemoType::MEMO_NONE;
 

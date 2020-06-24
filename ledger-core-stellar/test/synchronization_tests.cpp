@@ -31,15 +31,26 @@
 
 #include "StellarFixture.hpp"
 #include <stellar/StellarLikeOperationQuery.hpp>
-#include <core/math/BigInt.hpp>
+#include <core/api/BigInt.hpp>
 #include <stellar/api/StellarLikeMemo.hpp>
 #include <stellar/api/StellarLikeMemoType.hpp>
+#include <stellar/factories/StellarLikeWalletFactory.hpp>
+#include <integration/WalletFixture.hpp>
 
-TEST_F(StellarFixture, SynchronizeStellarAccount) {
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet", "stellar", api::DynamicObject::newInstance());
+struct StellarSynchronization : public WalletFixture<StellarLikeWalletFactory>, public StellarFixture {
+
+};
+
+TEST_F(StellarSynchronization, SynchronizeStellarAccount) {
+    auto const currency = STELLAR;
+
+    registerCurrency(currency);
+
+    auto wallet = wait(walletStore->createWallet("my_wallet", currency.name, api::DynamicObject::newInstance()));
     auto info = ::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, defaultAccount());
+    auto i = defaultAccount();
+    i.index = 0;
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(wait(wallet->newAccountWithInfo(i)));;
     auto exists = ::wait(account->exists());
     EXPECT_TRUE(exists);
     auto bus = account->synchronize();
@@ -56,15 +67,16 @@ TEST_F(StellarFixture, SynchronizeStellarAccount) {
     EXPECT_EQ(bus, account->synchronize());
     dispatcher->waitUntilStopped();
     auto balance = ::wait(account->getBalance());
-    auto operations = ::wait(std::dynamic_pointer_cast<OperationQuery>(account->queryOperations()->addOrder(api::OperationOrderKey::DATE, false)->complete())->execute());
+    auto operations = ::wait(std::dynamic_pointer_cast<StellarLikeOperationQuery>(account->queryOperations()->addOrder(api::OperationOrderKey::DATE, false)->complete())->execute());
     EXPECT_TRUE(balance->toBigInt()->compare(api::BigInt::fromLong(0)) > 0);
     EXPECT_TRUE(operations.size() >= 5);
 
     for (const auto& op : operations) {
-        auto record = op->asStellarLikeOperation()->getRecord();
-        fmt::print("{} {} {} {}\n",   api::to_string(op->getOperationType()), op->getAmount()->toString(), op->getFees()->toString(), api::to_string(record.operationType));
-        if (op->getOperationType() == api::OperationType::SEND) {
-            EXPECT_TRUE(op->getFees()->toLong() >= 100);
+        auto ops = std::dynamic_pointer_cast<StellarLikeOperation>(op);
+        auto record = ops->getRecord();
+        fmt::print("{} {} {} {}\n",   api::to_string(ops->getOperationType()), ops->getAmount()->toString(), ops->getFees()->toString(), api::to_string(record.operationType));
+        if (ops->getOperationType() == api::OperationType::SEND) {
+            EXPECT_TRUE(ops->getFees()->toLong() >= 100);
         }
     }
 
@@ -94,8 +106,9 @@ TEST_F(StellarFixture, SynchronizeStellarAccount) {
 
     auto txFound = false;
     for (auto& op : operations) {
-        if (op->asStellarLikeOperation()->getRecord().transactionHash == "6c084cdf56ff11b47baeab9a17fe8dc66d8009b7f4f86101758c9e99348af9a3") {
-            auto memo = op->asStellarLikeOperation()->getTransaction()->getMemo();
+        auto ops = std::dynamic_pointer_cast<StellarLikeOperation>(op);
+        if (ops->getRecord().transactionHash == "6c084cdf56ff11b47baeab9a17fe8dc66d8009b7f4f86101758c9e99348af9a3") {
+            auto memo = ops->getTransaction()->getMemo();
             EXPECT_EQ(memo->getMemoType(), api::StellarLikeMemoType::MEMO_TEXT);
             EXPECT_EQ(memo->getMemoText(), "Salut charlotte");
             txFound = true;
@@ -104,11 +117,16 @@ TEST_F(StellarFixture, SynchronizeStellarAccount) {
     EXPECT_TRUE(txFound);
 }
 
-TEST_F(StellarFixture, SynchronizeEmptyStellarAccount) {
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet", "stellar", api::DynamicObject::newInstance());
+TEST_F(StellarSynchronization, SynchronizeEmptyStellarAccount) {
+    auto const currency = STELLAR;
+
+    registerCurrency(currency);
+
+    auto wallet = wait(walletStore->createWallet("my_wallet", currency.name, api::DynamicObject::newInstance()));
     auto info = ::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, emptyAccount());
+    auto i = emptyAccount();
+    i.index = 0;
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(wait(wallet->newAccountWithInfo(i)));;
 
     auto exists = ::wait(account->exists());
     EXPECT_FALSE(exists);
@@ -126,28 +144,35 @@ TEST_F(StellarFixture, SynchronizeEmptyStellarAccount) {
     dispatcher->waitUntilStopped();
     auto address = wait(account->getFreshPublicAddresses())[0];
     auto balance = ::wait(account->getBalance());
-    auto operations = ::wait(std::dynamic_pointer_cast<OperationQuery>(account->queryOperations()->complete())->execute());
+    auto operations = ::wait(std::dynamic_pointer_cast<StellarLikeOperationQuery>(account->queryOperations()->complete())->execute());
     EXPECT_TRUE(balance->toBigInt()->compare(api::BigInt::fromLong(0)) == 0);
     EXPECT_TRUE(operations.size() == 0);
 
     // Fetch the first send operation
     for (const auto& op: operations) {
         if (op->getOperationType() == api::OperationType::SEND) {
-            const auto& sop = op->asStellarLikeOperation();
+            const auto& sop = std::dynamic_pointer_cast<StellarLikeOperation>(op);
             ASSERT_EQ(sop->getTransaction()->getSourceAccount()->toString(), address->toString());
             ASSERT_TRUE(sop->getTransaction()->getFee()->toLong() > 0);
-            auto sequence = std::dynamic_pointer_cast<api::BigIntImpl>(sop->getTransaction()->getSourceAccountSequence())->backend();
-            ASSERT_TRUE(sequence > BigInt::ZERO);
+            auto sequence = std::dynamic_pointer_cast<BigInt>(sop->getTransaction()->getSourceAccountSequence());
+            ASSERT_TRUE(*sequence > BigInt::ZERO);
         }
     }
 }
 
-TEST_F(StellarFixture, SynchronizeStellarAccountWithSubEntry) {
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet", "stellar", api::DynamicObject::newInstance());
+TEST_F(StellarSynchronization, SynchronizeStellarAccountWithSubEntry) {
+    auto const currency = STELLAR;
+
+    registerCurrency(currency);
+
+    auto wallet = wait(walletStore->createWallet("my_wallet", currency.name, api::DynamicObject::newInstance()));
     auto info = ::wait(wallet->getNextAccountCreationInfo());
+
     StellarLikeAddress addr("GAT4LBXYJGJJJRSNK74NPFLO55CDDXSYVMQODSEAAH3M6EY4S7LPH5GV", getCurrency(), Option<std::string>::NONE);
-    auto account = newAccount(wallet, 0, accountInfo(hex::toString(addr.toPublicKey())));
+    auto i = accountInfo(hex::toString(addr.toPublicKey()));
+    i.index = 0;
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(wait(wallet->newAccountWithInfo(i)));;
+    
     auto exists = ::wait(account->exists());
     EXPECT_TRUE(exists);
     auto bus = account->synchronize();
@@ -167,11 +192,18 @@ TEST_F(StellarFixture, SynchronizeStellarAccountWithSubEntry) {
     EXPECT_TRUE(reserve->toLong() > 2 * 5000000);
 }
 
-TEST_F(StellarFixture, SynchronizeStellarAccountWithManageBuyOffer) {
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet_1", "stellar", api::DynamicObject::newInstance());
+TEST_F(StellarSynchronization, SynchronizeStellarAccountWithManageBuyOffer) {
+    auto const currency = STELLAR;
+
+    registerCurrency(currency);
+
+    auto wallet = wait(walletStore->createWallet("my_wallet_1", currency.name, api::DynamicObject::newInstance()));
     auto info = ::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, accountInfoFromAddress("GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2"));
+
+    auto i = accountInfoFromAddress("GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2");
+    i.index = 0;
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(wait(wallet->newAccountWithInfo(i)));;
+    
     auto exists = ::wait(account->exists());
     EXPECT_TRUE(exists);
     auto bus = account->synchronize();
@@ -188,16 +220,24 @@ TEST_F(StellarFixture, SynchronizeStellarAccountWithManageBuyOffer) {
     EXPECT_EQ(bus, account->synchronize());
     dispatcher->waitUntilStopped();
     auto balance = ::wait(account->getBalance());
-    auto operations = ::wait(std::dynamic_pointer_cast<OperationQuery>(account->queryOperations()->addOrder(api::OperationOrderKey::DATE, false)->complete())->execute());
+    auto operations = ::wait(std::dynamic_pointer_cast<StellarLikeOperationQuery>(account->queryOperations()->addOrder(api::OperationOrderKey::DATE, false)->complete())->execute());
     EXPECT_TRUE(balance->toBigInt()->compare(api::BigInt::fromLong(0)) > 0);
     EXPECT_TRUE(operations.size() >= 5);
 }
 
-TEST_F(StellarFixture, SynchronizeStellarAccountWithMultisig) {
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet_2", "stellar", api::DynamicObject::newInstance());
+TEST_F(StellarSynchronization, SynchronizeStellarAccountWithMultisig) {
+
+    auto const currency = STELLAR;
+
+    registerCurrency(currency);
+
+    auto wallet = wait(walletStore->createWallet("my_wallet_2", currency.name, api::DynamicObject::newInstance()));
     auto info = ::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, accountInfoFromAddress("GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ"));
+
+    auto i = accountInfoFromAddress("GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ");
+    i.index = 0;
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(wait(wallet->newAccountWithInfo(i)));;
+
     auto exists = ::wait(account->exists());
     EXPECT_TRUE(exists);
     auto bus = account->synchronize();

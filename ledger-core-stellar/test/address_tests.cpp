@@ -31,6 +31,12 @@
 
 #include "StellarFixture.hpp"
 #include <stellar/StellarLikeAddress.hpp>
+#include <stellar/factories/StellarLikeWalletFactory.hpp>
+#include <integration/WalletFixture.hpp>
+
+struct StellarAddress : public WalletFixture<StellarLikeWalletFactory>, public StellarFixture {
+
+};
 
 static std::vector<std::string> pub_keys = {
         "a1083d11720853a2c476a07e29b64e0f9eb2ff894f1e485628faa7b63de77a4f",
@@ -48,7 +54,7 @@ static std::vector<std::string> invalid_addresses = {
         "OCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3"
 };
 
-TEST_F(StellarFixture, AddressFromPubKey) {
+TEST_F(StellarAddress, AddressFromPubKey) {
     for (auto i = 0; i < pub_keys.size(); i++) {
         StellarLikeAddress address(hex::toByteArray(pub_keys[i]), getCurrency(), Option<std::string>::NONE);
         std::cout << "Address: " << address.toString() << std::endl;
@@ -56,7 +62,7 @@ TEST_F(StellarFixture, AddressFromPubKey) {
     }
 }
 
-TEST_F(StellarFixture, AddressValidation) {
+TEST_F(StellarAddress, AddressValidation) {
     for (const auto& address : addresses) {
         EXPECT_TRUE(StellarLikeAddress::isValid(address, getCurrency()));
     }

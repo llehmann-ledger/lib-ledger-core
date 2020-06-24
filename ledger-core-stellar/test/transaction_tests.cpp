@@ -33,12 +33,22 @@
 #include <stellar/transaction_builders/StellarLikeTransactionBuilder.hpp>
 #include <stellar/StellarLikeCurrencies.hpp>
 #include <core/math/BigInt.hpp>
+#include <stellar/factories/StellarLikeWalletFactory.hpp>
+#include <integration/WalletFixture.hpp>
 
-TEST_F(StellarFixture, PaymentTransaction) {
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet", "stellar", api::DynamicObject::newInstance());
+struct StellarPayment : public WalletFixture<StellarLikeWalletFactory>, public StellarFixture {
+
+};
+
+
+TEST_F(StellarPayment, PaymentTransaction) {
+    auto const currency = STELLAR;
+    registerCurrency(currency);
+    auto wallet = wait(walletStore->createWallet("my_wallet", currency.name, api::DynamicObject::newInstance()));
     auto info = ::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, defaultAccount());
+    auto i = defaultAccount();
+    i.index = 0;
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(wait(wallet->newAccountWithInfo(i)));;
     auto bus = account->synchronize();
     bus->subscribe(dispatcher->getMainExecutionContext(),
                    make_receiver([=](const std::shared_ptr<api::Event> &event) {
@@ -75,13 +85,13 @@ TEST_F(StellarFixture, PaymentTransaction) {
     EXPECT_EQ(envelope.signatures.front().signature, signature);
 }
 
-TEST_F(StellarFixture, ParseRawTransaction) {
+TEST_F(StellarPayment, ParseRawTransaction) {
     auto strTx = "00000000a1083d11720853a2c476a07e29b64e0f9eb2ff894f1e485628faa7b63de77a4f0"
                  "0000064015dc2cc000000030000000000000000000000010000000000000001000000003a"
                  "83935fabfdc44749ad4d042dbc4df9b59442f325a27960519fba516adb8a5000000000000"
                  "00000000000000000000000000000";
 
-    auto tx = api::StellarLikeTransactionBuilder::parseRawTransaction(ledger::core::currencies::STELLAR, hex::toByteArray(strTx));
+    auto tx = api::StellarLikeTransactionBuilder::parseRawTransaction(ledger::core::currencies::stellar(), hex::toByteArray(strTx));
 
     EXPECT_EQ(tx->getSourceAccount()->toString(), "GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3");
     EXPECT_EQ(tx->getSourceAccountSequence()->compare(api::BigInt::fromLong(98448948301135875L)), 0);
@@ -90,14 +100,14 @@ TEST_F(StellarFixture, ParseRawTransaction) {
     EXPECT_EQ(hex::toString(tx->toRawTransaction()), strTx);
 }
 
-TEST_F(StellarFixture, ParseSignatureBase) {
+TEST_F(StellarPayment, ParseSignatureBase) {
     auto strTx = "7ac33997544e3175d266bd022439b22cdb16508c01163f26e5cb2a3e1045a9790000000200"
                  "000000a1083d11720853a2c476a07e29b64e0f9eb2ff894f1e485628faa7b63de77a4f0000"
                  "0064015dc2cc000000030000000000000000000000010000000000000001000000003a8393"
                  "5fabfdc44749ad4d042dbc4df9b59442f325a27960519fba516adb8a500000000000000000"
                  "0000000000000000";
 
-    auto tx = api::StellarLikeTransactionBuilder::parseSignatureBase(ledger::core::currencies::STELLAR, hex::toByteArray(strTx));
+    auto tx = api::StellarLikeTransactionBuilder::parseSignatureBase(ledger::core::currencies::stellar(), hex::toByteArray(strTx));
 
     EXPECT_EQ(tx->getSourceAccount()->toString(), "GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3");
     EXPECT_EQ(tx->getSourceAccountSequence()->compare(api::BigInt::fromLong(98448948301135875L)), 0);

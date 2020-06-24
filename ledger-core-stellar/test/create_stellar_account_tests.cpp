@@ -30,13 +30,24 @@
  */
 
 #include "StellarFixture.hpp"
+#include <stellar/factories/StellarLikeWalletFactory.hpp>
+#include <integration/WalletFixture.hpp>
 
-TEST_F(StellarFixture, CreateAccountWithPubKey) {
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet", "stellar", api::DynamicObject::newInstance());
+struct StellarAccount : public WalletFixture<StellarLikeWalletFactory>, public StellarFixture {
+
+};
+
+TEST_F(StellarAccount, CreateAccountWithPubKey) {
+
+    auto const currency = STELLAR;
+
+    registerCurrency(currency);
+
+    auto wallet = wait(walletStore->createWallet("my_wallet", currency.name, api::DynamicObject::newInstance()));
     auto info = ::wait(wallet->getNextAccountCreationInfo());
-    auto a = newAccount(wallet, 0, defaultAccount());
-    auto account = std::static_pointer_cast<AbstractAccount>(::wait(wallet->getAccount(0)));
+    auto i = defaultAccount();
+    i.index = 0;
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(wait(wallet->newAccountWithInfo(i)));;
     auto address = ::wait(account->getFreshPublicAddresses()).front()->toString();
     auto derivation = ::wait(account->getFreshPublicAddresses()).front()->getDerivationPath().value();
     EXPECT_EQ(address, "GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3");
