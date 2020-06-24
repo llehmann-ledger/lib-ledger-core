@@ -1,9 +1,8 @@
 /*
  *
- * StellarFixture.hpp
- * ledger-core
+ * StellarLikeCurrencies
  *
- * Created by Pierre Pollastri on 18/02/2019.
+ * Created by Léo Lehmann on 24/06/2020
  *
  * The MIT License (MIT)
  *
@@ -29,25 +28,22 @@
  *
  */
 
-#ifndef LEDGER_CORE_STELLARFIXTURE_HPP
-#define LEDGER_CORE_STELLARFIXTURE_HPP
+#pragma once
 
-#include <integration/BaseFixture.hpp>
-#include <stellar/StellarLikeWallet.hpp>
-#include <stellar/StellarLikeAccount.hpp>
-#include <stellar/StellarLikeOperation.hpp>
+#ifndef LIBCORE_EXPORT
+    #if defined(_MSC_VER)
+        #include <core/LibCoreExport.hpp>
+    #else
+        #define LIBCORE_EXPORT
+    #endif
+#endif
 
-class StellarFixture : public BaseFixture {
-public:
-    std::shared_ptr<Services> newPool(std::string poolName = "default_pool");
+#include <core/api/Currency.hpp>
 
-    api::AccountCreationInfo accountInfo(const std::string& pubKey) const;
-    api::AccountCreationInfo defaultAccount() const;
-    api::AccountCreationInfo emptyAccount() const;
-    api::AccountCreationInfo accountInfoFromAddress(const std::string& address) const;
-
-    api::Currency getCurrency() const;
-};
-
-
-#endif //LEDGER_CORE_STELLARFIXTURE_HPP
+namespace ledger {
+    namespace core {
+        namespace currencies {
+            api::Currency stellar();
+        }
+    }
+}

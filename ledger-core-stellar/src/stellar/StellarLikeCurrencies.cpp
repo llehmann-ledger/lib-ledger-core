@@ -1,13 +1,11 @@
 /*
+ * StellarLikeCurrencies
  *
- * StellarFixture.hpp
- * ledger-core
- *
- * Created by Pierre Pollastri on 18/02/2019.
+ * Created by Léo Lehmann on 24/06/2020.
  *
  * The MIT License (MIT)
  *
- * Copyright (c) 2019 Ledger
+ * Copyright (c) 2020 Ledger
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,25 +27,24 @@
  *
  */
 
-#ifndef LEDGER_CORE_STELLARFIXTURE_HPP
-#define LEDGER_CORE_STELLARFIXTURE_HPP
+#include <stellar/StellarLikeCurrencies.hpp>
+#include <stellar/StellarLikeCoinID.hpp>
+#include <core/wallet/CurrencyBuilder.hpp>
 
-#include <integration/BaseFixture.hpp>
-#include <stellar/StellarLikeWallet.hpp>
-#include <stellar/StellarLikeAccount.hpp>
-#include <stellar/StellarLikeOperation.hpp>
+namespace ledger {
+namespace core {
+namespace currencies {
 
-class StellarFixture : public BaseFixture {
-public:
-    std::shared_ptr<Services> newPool(std::string poolName = "default_pool");
+    api::Currency stellar() {
+        static api::Currency const CURRENCY = CurrencyBuilder("stellar")
+            .bip44(STELLAR_COIN_ID)
+            .paymentUri("stellar")
+            .unit("stroop", 0, "stroop")
+            .unit("XLM", 7, "XLM");
 
-    api::AccountCreationInfo accountInfo(const std::string& pubKey) const;
-    api::AccountCreationInfo defaultAccount() const;
-    api::AccountCreationInfo emptyAccount() const;
-    api::AccountCreationInfo accountInfoFromAddress(const std::string& address) const;
+        return CURRENCY;
+    }
 
-    api::Currency getCurrency() const;
-};
-
-
-#endif //LEDGER_CORE_STELLARFIXTURE_HPP
+}
+}
+}

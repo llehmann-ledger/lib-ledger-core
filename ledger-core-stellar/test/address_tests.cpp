@@ -30,7 +30,7 @@
  */
 
 #include "StellarFixture.hpp"
-#include <wallet/stellar/StellarLikeAddress.hpp>
+#include <stellar/StellarLikeAddress.hpp>
 
 static std::vector<std::string> pub_keys = {
         "a1083d11720853a2c476a07e29b64e0f9eb2ff894f1e485628faa7b63de77a4f",

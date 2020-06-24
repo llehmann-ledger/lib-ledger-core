@@ -67,8 +67,8 @@ api::AccountCreationInfo StellarFixture::accountInfoFromAddress(const std::strin
     return accountInfo(hex::toString(addr.toPublicKey()));
 }
 
-std::shared_ptr<WalletPool> StellarFixture::newPool(std::string poolName) {
-    return CoinIntegrationFixture::newPool(poolName);
+std::shared_ptr<Services> StellarFixture::newPool(std::string poolName) {
+    return BaseFixture::newDefaultServices();
 }
 
 api::Currency StellarFixture::getCurrency() const {

@@ -30,10 +30,10 @@
  */
 
 #include "StellarFixture.hpp"
-#include <wallet/common/OperationQuery.h>
-#include <math/BigInt.h>
-#include <api/StellarLikeMemo.hpp>
-#include <api/StellarLikeMemoType.hpp>
+#include <stellar/StellarLikeOperationQuery.hpp>
+#include <core/math/BigInt.hpp>
+#include <stellar/api/StellarLikeMemo.hpp>
+#include <stellar/api/StellarLikeMemoType.hpp>
 
 TEST_F(StellarFixture, SynchronizeStellarAccount) {
     auto pool = newPool();

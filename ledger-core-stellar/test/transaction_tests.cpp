@@ -30,9 +30,9 @@
  */
 
 #include "StellarFixture.hpp"
-#include <wallet/stellar/transaction_builders/StellarLikeTransactionBuilder.hpp>
-#include <wallet/currencies.hpp>
-#include <api_impl/BigIntImpl.hpp>
+#include <stellar/transaction_builders/StellarLikeTransactionBuilder.hpp>
+#include <stellar/StellarLikeCurrencies.hpp>
+#include <core/math/BigInt.hpp>
 
 TEST_F(StellarFixture, PaymentTransaction) {
     auto pool = newPool();

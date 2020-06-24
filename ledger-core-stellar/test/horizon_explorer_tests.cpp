@@ -30,9 +30,9 @@
  */
 
 #include "StellarFixture.hpp"
-#include <wallet/stellar/explorers/HorizonBlockchainExplorer.hpp>
-#include <collections/DynamicObject.hpp>
-#include <utils/DateUtils.hpp>
+#include <stellar/explorers/HorizonBlockchainExplorer.hpp>
+#include <core/collections/DynamicObject.hpp>
+#include <core/utils/DateUtils.hpp>
 
 static const auto BASE_URL = "https://horizon-testnet.stellar.org";
 static const auto MAINNET_URL = "https://horizon.stellar.org";

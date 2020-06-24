@@ -33,7 +33,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QDebug>
-#include "../integration/IntegrationEnvironment.h"
+#include <integration/IntegrationEnvironment.hpp>
 
 int main(int argc, char **argv) {
     IntegrationEnvironment::initInstance(argc, argv);

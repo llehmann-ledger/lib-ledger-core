@@ -30,10 +30,10 @@
  */
 
 #include "StellarFixture.hpp"
-#include <wallet/stellar/xdr/models.hpp>
-#include <wallet/stellar/xdr/XDREncoder.hpp>
-#include <wallet/stellar/xdr/XDRDecoder.hpp>
-#include <wallet/stellar/StellarLikeAddress.hpp>
+#include <stellar/xdr/models.hpp>
+#include <stellar/xdr/XDREncoder.hpp>
+#include <stellar/xdr/XDRDecoder.hpp>
+#include <stellar/StellarLikeAddress.hpp>
 #include <algorithm>
 
 using namespace ledger::core::stellar::xdr;

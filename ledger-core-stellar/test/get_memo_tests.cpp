@@ -30,10 +30,10 @@
  */
 
 #include "StellarFixture.hpp"
-#include <wallet/common/OperationQuery.h>
-#include <math/BigInt.h>
-#include <wallet/stellar/StellarLikeMemo.hpp>
-#include <api/StellarLikeMemoType.hpp>
+#include <stellar/StellarLikeOperationQuery.hpp>
+#include <core/math/BigInt.hpp>
+#include <stellar/StellarLikeMemo.hpp>
+#include <stellar/api/StellarLikeMemoType.hpp>
 
 using namespace ledger::core;
 
