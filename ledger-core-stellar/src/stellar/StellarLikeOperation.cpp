@@ -42,13 +42,13 @@
 namespace ledger {
     namespace core {
 
-        StellarLikeOperation::StellarLikeOperation(api::Currency const & currency
-            ) : _currency(currency) {
+        StellarLikeOperation::StellarLikeOperation(const std::shared_ptr<AbstractAccount>& account
+        ) : Operation(account) {
         }
 
-        StellarLikeOperation::StellarLikeOperation(api::Currency const & currency, 
+        StellarLikeOperation::StellarLikeOperation(const std::shared_ptr<AbstractAccount>& account,
             stellar::OperationWithParentTransaction const & operationWithTransaction
-            ) : _currency(currency) {
+            ) : Operation(account) {
                 setoperationWithTransaction(operationWithTransaction);
         }
 
@@ -72,7 +72,7 @@ namespace ledger {
             std::shared_ptr<api::Amount> sourceAmount;
             if (op.sourceAmount.nonEmpty()) {
                 sourceAmount = std::make_shared<Amount>(
-                        _currency, 0, op.sourceAmount.getValue());
+                        getCurrency(), 0, op.sourceAmount.getValue());
             }
             _record = api::StellarLikeOperationRecord(
                     op.id, op.transactionSuccessful, static_cast<api::StellarLikeOperationType>(op.type),
@@ -80,7 +80,7 @@ namespace ledger {
             );
 
             // Create the envelope object
-            _envelope.tx.sourceAccount = StellarLikeAddress(op.from, _currency, Option<std::string>::NONE).toXdrPublicKey();
+            _envelope.tx.sourceAccount = StellarLikeAddress(op.from, getCurrency(), Option<std::string>::NONE).toXdrPublicKey();
             _envelope.tx.seqNum = op.transactionSequence.toUint64();
             _envelope.tx.fee = op.transactionFee.toUnsignedInt();
             _envelope.tx.memo.type = stellar::xdr::MemoType::MEMO_NONE;
@@ -97,7 +97,7 @@ namespace ledger {
         }
 
         std::shared_ptr<api::StellarLikeTransaction> StellarLikeOperation::getTransaction() {
-           return std::make_shared<StellarLikeTransaction>(_currency, _envelope);
+           return std::make_shared<StellarLikeTransaction>(getCurrency(), _envelope);
         }
 
         void StellarLikeOperation::refreshUid(std::string const&) {

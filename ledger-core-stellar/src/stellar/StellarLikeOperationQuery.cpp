@@ -46,7 +46,7 @@ namespace ledger {
         std::shared_ptr<StellarLikeOperation> StellarLikeOperationQuery::createOperation(
             std::shared_ptr<AbstractAccount> &account
         ) {
-        	return std::make_shared<StellarLikeOperation>(account->getWallet()->getCurrency());
+            return std::make_shared<StellarLikeOperation>(account);
         }
 
         void StellarLikeOperationQuery::inflateCompleteTransaction(

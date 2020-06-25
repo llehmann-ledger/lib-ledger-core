@@ -45,9 +45,9 @@ namespace ledger {
 
             StellarLikeOperation() = default;
 
-            StellarLikeOperation(api::Currency const & currency);
+            StellarLikeOperation(const std::shared_ptr<AbstractAccount>& account);
 
-            StellarLikeOperation(api::Currency const & currency, stellar::OperationWithParentTransaction const & operationWithTransaction);
+            StellarLikeOperation(const std::shared_ptr<AbstractAccount>& account, stellar::OperationWithParentTransaction const & operationWithTransaction);
 
             void setoperationWithTransaction(stellar::OperationWithParentTransaction const & operationWithTransaction);
 
@@ -61,7 +61,6 @@ namespace ledger {
             stellar::OperationWithParentTransaction _operationWithTransaction;
             api::StellarLikeOperationRecord _record;
             stellar::xdr::TransactionEnvelope _envelope;
-            api::Currency _currency;
         };
     }
 }

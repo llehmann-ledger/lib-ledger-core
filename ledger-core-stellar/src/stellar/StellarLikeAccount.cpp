@@ -192,7 +192,7 @@ namespace ledger {
                 };
 
                 //Get operations related to an account
-                OperationDatabaseHelper::queryOperations(sql, uid, operations, filter);
+                OperationDatabaseHelper::queryOperations<StellarLikeOperation>(sql, uid, operations, filter);
 
                 auto lowerDate = startDate;
                 auto upperDate = DateUtils::incrementDate(startDate, precision);
@@ -262,7 +262,7 @@ namespace ledger {
         int StellarLikeAccount::putTransaction(soci::session &sql, const stellar::Transaction &tx) {
             int createdOperations = 0;
             StellarLikeTransactionDatabaseHelper::putTransaction(sql, getWallet()->getCurrency(), tx);
-            StellarLikeOperation operation(getWallet()->getCurrency());
+            StellarLikeOperation operation(shared_from_this());
             operation.accountUid = getAccountUid();
             operation.currencyName = getWallet()->getCurrency().name;
             operation.date = tx.createdAt;
@@ -293,7 +293,14 @@ namespace ledger {
                     stellarOperation.to = operation.recipients[0];
                 operation.setoperationWithTransaction({stellarOperation, tx});
                 operation.refreshUid();
-                OperationDatabaseHelper::putOperation(sql, operation);
+                auto insert = OperationDatabaseHelper::putOperation(sql, operation);
+                auto stellarOpId = StellarLikeTransactionDatabaseHelper::putOperation(sql, operation.accountUid, operation.currencyName, stellarOperation);
+                if (insert) {
+                    sql << "INSERT INTO stellar_account_operations VALUES(:uid, :op_uid)",
+                        soci::use(operation.uid),
+                        soci::use(stellarOpId)
+                    ;
+                }
                 createdOperations += 1;
             };
 
