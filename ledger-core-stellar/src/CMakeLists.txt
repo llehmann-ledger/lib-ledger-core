@@ -8,8 +8,8 @@ file(GLOB API_HEADER_FILES "${PROJECT_SOURCE_DIR}/inc/stellar/api/*.hpp")
 
 # Configure JNI target
 if (TARGET_JNI)
+    file(GLOB JNI_SRC_FILES "${PROJECT_SOURCE_DIR}/inc/stellar/jni/*.cpp")
     file(GLOB JNI_HEADER_FILES "${PROJECT_SOURCE_DIR}/inc/stellar/jni/*.hpp")
-    file(GLOB JNI_HEADER_FILES "${PROJECT_SOURCE_DIR}/inc/bitcoin/jni/*.hpp")
 
     list(APPEND API_HEADER_FILES ${JNI_HEADER_FILES})
 endif ()
