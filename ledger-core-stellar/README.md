@@ -23,7 +23,7 @@ From the root folder of this git repository, run the following commands:
   2. `./tools/lc project api stellar`: this will generate the Stellar API.
   3. `cd ledger-core-stellar`.
   4. `mkdir build && cd build`: creates a build directory if none exists yet.
-  5. `cmake -DCMAKE_BUILD_TYPE=Debug ..`: this will configure the project in debug mode.
+  5. `cmake -DBUILD_COINS=stellar -DCMAKE_BUILD_TYPE=Debug ..`: this will configure the stellar project in debug mode.
   6. `make -j8`:  builds with 8 threads.
 
 Once everything is compiled, you can start playing with the C++ library or generating foreign
