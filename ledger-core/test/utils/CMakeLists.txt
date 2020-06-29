@@ -8,6 +8,7 @@ endif (APPLE)
 add_executable(ledger-core-utils-tests
     main.cpp EndianTests.cpp HexTests.cpp DerivationPathTest.cpp OptionTest.cpp EitherTest.cpp
     LazyTest.cpp DateParserTests.cpp DerivationSchemeTests.cpp ConfigurationMatchableTests.cpp
+    json_test.cpp
 )
 
 target_link_libraries(ledger-core-utils-tests gtest gtest_main)
