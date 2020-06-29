@@ -1,6 +1,6 @@
 /*
  *
- * tezosNetworks
+ * stellarNetworks
  *
  * Created by El Khalil Bellakrid on 26/04/2019.
  *
