@@ -10,6 +10,6 @@ Address = interface +c {
     toString(): string;
 
     # Get the currency associated with this address.
-    getCurrency(): Currency;
+    const getCurrency(): Currency;
 }
 

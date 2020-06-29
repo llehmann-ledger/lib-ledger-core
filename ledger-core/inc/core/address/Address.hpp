@@ -40,8 +40,7 @@ namespace ledger {
         class Address : public api::Address, public std::enable_shared_from_this<Address> {
         public:
             explicit Address(const api::Currency& currency, const Option<std::string>& path);
-            api::Currency getCurrency() override;
-            api::Currency getCurrency() const;
+            api::Currency getCurrency() const override;
 
             optional<std::string> getDerivationPath() override;
 
