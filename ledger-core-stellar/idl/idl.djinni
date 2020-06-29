@@ -1,4 +1,5 @@
 @import "ledger-core/amount.djinni"
+@import "ledger-core/error.djinni"
 @import "addresses.djinni"
 
 StellarLikeOperationType = enum {
