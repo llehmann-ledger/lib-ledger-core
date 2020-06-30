@@ -39,8 +39,7 @@ namespace ledger {
     namespace core {
         class StellarLikeAccountDatabaseHelper {
         public:
-            StellarLikeAccountDatabaseHelper() = delete;
-
+ 
             static bool getAccount(soci::session& sql, const std::string& accountUid, stellar::Account& out);
             static void getAccountBalances(soci::session& sql, const std::string& accountUid, stellar::Account& out);
             static void putAccount(soci::session& sql, const std::string& walletUid, int32_t accountIndex, const stellar::Account& in);

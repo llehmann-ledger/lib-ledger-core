@@ -36,12 +36,32 @@
 #include <unordered_map>
 #include <core/math/BigInt.hpp>
 #include <chrono>
+#include <core/api/Account.hpp>
+#include <core/api/ErrorCodeCallback.hpp>
+#include <core/api/Services.hpp>
+#include <core/api/WalletStore.hpp>
+#include <stellar/api/Stellar.hpp>
 #include <stellar/xdr/models.hpp>
 #include <stellar/api/StellarLikeNetworkParameters.hpp>
 #include <stellar/api/StellarLikeAccountSigner.hpp>
 
 namespace ledger {
     namespace core {
+        struct Stellar : api::Stellar {
+            Stellar() = default;
+            ~Stellar() = default;
+
+            void registerInto(
+                std::shared_ptr<api::Services> const & services,
+                std::shared_ptr<api::WalletStore> const & walletStore,
+                std::shared_ptr<api::ErrorCodeCallback> const & callback
+            ) override;
+
+            std::shared_ptr<api::StellarLikeAccount> fromCoreAccount(const std::shared_ptr<api::Account> & coreAccount) override;
+
+            std::shared_ptr<api::StellarLikeOperation> fromCoreOperation(const std::shared_ptr<api::Operation> & coreOperation) override;
+        };
+
         namespace stellar {
 
             using XDRData = std::vector<uint8_t>;

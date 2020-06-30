@@ -31,9 +31,44 @@
 
 #include <stellar/stellar.hpp>
 #include <stellar/StellarLikeAddress.hpp>
+#include <stellar/factories/StellarLikeWalletFactory.hpp>
+#include <core/wallet/WalletStore.hpp>
+#include <core/Services.hpp>
+#include <stellar/StellarLikeCurrencies.hpp>
+#include <stellar/StellarLikeAccount.hpp>
 
 namespace ledger {
     namespace core {
+
+        std::shared_ptr<api::Stellar> api::Stellar::newInstance() {
+            return std::make_shared<ledger::core::Stellar>();
+        }
+
+        void Stellar::registerInto(
+            std::shared_ptr<api::Services> const & services,
+            std::shared_ptr<api::WalletStore> const & walletStore,
+            std::shared_ptr<api::ErrorCodeCallback> const & callback
+        ) {
+            auto currency = currencies::stellar();
+            auto s = std::dynamic_pointer_cast<ledger::core::Services>(services);
+            auto ws = std::dynamic_pointer_cast<ledger::core::WalletStore>(walletStore);
+            auto walletFactory = std::make_shared<StellarLikeWalletFactory>(currency, s);
+
+            ws->addCurrency(currency)
+                .template map<api::ErrorCode>(s->getDispatcher()->getMainExecutionContext(), [=] (Unit const & unit) {
+                    ws->registerFactory(currency, walletFactory);
+                    return api::ErrorCode::FUTURE_WAS_SUCCESSFULL;
+                }).callback(s->getDispatcher()->getMainExecutionContext(), callback);
+        }
+
+        std::shared_ptr<api::StellarLikeAccount> Stellar::fromCoreAccount(const std::shared_ptr<api::Account> & coreAccount) {
+            return std::dynamic_pointer_cast<ledger::core::StellarLikeAccount>(coreAccount);
+        }
+
+        std::shared_ptr<api::StellarLikeOperation> Stellar::fromCoreOperation(const std::shared_ptr<api::Operation> & coreOperation) {
+            return std::dynamic_pointer_cast<ledger::core::StellarLikeOperation>(coreOperation);
+        }
+
         namespace stellar {
 
             static const std::string kAssetTypeNative("native");

@@ -39,7 +39,6 @@ namespace ledger {
     namespace core {
         class StellarLikeAssetDatabaseHelper {
         public:
-            StellarLikeAssetDatabaseHelper() = delete;
 
             static std::string createAssetUid(const std::string& type, const Option<std::string>& code, const Option<std::string>&issuer);
             static std::string createAssetUid(const stellar::Asset& asset);

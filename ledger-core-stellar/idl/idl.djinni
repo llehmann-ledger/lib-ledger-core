@@ -1,6 +1,24 @@
 @import "ledger-core/amount.djinni"
 @import "ledger-core/error.djinni"
+@import "ledger-core/callback.djinni"
+@import "ledger-core/wallet_store.djinni"
+
 @import "addresses.djinni"
+
+# The Tezos currency.
+Stellar = interface +c {
+  static newInstance(): Stellar;
+
+  # Register the currency into a wallet store and associated services.
+  registerInto(services: Services, walletStore: WalletStore, callback: Callback<ErrorCode>);
+
+  # Turn an Account into a StellarLikeAccount.
+  fromCoreAccount(coreAccount: Account): optional<StellarLikeAccount>;
+
+  # Turn an Operation into a StellarLikeOperation.
+  fromCoreOperation(coreOperation: Operation): optional<StellarLikeOperation>;
+}
+
 
 StellarLikeOperationType = enum {
     CREATE_ACCOUNT; PAYMENT; PATH_PAYMENT; MANAGE_OFFER; CREATE_PASSIVE_OFFER; SET_OPTIONS;
