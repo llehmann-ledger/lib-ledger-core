@@ -108,6 +108,9 @@ namespace ledger {
 
             std::string getRestoreKey() override;
 
+            static RippleLikeBlockchainExplorerTransaction getXRPLikeBlockchainExplorerTxFromRawTx(const std::shared_ptr<RippleLikeAccount> &account,
+                                                                                                     const std::string &txHash,
+                                                                                                     const std::vector<uint8_t> &rawTx);
             void broadcastRawTransaction(const std::vector<uint8_t> &transaction,
                                          const std::shared_ptr<api::StringCallback> &callback) override;
 
