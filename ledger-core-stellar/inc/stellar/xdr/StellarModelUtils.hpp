@@ -1,8 +1,9 @@
 /*
  *
- * StellarMigrations
+ * StellarModelUtils.hpp
+ * ledger-core
  *
- * Created by Léo Lehmann on 23/06/2020.
+ * Created by Pierre Pollastri on 05/07/2020.
  *
  * The MIT License (MIT)
  *
@@ -28,26 +29,17 @@
  *
  */
 
-#pragma once
+#ifndef LEDGER_CORE_STELLARMODELUTILS_HPP
+#define LEDGER_CORE_STELLARMODELUTILS_HPP
 
-#include <core/api/DatabaseBackendType.hpp>
-#include <core/database/Migrations.hpp>
+#include <stellar/xdr/models.hpp>
 
-#include <stellar/StellarLikeCoinID.hpp>
+namespace ledger { namespace core { namespace stellar { namespace xdr {
 
-namespace ledger {
-    namespace core {
-        /// Tag type.
-        struct StellarMigration {
-          static int constexpr COIN_ID = STELLAR_COIN_ID;
-          static uint32_t constexpr CURRENT_VERSION = 2;
-        };
+    const std::list<xdr::Operation>& getOperations(const xdr::TransactionEnvelope& envelope);
+    TransactionEnvelope wrap(const xdr::TransactionV0Envelope& envelope);
+    TransactionEnvelope wrap(const xdr::TransactionV1Envelope& envelope);
 
-        // migrations
-        template <> void migrate<1, StellarMigration>(soci::session& sql, api::DatabaseBackendType type);
-        template <> void rollback<1, StellarMigration>(soci::session& sql, api::DatabaseBackendType type);
+} } } }
 
-        template <> void migrate<2, StellarMigration>(soci::session& sql, api::DatabaseBackendType type);
-        template <> void rollback<2, StellarMigration>(soci::session& sql, api::DatabaseBackendType type);
-  }
-}
+#endif //LEDGER_CORE_STELLARMODELUTILS_HPP

@@ -60,7 +60,7 @@ namespace ledger {
         private:
             stellar::OperationWithParentTransaction _operationWithTransaction;
             api::StellarLikeOperationRecord _record;
-            stellar::xdr::TransactionEnvelope _envelope;
+            stellar::xdr::TransactionV1Envelope _envelope;
         };
     }
 }

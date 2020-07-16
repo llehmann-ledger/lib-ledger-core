@@ -35,6 +35,7 @@
 #include <core/utils/Hex.hpp>
 #include <core/utils/Exception.hpp>
 #include <core/math/BigInt.hpp>
+#include <core/math/BaseConverter.hpp>
 
 namespace ledger {
     namespace core {
@@ -124,7 +125,8 @@ namespace ledger {
                 memo.type = type == "return" ?
                         stellar::xdr::MemoType::MEMO_RETURN : stellar::xdr::MemoType::MEMO_HASH;
                 stellar::xdr::Hash hash;
-                auto hashVector = hex::toByteArray(content);
+                std::vector<uint8_t> hashVector;
+                BaseConverter::decode(content, BaseConverter::BASE64_RFC4648, hashVector);
                 if (hashVector.size() == hash.max_size()) {
                     std::copy(hashVector.begin(), hashVector.end(), hash.begin());
                     memo.content = hash;

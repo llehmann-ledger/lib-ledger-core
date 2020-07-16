@@ -36,6 +36,7 @@
 #include <core/wallet/AbstractAccount.hpp>
 #include <stellar/xdr/models.hpp>
 #include <stellar/StellarLikeMemo.hpp>
+#include <stellar/xdr/StellarModelUtils.hpp>
 
 #include <core/operation/OperationDatabaseHelper.hpp>
 
@@ -80,7 +81,7 @@ namespace ledger {
             );
 
             // Create the envelope object
-            _envelope.tx.sourceAccount = StellarLikeAddress(op.from, getCurrency(), Option<std::string>::NONE).toXdrPublicKey();
+            _envelope.tx.sourceAccount = StellarLikeAddress(op.from, getCurrency(), Option<std::string>::NONE).toXdrMuxedAccount();
             _envelope.tx.seqNum = op.transactionSequence.toUint64();
             _envelope.tx.fee = op.transactionFee.toUnsignedInt();
             _envelope.tx.memo.type = stellar::xdr::MemoType::MEMO_NONE;
@@ -97,7 +98,8 @@ namespace ledger {
         }
 
         std::shared_ptr<api::StellarLikeTransaction> StellarLikeOperation::getTransaction() {
-           return std::make_shared<StellarLikeTransaction>(getCurrency(), _envelope);
+           auto wrapped = stellar::xdr::wrap(_envelope);
+           return std::make_shared<StellarLikeTransaction>(getCurrency(), wrapped);
         }
 
         void StellarLikeOperation::refreshUid(std::string const&) {

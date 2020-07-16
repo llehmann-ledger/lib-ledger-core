@@ -43,6 +43,7 @@ namespace ledger {
         public:
             StellarLikeAddress( const std::vector<uint8_t>& pubKey,
                                 const api::Currency& currency,
+                                const Option<uint64_t>& memoId,
                                 const Option<std::string>& path);
             StellarLikeAddress( const std::string& address,
                                 const api::Currency& currency,
@@ -53,12 +54,18 @@ namespace ledger {
             static bool isValid(const std::string& address, const api::Currency& currency);
 
             static std::string convertPubkeyToAddress(  const std::vector<uint8_t>& pubKey,
+                                                        const Option<uint64_t>& memoId,
                                                         const api::StellarLikeNetworkParameters& params);
 
             static std::string convertXdrAccountToAddress(const stellar::xdr::AccountID& accountId,
                                                           const api::StellarLikeNetworkParameters& params);
+
+            static std::string convertMuxedAccountToAddress(const stellar::xdr::MuxedAccount& account,
+                                                            const api::StellarLikeNetworkParameters& params);
+
             std::vector<uint8_t> toPublicKey() const;
             stellar::xdr::PublicKey toXdrPublicKey() const;
+            stellar::xdr::MuxedAccount toXdrMuxedAccount() const;
 
         private:
             std::string _address;

@@ -49,7 +49,7 @@ static ledger::core::api::Currency STELLAR =
         .unit("lumen", 7, "XLM");
 
 static ledger::core::api::StellarLikeNetworkParameters STELLAR_PARAMS {
-    "xlm", {6 << 3}, 5000000, 100, {}, "Public Global Stellar Network ; September 2015"
+    "xlm", {6 << 3},  {12 << 3}, 5000000, 100, {}, "Public Global Stellar Network ; September 2015"
 };
 
 class StellarFixture {

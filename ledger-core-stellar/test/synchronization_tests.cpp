@@ -270,3 +270,53 @@ TEST_F(StellarSynchronization, SynchronizeStellarAccountWithMultisig) {
     EXPECT_EQ(signer_2->type, "ed25519_public_key");
     EXPECT_EQ(signer_2->weight, 10);
 }
+
+// Synchronize an account with protocol 13 upgrade object
+TEST_F(StellarSynchronization, SynchronizeProtocol13) {
+    // GBV4NH4G5SWYM6OQJKZKG2PA2O2VQ2W6K5S43WLMLJRWU4XTG5EST5QP
+
+    auto const currency = STELLAR;
+
+    registerCurrency(currency);
+
+
+    auto wallet = wait(walletStore->createWallet("my_wallet_proto_13", currency.name, api::DynamicObject::newInstance()));
+    auto info = ::wait(wallet->getNextAccountCreationInfo());
+
+    auto i = accountInfoFromAddress("GBSEXVEU2WBBLIUCWIWFDPV5I4HLBSOWRNJVKLNXZFVNITFPKQIVO3YI");
+    i.index = 0;
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(wait(wallet->newAccountWithInfo(i)));;
+
+    auto exists = ::wait(account->exists());
+    EXPECT_TRUE(exists);
+    auto bus = account->synchronize();
+    bus->subscribe(dispatcher->getMainExecutionContext(),
+                   make_receiver([=](const std::shared_ptr<api::Event> &event) {
+                       fmt::print("Received event {}\n", api::to_string(event->getCode()));
+                       if (event->getCode() == api::EventCode::SYNCHRONIZATION_STARTED)
+                           return;
+                       EXPECT_NE(event->getCode(), api::EventCode::SYNCHRONIZATION_FAILED);
+                       EXPECT_EQ(event->getCode(),
+                                 api::EventCode::SYNCHRONIZATION_SUCCEED);
+                       dispatcher->stop();
+                   }));
+    EXPECT_EQ(bus, account->synchronize());
+    dispatcher->waitUntilStopped();
+    auto balance = ::wait(account->getBalance());
+    auto address = ::wait(account->getFreshPublicAddresses()).front();
+    auto operations = ::wait(std::dynamic_pointer_cast<StellarLikeOperationQuery>(account->queryOperations()->complete())->execute());
+    EXPECT_GT(balance->toLong(), 0);
+    EXPECT_TRUE(operations.size() >= 11);
+
+    // Fetch the first send operation
+    for (const auto& op: operations) {
+        const auto &sop = std::dynamic_pointer_cast<StellarLikeOperation>(op);
+        fmt::print("{} {} {}\n", api::to_string(op->getOperationType()), op->getAmount()->toString(), sop->getRecord().transactionHash);
+        if (op->getOperationType() == api::OperationType::SEND) {
+            ASSERT_EQ(sop->getTransaction()->getSourceAccount()->toString(), address->toString());
+            ASSERT_TRUE(sop->getTransaction()->getFee()->toLong() > 0);
+            auto sequence = std::dynamic_pointer_cast<BigInt>(sop->getTransaction()->getSourceAccountSequence());
+            ASSERT_TRUE(*sequence > BigInt::ZERO);
+        }
+    }
+}
