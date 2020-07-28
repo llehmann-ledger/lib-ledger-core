@@ -320,12 +320,12 @@ namespace ledger {
                     OperationVariant content;
                 };
 
-                // TransactionV0 is a transaction with the AccountID discriminant stripped off,
-                // leaving a raw ed25519 public key to identify the source account. This is used
-                // for backwards compatibility starting from the protocol 12/13 boundary. If an
-                // "old-style" TransactionEnvelope containing a Transaction is parsed with this
-                // XDR definition, it will be parsed as a "new-style" TransactionEnvelope
-                // containing a TransactionV0.
+                /// TransactionV0 is a transaction with the AccountID discriminant stripped off,
+                /// leaving a raw ed25519 public key to identify the source account. This is used
+                /// for backwards compatibility starting from the protocol 12/13 boundary. If an
+                /// "old-style" TransactionEnvelope containing a Transaction is parsed with this
+                /// XDR definition, it will be parsed as a "new-style" TransactionEnvelope
+                /// containing a TransactionV0.
                 struct TransactionV0 {
                     uint256 sourceAccountEd25519;
                     uint32_t  fee;
