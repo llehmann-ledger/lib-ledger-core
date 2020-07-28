@@ -347,7 +347,7 @@ namespace ledger {
                 {
                     /// account used to run the transaction
                     MuxedAccount sourceAccount;
-                    // the fee the sourceAccount will pay
+                    /// the fee the sourceAccount will pay
                     uint32_t fee;
                     // sequence number to consume in the account
                     SequenceNumber seqNum;
