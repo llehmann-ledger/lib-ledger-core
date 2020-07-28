@@ -351,7 +351,7 @@ namespace ledger {
                     uint32_t fee;
                     /// sequence number to consume in the account
                     SequenceNumber seqNum;
-                    // validity range (inclusive) for the last ledger close time
+                    /// validity range (inclusive) for the last ledger close time
                     Option<TimeBounds> timeBounds;
                     Memo memo;
                     std::list<Operation> operations;
