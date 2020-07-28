@@ -382,7 +382,7 @@ namespace ledger {
                     std::list<DecoratedSignature> signatures;
                 };
 
-                // Transaction envelope structure V1
+                /// Transaction envelope structure V1
                 struct TransactionV1Envelope {
                     Transaction tx;
                     /* Each decorated signature is a signature over the SHA256 hash of
