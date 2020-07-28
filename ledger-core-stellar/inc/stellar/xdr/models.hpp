@@ -396,7 +396,7 @@ namespace ledger {
                     std::list<Operation> operations;
                 };
 
-                // Transaction envelope structure for FeeBumpTransactions
+                /// Transaction envelope structure for FeeBumpTransactions
                 struct FeeBumpTransactionEnvelope {
                     FeeBumpTransaction tx;
                     /* Each decorated signature is a signature over the SHA256 hash of
