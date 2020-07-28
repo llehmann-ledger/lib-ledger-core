@@ -366,7 +366,7 @@ namespace ledger {
                     Signature signature; // actual signature
                 };
 
-                // Transaction envelope type enum
+                /// Transaction envelope type enum
                 enum class EnvelopeType : uint32_t
                 {
                     ENVELOPE_TYPE_TX_V0 = 0,
