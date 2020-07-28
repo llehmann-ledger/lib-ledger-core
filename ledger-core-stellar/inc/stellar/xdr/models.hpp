@@ -337,12 +337,12 @@ namespace ledger {
                     TransactionV0() : fee(0), seqNum(0) {};
                 };
 
-                //a transaction is a container for a set of operations
-                // - is executed by an account
-                // - fees are collected from the account
-                // - operations are executed in order as one ACID transaction
-                //   either all operations are applied or none are
-                //   if any returns a failing code
+                ///a transaction is a container for a set of operations
+                /// - is executed by an account
+                /// - fees are collected from the account
+                /// - operations are executed in order as one ACID transaction
+                ///   either all operations are applied or none are
+                ///   if any returns a failing code
                 struct Transaction
                 {
                     // account used to run the transaction
