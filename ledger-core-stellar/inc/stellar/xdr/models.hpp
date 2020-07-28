@@ -345,7 +345,7 @@ namespace ledger {
                 ///   if any returns a failing code
                 struct Transaction
                 {
-                    // account used to run the transaction
+                    /// account used to run the transaction
                     MuxedAccount sourceAccount;
                     // the fee the sourceAccount will pay
                     uint32_t fee;
