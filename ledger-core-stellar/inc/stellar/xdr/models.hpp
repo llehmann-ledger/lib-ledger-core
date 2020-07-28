@@ -374,7 +374,7 @@ namespace ledger {
                     ENVELOPE_TYPE_TX_FEE_BUMP = 54
                 };
 
-                // Transaction envelope structure V0
+                /// Transaction envelope structure V0
                 struct TransactionV0Envelope {
                     TransactionV0 tx;
                     /* Each decorated signature is a signature over the SHA256 hash of
