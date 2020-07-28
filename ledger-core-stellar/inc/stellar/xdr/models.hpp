@@ -407,7 +407,7 @@ namespace ledger {
                 using TransactionEnvelopeVariant = boost::variant<
                         TransactionV0Envelope, TransactionV1Envelope, FeeBumpTransactionEnvelope>;
 
-                // A TransactionEnvelope wraps a transaction with signatures.
+                /// A TransactionEnvelope wraps a transaction with signatures.
                 struct TransactionEnvelope {
                     EnvelopeType type;
                     TransactionEnvelopeVariant content;
