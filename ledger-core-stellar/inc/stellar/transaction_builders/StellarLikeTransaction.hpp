@@ -57,7 +57,7 @@ namespace ledger {
 
             std::vector<uint8_t> toSignatureBase() override;
 
-            const stellar::xdr::TransactionEnvelope& envelope() const { return _envelope; };
+            const stellar::xdr::TransactionEnvelope& envelope() const { return _envelope; }
 
             std::shared_ptr<api::StellarLikeMemo> getMemo() override;
 

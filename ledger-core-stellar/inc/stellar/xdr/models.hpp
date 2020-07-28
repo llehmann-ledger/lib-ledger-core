@@ -191,16 +191,16 @@ namespace ledger {
                 // Result: PathPaymentStrictReceiveResult
                 struct PathPaymentStrictReceiveOp
                 {
-                    Asset sendAsset;            // asset we pay with
-                    int64_t sendMax;            // the maximum amount of sendAsset to
-                                                // send (excluding fees).
-                                                // The operation will fail if can't be met
+                    Asset sendAsset;            ///< asset we pay with
+                    int64_t sendMax;            ///< the maximum amount of sendAsset to
+                                                ///< send (excluding fees).
+                                                ///< The operation will fail if can't be met
 
-                    MuxedAccount destination;   // recipient of the payment
-                    Asset destAsset;            // what they end up with
-                    int64_t destAmount;         // amount they end up with
+                    MuxedAccount destination;   ///< recipient of the payment
+                    Asset destAsset;            ///< what they end up with
+                    int64_t destAmount;         ///< amount they end up with
 
-                    std::vector<Asset> path; // additional hops it must go through to get there
+                    std::vector<Asset> path;    ///< additional hops it must go through to get there
                 };
 
                 /* PathPaymentStrictSend
@@ -213,15 +213,15 @@ namespace ledger {
                 */
                 struct PathPaymentStrictSendOp
                 {
-                    Asset sendAsset;            // asset we pay with
-                    int64_t sendAmount;         // amount of sendAsset to send (excluding fees)
+                    Asset sendAsset;            ///< asset we pay with
+                    int64_t sendAmount;         ///< amount of sendAsset to send (excluding fees)
 
-                    MuxedAccount destination;   // recipient of the payment
-                    Asset destAsset;            // what they end up with
-                    int64_t destMin;            // the minimum amount of dest asset to
-                                                // be received
+                    MuxedAccount destination;   ///< recipient of the payment
+                    Asset destAsset;            ///< what they end up with
+                    int64_t destMin;            ///< the minimum amount of dest asset to
+                                                ///< be received
                     // The operation will fail if it can't be met
-                    std::vector<Asset> path; // additional hops it must go through to get there
+                    std::vector<Asset> path;    ///< additional hops it must go through to get there
                 };
 
                 struct ManageSellOfferOp

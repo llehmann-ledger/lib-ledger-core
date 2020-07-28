@@ -29,8 +29,7 @@
  *
  */
 
-#ifndef LEDGER_CORE_STELLARMODELUTILS_HPP
-#define LEDGER_CORE_STELLARMODELUTILS_HPP
+#pragma once
 
 #include <stellar/xdr/models.hpp>
 
@@ -41,5 +40,3 @@ namespace ledger { namespace core { namespace stellar { namespace xdr {
     TransactionEnvelope wrap(const xdr::TransactionV1Envelope& envelope);
 
 } } } }
-
-#endif //LEDGER_CORE_STELLARMODELUTILS_HPP

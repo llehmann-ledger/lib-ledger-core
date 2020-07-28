@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
 
-# set(CMAKE_INCLUDE_CURRENT_DIR ON)
-# set(ANDROID_CPP_FEATURES exceptions)
-
 # Automatically add API files to the library
 file(GLOB API_HEADER_FILES "${PROJECT_SOURCE_DIR}/inc/stellar/api/*.hpp")
 
