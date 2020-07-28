@@ -349,7 +349,7 @@ namespace ledger {
                     MuxedAccount sourceAccount;
                     /// the fee the sourceAccount will pay
                     uint32_t fee;
-                    // sequence number to consume in the account
+                    /// sequence number to consume in the account
                     SequenceNumber seqNum;
                     // validity range (inclusive) for the last ledger close time
                     Option<TimeBounds> timeBounds;
