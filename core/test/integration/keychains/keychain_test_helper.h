@@ -122,11 +122,7 @@ template <class Keychain>
 class KeychainFixture : public BaseFixture {
 public:
     void testKeychain(const KeychainTestData &data, std::function<void (Keychain&)> f) {
-        auto backend = std::make_shared<ledger::core::PreferencesBackend>(
-                fmt::format("/preferences/{}/tests.db", uuid::generate_uuid_v4()),
-                dispatcher->getMainExecutionContext(),
-                resolver
-        );
+        auto backend = std::make_shared<ledger::core::test::MemPreferencesBackend>();
         auto configuration = std::make_shared<DynamicObject>();
         dispatcher->getMainExecutionContext()->execute(ledger::core::make_runnable([=]() {
             Keychain keychain(

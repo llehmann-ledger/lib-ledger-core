@@ -44,11 +44,7 @@ using namespace std;
 class EthereumKeychains : public BaseFixture {
 public:
     void testEthKeychain(const KeychainTestData &data, std::function<void (EthereumLikeKeychain&)> f) {
-        auto backend = std::make_shared<ledger::core::PreferencesBackend>(
-                fmt::format("/preferences/{}/tests.db", uuid::generate_uuid_v4()),
-                dispatcher->getMainExecutionContext(),
-                resolver
-        );
+        auto backend = std::make_shared<ledger::core::test::MemPreferencesBackend>();
         auto configuration = std::make_shared<DynamicObject>();
         dispatcher->getMainExecutionContext()->execute(ledger::core::make_runnable([=]() {
             EthereumLikeKeychain keychain(

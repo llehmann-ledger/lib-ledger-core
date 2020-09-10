@@ -613,8 +613,8 @@ TEST_F(BitcoinLikeWalletSynchronization, SynchronizeOnFakeExplorer) {
         rng,
         backend,
         api::DynamicObject::newInstance(),
-        nullptr,
-        nullptr
+        std::make_shared<MemPreferencesBackend>(),
+        std::make_shared<MemPreferencesBackend>()
     );
     {
         auto wallet = uv::wait(pool->createWallet("e847815f-488a-4301-b67c-378a5e9c8a62", "bitcoin",

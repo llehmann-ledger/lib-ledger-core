@@ -68,8 +68,8 @@ TEST_F(RippleLikeOptimisticTransactionUpdate, BroadcastTransaction)
         rng,
         backend,
         api::DynamicObject::newInstance(),
-        nullptr,
-        nullptr);
+        std::make_shared<MemPreferencesBackend>(),
+        std::make_shared<MemPreferencesBackend>());
     {
         auto configuration = DynamicObject::newInstance();
         configuration->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME,

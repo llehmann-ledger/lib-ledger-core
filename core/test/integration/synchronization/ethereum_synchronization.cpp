@@ -388,8 +388,8 @@ TEST_F(EthereumLikeWalletSynchronization, ReorgLastBlock) {
             rng,
             backend,
             api::DynamicObject::newInstance(),
-            nullptr,
-            nullptr
+            std::make_shared<MemPreferencesBackend>(),
+            std::make_shared<MemPreferencesBackend>()
         );
         {
             auto configuration = DynamicObject::newInstance();

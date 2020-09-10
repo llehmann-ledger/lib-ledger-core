@@ -12,10 +12,14 @@ TEST_F(DispatcherStopTest, InifiniteRunningTest)
         // Happens really often when there are networks errors for instance.
     });
 
-    getTestExecutionContext()->delay(
+    dispatcher->getSerialExecutionContext("toto")->delay(
     LambdaRunnable::make([&]() {
         receiver->onEvent(nullptr);
     }),1);
-
+    dispatcher->getSerialExecutionContext("tata")->delay(
+    LambdaRunnable::make([&]() {
+        dispatcher->stop();
+        FAIL() << "Timeout";
+    }), 10000);
     dispatcher->waitUntilStopped();
 }

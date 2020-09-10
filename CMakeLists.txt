@@ -31,11 +31,7 @@ add_definitions("-DSQLITE_HAS_CODEC")
 # To compile with PostgreSQL support
 if (PG_SUPPORT)
     add_definitions("-DPG_SUPPORT")
-elseif(RAM_DATABASE)
-# To compile with in memory SQLite database support
-    add_definitions("-DRAM_DATABASE")
 endif()
-
 # To add SSL support
 if (SSL_SUPPORT)
     add_definitions("-DSSL_SUPPORT")

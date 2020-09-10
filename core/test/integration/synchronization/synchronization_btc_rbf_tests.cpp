@@ -69,8 +69,8 @@ struct BitcoinLikeWalletBtcRbfSynchronization : public BaseFixture {
                 rng,
                 backend,
                 api::DynamicObject::newInstance(),
-                nullptr,
-                nullptr
+                std::make_shared<MemPreferencesBackend>(),
+                std::make_shared<MemPreferencesBackend>()
         );
     }
 

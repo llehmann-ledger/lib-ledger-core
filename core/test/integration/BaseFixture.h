@@ -67,6 +67,7 @@
 #include <OpenSSLRandomNumberGenerator.hpp>
 #include <utils/FilesystemUtils.hpp>
 #include <events/EventPublisher.hpp>
+#include <MemPreferencesBackend.hpp>
 
 using namespace ledger::core; // Only do that for testing
 using namespace ledger::core::test;

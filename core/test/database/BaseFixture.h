@@ -60,6 +60,7 @@
 #include <api/Account.hpp>
 #include <api/BitcoinLikeAccount.hpp>
 #include <Uuid.hpp>
+#include <MemPreferencesBackend.hpp>
 
 using namespace ledger::core; // Only do that for testing
 using namespace ledger::core::test;

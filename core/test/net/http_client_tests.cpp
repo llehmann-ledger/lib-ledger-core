@@ -72,7 +72,7 @@ TEST(HttpClient, GET) {
 
         server->start(8000);
 
-        worker->execute(::make_runnable([&http, dispatcher, &server] () {
+        worker->delay(::make_runnable([&http, dispatcher, &server] () {
             http.GET("/say/hello/toto/please")().foreach(dispatcher->getMainExecutionContext(),
                                                             [dispatcher, &server] (const std::shared_ptr<api::HttpUrlConnection> connection) {
                 auto body = connection->readBody();
@@ -85,8 +85,13 @@ TEST(HttpClient, GET) {
                     dispatcher->stop();
                 }), 0);
             });
-        }));
-        WAIT_AND_TIMEOUT(dispatcher, 10000)
+        }), 100);
+        dispatcher->getSerialExecutionContext("toto")->delay(::make_runnable([dispatcher, server]() {
+            dispatcher->stop();
+            server->stop();
+            FAIL() << "Timeout";
+        }), 10000);
+        dispatcher->waitUntilStopped();
     }
 }
 
@@ -94,7 +99,7 @@ TEST(HttpClient, GETJson) {
     auto dispatcher = std::make_shared<NativeThreadDispatcher>();
     auto client = std::make_shared<MongooseHttpClient>(dispatcher->getSerialExecutionContext("client"));
     auto worker = dispatcher->getSerialExecutionContext("worker");
-    ledger::core::HttpClient http("http://127.0.0.1:8000", client, worker);
+    ledger::core::HttpClient http("http://127.0.0.1:8001", client, worker);
     {
         auto server = std::make_shared<MongooseSimpleRestServer>(dispatcher->getSerialExecutionContext("server"));
 
@@ -102,9 +107,9 @@ TEST(HttpClient, GETJson) {
             return {200, "OK", "{\"the_answer\": 42}"};
         });
 
-        server->start(8000);
+        server->start(8001);
 
-        worker->execute(::make_runnable([&http, dispatcher, &server] () {
+        worker->delay(::make_runnable([&http, dispatcher, &server] () {
                 http
                     .GET("/talk/to/me/in/json")
                     .json()
@@ -118,8 +123,13 @@ TEST(HttpClient, GETJson) {
                             dispatcher->stop();
                         }), 0);
             });
-        }));
-        WAIT_AND_TIMEOUT(dispatcher, 10000);
+        }), 100);
+        dispatcher->getSerialExecutionContext("toto")->delay(::make_runnable([dispatcher, server]() {
+            dispatcher->stop();
+            server->stop();
+            FAIL() << "Timeout";
+        }), 10000);
+        dispatcher->waitUntilStopped();
     }
 }
 
@@ -127,7 +137,7 @@ TEST(HttpClient, GETJsonError) {
     auto dispatcher = std::make_shared<NativeThreadDispatcher>();
     auto client = std::make_shared<MongooseHttpClient>(dispatcher->getSerialExecutionContext("client"));
     auto worker = dispatcher->getSerialExecutionContext("worker");
-    ledger::core::HttpClient http("http://127.0.0.1:8000", client, worker);
+    ledger::core::HttpClient http("http://127.0.0.1:8002", client, worker);
     {
         auto server = std::make_shared<MongooseSimpleRestServer>(dispatcher->getSerialExecutionContext("server"));
 
@@ -135,9 +145,9 @@ TEST(HttpClient, GETJsonError) {
             return {301, "Moved Permanently", "{\"not_here\": true}"};
         });
 
-        server->start(8000);
+        server->start(8002);
 
-        worker->execute(::make_runnable([&http, dispatcher, &server] () {
+        worker->delay(::make_runnable([&http, dispatcher, &server] () {
             http
                     .GET("/knock/knock/neo")
                     .json()
@@ -152,8 +162,13 @@ TEST(HttpClient, GETJsonError) {
                             dispatcher->stop();
                         }), 0);
                     });
-        }));
-        WAIT_AND_TIMEOUT(dispatcher, 10000)
+        }), 100);
+        dispatcher->getSerialExecutionContext("toto")->delay(::make_runnable([dispatcher, server]() {
+            dispatcher->stop();
+            server->stop();
+            FAIL() << "Timeout";
+        }), 10000);
+        dispatcher->waitUntilStopped();
     }
 }
 
@@ -161,7 +176,7 @@ TEST(HttpClient, POST) {
     auto dispatcher = std::make_shared<NativeThreadDispatcher>();
     auto client = std::make_shared<MongooseHttpClient>(dispatcher->getSerialExecutionContext("client"));
     auto worker = dispatcher->getSerialExecutionContext("worker");
-    ledger::core::HttpClient http("http://127.0.0.1:8000", client, worker);
+    ledger::core::HttpClient http("http://127.0.0.1:8003", client, worker);
     {
         auto server = std::make_shared<MongooseSimpleRestServer>(dispatcher->getSerialExecutionContext("server"));
 
@@ -170,10 +185,10 @@ TEST(HttpClient, POST) {
             return {200, "OK", result};
         });
 
-        server->start(8000);
+        server->start(8003);
 
 
-        worker->execute(::make_runnable([&http, dispatcher, &server] () {
+        worker->delay(::make_runnable([&http, dispatcher, &server] () {
             std::vector<uint8_t> body((uint8_t *)BIG_TEXT.c_str(), (uint8_t *)(BIG_TEXT.c_str() + BIG_TEXT.size()));
             http.POST("/next/century/postal/service", body)().foreach(dispatcher->getMainExecutionContext(),
                                                             [dispatcher, &server] (const std::shared_ptr<api::HttpUrlConnection> connection) {
@@ -186,9 +201,14 @@ TEST(HttpClient, POST) {
                     dispatcher->stop();
                 }), 0);
             });
-        }));
+        }), 100);
 
-        WAIT_AND_TIMEOUT(dispatcher, 10000)
+        dispatcher->getSerialExecutionContext("toto")->delay(::make_runnable([dispatcher, server]() {
+            dispatcher->stop();
+            server->stop();
+            FAIL() << "Timeout";
+        }), 10000);
+        dispatcher->waitUntilStopped();
     }
 }
 
@@ -237,7 +257,7 @@ TEST(HttpClient, DISABLED_GETWithSax) {
     auto dispatcher = std::make_shared<NativeThreadDispatcher>();
     auto client = std::make_shared<MongooseHttpClient>(dispatcher->getSerialExecutionContext("client"));
     auto worker = dispatcher->getSerialExecutionContext("worker");
-    ledger::core::HttpClient http("http://127.0.0.1:8000", client, worker);
+    ledger::core::HttpClient http("http://127.0.0.1:8004", client, worker);
     {
         auto server = std::make_shared<MongooseSimpleRestServer>(dispatcher->getSerialExecutionContext("server"));
 
@@ -245,9 +265,9 @@ TEST(HttpClient, DISABLED_GETWithSax) {
             return {200, "OK", "{\"the_answer\": 42}"};
         });
 
-        server->start(8000);
+        server->start(8004);
 
-        worker->execute(::make_runnable([&http, dispatcher, &server] () {
+        worker->delay(::make_runnable([&http, dispatcher, &server] () {
             http
                     .GET("/talk/to/me/in/json")
                     .json<Success, Failure>(Handler())
@@ -259,8 +279,13 @@ TEST(HttpClient, DISABLED_GETWithSax) {
                             dispatcher->stop();
                         }), 0);
                     });
-        }));
-        WAIT_AND_TIMEOUT(dispatcher, 10000);
+        }), 100);
+        dispatcher->getSerialExecutionContext("toto")->delay(::make_runnable([dispatcher, server]() {
+            dispatcher->stop();
+            server->stop();
+            FAIL() << "Timeout";
+        }), 10000);
+        dispatcher->waitUntilStopped();
     }
 }
 
@@ -317,7 +342,7 @@ TEST(HttpClient, DISABLED_GETWithSaxError) {
     auto dispatcher = std::make_shared<NativeThreadDispatcher>();
     auto client = std::make_shared<MongooseHttpClient>(dispatcher->getSerialExecutionContext("client"));
     auto worker = dispatcher->getSerialExecutionContext("worker");
-    ledger::core::HttpClient http("http://127.0.0.1:8000", client, worker);
+    ledger::core::HttpClient http("http://127.0.0.1:8005", client, worker);
     {
         auto server = std::make_shared<MongooseSimpleRestServer>(dispatcher->getSerialExecutionContext("server"));
 
@@ -325,9 +350,9 @@ TEST(HttpClient, DISABLED_GETWithSaxError) {
             return {301, "Moved Permanently", "{\"not_here\": true}"};
         });
 
-        server->start(8000);
+        server->start(8005);
 
-        worker->execute(::make_runnable([&http, dispatcher, &server] () {
+        worker->delay(::make_runnable([&http, dispatcher, &server] () {
             http
                     .GET("/knock/knock/neo")
                     .json<Success, Failure>(Handler())
@@ -339,7 +364,12 @@ TEST(HttpClient, DISABLED_GETWithSaxError) {
                             dispatcher->stop();
                         }), 0);
                     });
-        }));
-        WAIT_AND_TIMEOUT(dispatcher, 10000);
+        }), 100);
+        dispatcher->getSerialExecutionContext("toto")->delay(::make_runnable([dispatcher, server]() {
+            dispatcher->stop();
+            server->stop();
+            FAIL() << "Timeout";
+        }), 10000);
+        dispatcher->waitUntilStopped();
     }
 }

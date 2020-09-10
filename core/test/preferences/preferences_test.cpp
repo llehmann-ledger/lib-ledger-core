@@ -39,6 +39,8 @@
 #include <NativePathResolver.hpp>
 #include <fstream>
 #include <OpenSSLRandomNumberGenerator.hpp>
+#include <Uuid.hpp>
+#include <fmt/format.h>
 
 class PreferencesTest : public ::testing::Test {
 protected:
@@ -46,6 +48,10 @@ protected:
     std::shared_ptr<NativeThreadDispatcher> dispatcher;
     std::shared_ptr<ledger::core::api::Lock> preferencesLock;
     std::shared_ptr<ledger::core::PreferencesBackend> backend;
+
+    void SetUp() override {
+        usleep(100000);
+    }
 
     void TearDown() override {
         backend->clear();
@@ -57,7 +63,7 @@ public:
         , dispatcher(std::make_shared<NativeThreadDispatcher>())
         , preferencesLock(dispatcher->newLock())
         , backend(std::make_shared<ledger::core::PreferencesBackend>(
-                    "/preferences/tests.db",
+                    fmt::format("/preferences/{}/tests.db", uuid::generate_uuid_v4()),
                     dispatcher->getSerialExecutionContext("worker"),
                     resolver
           )) {
@@ -65,7 +71,7 @@ public:
 };
 
 TEST_F(PreferencesTest, StoreAndGetWithPreferencesAPI) {
-    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, "my_test_preferences");
+    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, uuid::generate_uuid_v4());
 
     dispatcher->getSerialExecutionContext("not_my_worker")->execute(make_runnable([=] () {
         preferences->edit()
@@ -112,7 +118,7 @@ TEST_F(PreferencesTest, StoreAndGetWithPreferencesAPI) {
 }
 
 TEST_F(PreferencesTest, EncryptDecrypt) {
-    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, "encrypt_decrypt");
+    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, uuid::generate_uuid_v4());
     auto rng = std::make_shared<OpenSSLRandomNumberGenerator>();
     auto password = std::string("v3ry_secr3t_p4sSw0rD");
     auto string_array = std::vector<std::string>{ "foo", "bar", "zoo" };
@@ -178,7 +184,7 @@ TEST_F(PreferencesTest, EncryptDecrypt) {
 
 // This test checks that we can completely unset encryption to go back to a plaintext mode.
 TEST_F(PreferencesTest, ResetEncryption) {
-    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, "reset_encryption");
+    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, uuid::generate_uuid_v4());
     auto rng = std::make_shared<OpenSSLRandomNumberGenerator>();
     auto password = std::string("v3ry_secr3t_p4sSw0rD");
 
@@ -199,7 +205,7 @@ TEST_F(PreferencesTest, ResetEncryption) {
 }
 
 TEST_F(PreferencesTest, UnsetEncryption) {
-    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, "my_test_preferences_reencrypted2");
+    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, uuid::generate_uuid_v4());
     auto rng = std::make_shared<OpenSSLRandomNumberGenerator>();
     auto password = std::string("v3ry_secr3t_p4sSw0rD");
 
@@ -225,7 +231,7 @@ TEST_F(PreferencesTest, UnsetEncryption) {
 }
 
 TEST_F(PreferencesTest, Clear) {
-    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, "clear");
+    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, uuid::generate_uuid_v4());
 
     preferences->editor()->putString("string", "dawg")->commit();
     EXPECT_EQ(preferences->getString("string", ""), "dawg");
@@ -237,7 +243,7 @@ TEST_F(PreferencesTest, Clear) {
 // This test checks that when setting encryption on, already present values are encrypted as well
 // so that we can correctly retrieve them after encryption is set.
 TEST_F(PreferencesTest, RecryptClearValues) {
-    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, "recrypt_clear_values");
+    auto preferences = std::make_shared<ledger::core::Preferences>(*backend, uuid::generate_uuid_v4());
     auto rng = std::make_shared<OpenSSLRandomNumberGenerator>();
     auto password = std::string("v3ry_secr3t_p4sSw0rD");
 

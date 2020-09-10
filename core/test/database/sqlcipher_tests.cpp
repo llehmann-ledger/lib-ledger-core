@@ -40,11 +40,7 @@ using namespace ledger::core;
 class SQLCipherTest : public BaseFixture {
 };
 
-#ifdef RAM_DATABASE
 TEST_F(SQLCipherTest, DISABLED_SanityCheck) { // No persistence when using in-memory database
-#else
-TEST_F(SQLCipherTest, SanityCheck) {
-#endif
     auto dbName = "test_db_" + uuid::generate_uuid_v4();
     auto password = "test_key";
     auto newPassword = "test_key_new";
@@ -103,11 +99,7 @@ TEST_F(SQLCipherTest, SanityCheck) {
 // TODO: remove this check after we migrate to VS2017 and provide /Zc:__cplusplus option
 // https://devblogs.microsoft.com/cppblog/msvc-now-correctly-reports-__cplusplus/
 #if __cplusplus >= 201103L
-#ifdef RAM_DATABASE
 TEST_F(SQLCipherTest, DISABLED_ThrowIfWrongPassword) { // No password when using in-memory database
-#else
-TEST_F(SQLCipherTest, ThrowIfWrongPassword) {
-#endif
     auto dbName = "test_db2_" + uuid::generate_uuid_v4();
     auto password = "test_key";
     auto newPassword = "test_key_new";
@@ -140,11 +132,7 @@ TEST_F(SQLCipherTest, ThrowIfWrongPassword) {
 }
 #endif
 
-#if defined(_WIN32) || defined(RAM_DATABASE)
-TEST_F(SQLCipherTest, DISABLED_DisableEncryption) { //The "Remove encryption" doesn't work in windows
-#else
-TEST_F(SQLCipherTest, DisableEncryption) {
-#endif
+TEST_F(SQLCipherTest, DISABLED_DisableEncryption) { //The "Remove encryption" doesn't work in windows, and not allowed when using in-memory database
     auto dbName = "test_db_" + uuid::generate_uuid_v4();
     auto password = "test_key";
     auto newPassword = "test_key_new";

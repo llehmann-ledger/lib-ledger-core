@@ -74,8 +74,8 @@ std::shared_ptr<WalletPool> BaseFixture::newDefaultPool(std::string poolName) {
             nullptr,
             backend,
             api::DynamicObject::newInstance(),
-            nullptr,
-            nullptr
+            std::make_shared<MemPreferencesBackend>(),
+            std::make_shared<MemPreferencesBackend>()
     );
 }
 

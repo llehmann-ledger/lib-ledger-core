@@ -175,7 +175,7 @@ sqlite3_session_backend::sqlite3_session_backend(
         }
     }
 
-#ifdef RAM_DATABASE
+#ifdef BUILD_TESTS
     connection_flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_URI | SQLITE_OPEN_SHAREDCACHE;
     int res = sqlite3_open_v2(("file:" + dbname + "?mode=memory").c_str(), &conn_, connection_flags, NULL);
 #else
@@ -185,7 +185,7 @@ sqlite3_session_backend::sqlite3_session_backend(
     post_connection(dbname, connection_flags, timeout, synchronous);
 
 // Encryption not supported when using in-memory database
-#ifndef RAM_DATABASE
+#ifndef BUILD_TESTS
     //Set password
     if (!passKey.empty() || !newPassKey.empty())
     {

@@ -17,7 +17,8 @@ add_library(ledger-test STATIC
             HttpClientOnFakeExplorer.hpp HttpClientOnFakeExplorer.cpp
             UvThreadDispatcher.hpp UvThreadDispatcher.cpp
             CppHttpLibClient.hpp CppHttpLibClient.cpp
-            ProxyHttpClient.hpp ProxyHttpClient.cpp)
+            ProxyHttpClient.hpp ProxyHttpClient.cpp
+            MemPreferencesBackend.hpp MemPreferencesBackend.cpp)
 if (SYS_OPENSSL)
     include_directories(${CMAKE_BINARY_DIR}/include ${OPENSSL_INCLUDE_DIR})
 else()
