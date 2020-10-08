@@ -39,7 +39,26 @@
             mkdir libcore-build
             cd libcore-build
             cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DBUILD_TESTS=ON ../libcore
+            echo $(nproc)
             make -j$(nproc)
+
+        - name: Run tests
+          run: ctest --timeout 240 -VV
+
+        - name: Generate coverage
+          run: |
+            lcov -q --directory core/src/ \
+            --base-directory ../libcore/core/src/ \
+            --no-external \
+            --capture \
+            -o lcov.info
+            genhtml --ignore-errors \
+            source lcov.info \
+            --title "Libcore: Unit Test Coverage" \
+            --frames \
+            --show-details \
+            --keep-descriptions \
+            --output-directory=lcov_html_report
 
         - name : Upload artifact
           uses: actions/upload-artifact@v2
@@ -48,3 +67,4 @@
             path: |
               core/src/libledger-core.so
               core/src/libledger-core-static.a
+              lcov_html_report
