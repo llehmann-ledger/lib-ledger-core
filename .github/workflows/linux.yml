@@ -42,6 +42,7 @@
 
         - name: Run tests
           run: ctest --timeout 240 -VV
+          working-directory: libcore-build
 
         - name: Generate coverage
           run: |
@@ -64,7 +65,6 @@
           with:
             name: linux-artifact
             path: |
-              core/src/libledger-core.so
-              core/src/libledger-core-static.a
-              lcov_html_report
-            working-directory: libcore-build
+              libcore-build/core/src/libledger-core.so
+              libcore-build/core/src/libledger-core-static.a
+              libcore-build/lcov_html_report

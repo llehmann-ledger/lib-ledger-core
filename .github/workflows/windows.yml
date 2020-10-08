@@ -1,0 +1,29 @@
+  name: Windows workflow
+
+  on:
+    push:
+      branches:
+        - develop
+    pull_request:
+      branches:
+        - develop
+
+  jobs:
+    build-linux:
+      runs-on: windows-latest
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+          with:
+            path: libcore
+            submodules: true
+
+        - name: Install Qt
+          uses: jurplel/install-qt-action@v2
+
+        - name: Build libcore
+          run: |
+            mkdir libcore-build
+            cd libcore-build
+            cmake  -DBUILD_TESTS=ON ../libcore && cmake --build . --config Debug -- /m:%NUMBER_OF_PROCESSORS%
