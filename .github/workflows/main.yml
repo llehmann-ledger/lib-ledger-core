@@ -1,0 +1,49 @@
+  name: Build libcore
+
+  on:
+    push:
+      branches:
+        - develop
+    pull_request:
+      branches:
+        - develop
+
+  jobs:
+
+    build-linux:
+      runs-on: ubuntu-20.04
+
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+          with:
+            path: libcore
+
+        - name: Install dependencies
+          run: |
+            sudo apt-get install -qqy \
+            build-essential \
+            git \
+            lcov \
+            gcovr \
+            qtbase5-dev \
+            libqt5websockets5-dev \
+            openssl \
+            libssl-dev \
+            cmake \
+            wget
+
+        - name: Build libcore
+          run: |
+            mkdir libcore-build
+            cd libcore-build
+            cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DBUILD_TESTS=ON ../libcore
+            make -j$(nproc)
+
+        - name : Upload artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: linux-artifact
+            path: |
+              core/src/libledger-core.so
+              core/src/libledger-core-static.a
