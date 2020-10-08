@@ -9,7 +9,7 @@
         - develop
 
   jobs:
-    build-linux:
+    build-windows:
       runs-on: windows-latest
 
       steps:
