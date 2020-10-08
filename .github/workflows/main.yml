@@ -18,6 +18,7 @@
           uses: actions/checkout@v2
           with:
             path: libcore
+            submodules: true
 
         - name: Install dependencies
           run: |
