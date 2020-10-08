@@ -1,4 +1,4 @@
-  name: Build libcore
+  name: Linux workflow
 
   on:
     push:
@@ -9,7 +9,6 @@
         - develop
 
   jobs:
-
     build-linux:
       runs-on: ubuntu-20.04
 
@@ -39,7 +38,6 @@
             mkdir libcore-build
             cd libcore-build
             cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DBUILD_TESTS=ON ../libcore
-            echo $(nproc)
             make -j$(nproc)
 
         - name: Run tests
