@@ -26,5 +26,5 @@
           run: |
             mkdir libcore-build
             cd libcore-build
-            set CORE_COUNT=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
-            cmake  -DBUILD_TESTS=ON ../libcore && cmake --build . --config Debug -- /m:%CORE_COUNT%
+            $CORE_COUNT=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
+            cmake  -DBUILD_TESTS=ON ../libcore && cmake --build . --config Debug -- /m:$CORE_COUNT
