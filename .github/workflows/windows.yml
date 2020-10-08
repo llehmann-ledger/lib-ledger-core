@@ -39,6 +39,4 @@
           with:
             name: linux-artifact
             path: |
-              libcore-build/core/src/libledger-core.so
-              libcore-build/core/src/libledger-core-static.a
-              libcore-build/lcov_html_report
+              libcore-build
