@@ -57,6 +57,7 @@
             --show-details \
             --keep-descriptions \
             --output-directory=lcov_html_report
+          working-directory: libcore-build
 
         - name : Upload artifact
           uses: actions/upload-artifact@v2
@@ -66,3 +67,4 @@
               core/src/libledger-core.so
               core/src/libledger-core-static.a
               lcov_html_report
+            working-directory: libcore-build
