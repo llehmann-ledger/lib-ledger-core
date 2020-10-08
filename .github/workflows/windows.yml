@@ -26,4 +26,5 @@
           run: |
             mkdir libcore-build
             cd libcore-build
-            cmake  -DBUILD_TESTS=ON ../libcore && cmake --build . --config Debug -- /m:(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
+            echo (Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
+            cmake  -DBUILD_TESTS=ON ../libcore && cmake --build . --config Debug -- /m:
