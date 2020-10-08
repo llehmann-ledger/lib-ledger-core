@@ -28,3 +28,17 @@
             cd libcore-build
             $CORE_COUNT=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
             cmake  -DBUILD_TESTS=ON ../libcore && cmake --build . --config Debug -- /m:$CORE_COUNT
+
+        - name: Run tests
+          run: ctest --timeout 240 -VV
+          continue-on-error: true
+          working-directory: libcore-build
+
+        - name : Upload artifact
+          uses: actions/upload-artifact@v2
+          with:
+            name: linux-artifact
+            path: |
+              libcore-build/core/src/libledger-core.so
+              libcore-build/core/src/libledger-core-static.a
+              libcore-build/lcov_html_report

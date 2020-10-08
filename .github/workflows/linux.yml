@@ -42,6 +42,7 @@
 
         - name: Run tests
           run: ctest --timeout 240 -VV
+          continue-on-error: true
           working-directory: libcore-build
 
         - name: Generate coverage
