@@ -17,6 +17,10 @@
             echo "Cleaning up previous run"
             rm -rf "${{ github.workspace }}/build"
 
+    build:
+      needs: prepare
+      runs-on: ubuntu-20.04
+      steps:
         - name: Install dependencies
           run: |
             sudo apt-get install -qqy \
@@ -31,10 +35,6 @@
             cmake \
             wget
 
-    build:
-      needs: prepare
-      runs-on: ubuntu-20.04
-      steps:
         - name: Checkout code
           uses: actions/checkout@v2
           with:

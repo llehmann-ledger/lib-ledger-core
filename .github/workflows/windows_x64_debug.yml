@@ -16,6 +16,7 @@
           run: |
             echo "Cleaning up previous run"
             Remove-Item -LiteralPath "${{ github.workspace }}/build" -Force -Recurse
+          continue-on-error: true
 
     build:
       needs: prepare
