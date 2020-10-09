@@ -19,15 +19,12 @@
             path: libcore
             submodules: true
 
-        - name: Install Qt
-          uses: jurplel/install-qt-action@v2
-
         - name: Build libcore
           run: |
             mkdir libcore-build
             cd libcore-build
             $CORE_COUNT=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
-            cmake  -DBUILD_TESTS=ON ../libcore && cmake --build . --config Debug -- /m:$CORE_COUNT
+            cmake  -DBUILD_TESTS=ON ../libcore -and cmake --build . --config Debug -- /m:$CORE_COUNT
 
         - name: Run tests
           run: ctest --timeout 240 -VV
