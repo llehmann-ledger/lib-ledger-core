@@ -1,4 +1,4 @@
-  name: Linux workflow
+  name: Linux (Debug)
 
   on:
     push:
@@ -12,16 +12,11 @@
     prepare:
       runs-on: ubuntu-20.04
       steps:
-        - 
-          name: Clean workspace
+        - name: Clean workspace
           run: |
             echo "Cleaning up previous run"
-            rm -rf "${{ github.workspace }}/libcore-build"
+            rm -rf "${{ github.workspace }}/build"
 
-    build:
-      needs: prepare
-      runs-on: ubuntu-20.04
-      steps:
         - name: Install dependencies
           run: |
             sudo apt-get install -qqy \
@@ -36,58 +31,70 @@
             cmake \
             wget
 
-        - name: Checkout repository
+    build:
+      needs: prepare
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Checkout code
           uses: actions/checkout@v2
           with:
             path: libcore
             clean: true
             submodules: true
 
-        - name: Build libcore
+        - name: Build - Cmake
           run: |
-            mkdir libcore-build
-            cd libcore-build
+            mkdir build
+            cd build
             cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DBUILD_TESTS=ON ../libcore
-            make -j$(nproc)
 
-        - name: Run tests
+        - name: Build - Make
+          run: |
+            make -j$(nproc)
+          working-directory: build
+
+        - name : Upload build files
+          uses: actions/upload-artifact@v2
+          with:
+            name: linux-build-files
+            path: |
+              build/core/src/libledger-core-static.a
+              build/core/src/libledger-core.so
+
+    test:
+      needs: build
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Run Unit Tests
           run: ctest --timeout 240 -VV
           continue-on-error: true
-          working-directory: libcore-build
+          working-directory: build
 
-        - name: Generate coverage
+    coverage:
+      needs: test
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Get raw coverage
           run: |
             lcov -q --directory core/src/ \
             --base-directory ../libcore/core/src/ \
             --no-external \
             --capture \
             -o lcov.info
+
+        - name: Generate coverage HTML report
+          run: |
             genhtml --ignore-errors \
             source lcov.info \
-            --title "Libcore: Unit Test Coverage" \
+            --title "Libcore: Unit Test Coverage (Linux, Debug)" \
             --frames \
             --show-details \
             --keep-descriptions \
             --output-directory=lcov_html_report
-          working-directory: libcore-build
-
-        - name : Upload shared library
-          uses: actions/upload-artifact@v2
-          with:
-            name: libledger-core.so
-            path: |
-              libcore-build/core/src/libledger-core.so
-
-        - name : Upload static library
-          uses: actions/upload-artifact@v2
-          with:
-            name: libledger-core-static.a
-            path: |
-              libcore-build/core/src/libledger-core-static.a
 
         - name : Upload coverage report
           uses: actions/upload-artifact@v2
           with:
-            name: lcov_html_report
+            name: coverage_report
             path: |
-              libcore-build/lcov_html_report
+              ./lcov_html_report
