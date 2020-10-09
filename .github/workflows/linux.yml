@@ -1,4 +1,4 @@
-  name: Linux workflow
+  name: Linux (Debug)
 
   on:
     push:

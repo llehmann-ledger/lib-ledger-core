@@ -1,4 +1,5 @@
-  name: Windows workflow
+  name: Windows x64 (Debug)
+
   on:
     push:
       branches:
