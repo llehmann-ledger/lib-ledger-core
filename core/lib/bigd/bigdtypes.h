@@ -33,7 +33,7 @@ You can override by defining HAVE_C99INCLUDES or HAVE_SYS_TYPES.
 #ifndef EXACT_INTS_DEFINED_
 #define EXACT_INTS_DEFINED_ 1
 #ifndef HAVE_C99INCLUDES
-	#if (__STDC_VERSION >= 199901L) || defined(linux) || defined(__linux__) || defined(__APPLE__)
+	#if (__STDC_VERSION__ >= 199901L) || defined(linux) || defined(__linux__) || defined(__APPLE__) || defined(__cplusplus) 
 	#define HAVE_C99INCLUDES
 	#endif
 #endif
