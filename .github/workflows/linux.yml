@@ -1,0 +1,100 @@
+  name: Linux (Debug)
+
+  on:
+    push:
+      branches:
+        - develop
+    pull_request:
+      branches:
+        - develop
+
+  jobs:
+    prepare:
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Clean workspace
+          run: |
+            echo "Cleaning up previous run"
+            rm -rf "${{ github.workspace }}/build"
+
+        - name: Install dependencies
+          run: |
+            sudo apt-get install -qqy \
+            build-essential \
+            git \
+            lcov \
+            gcovr \
+            qtbase5-dev \
+            libqt5websockets5-dev \
+            openssl \
+            libssl-dev \
+            cmake \
+            wget
+
+    build:
+      needs: prepare
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+          with:
+            path: libcore
+            clean: true
+            submodules: true
+
+        - name: Build - Cmake
+          run: |
+            mkdir build
+            cd build
+            cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DBUILD_TESTS=ON ../libcore
+
+        - name: Build - Make
+          run: |
+            make -j$(nproc)
+          working-directory: build
+
+        - name : Upload build files
+          uses: actions/upload-artifact@v2
+          with:
+            name: linux-build-files
+            path: |
+              build/core/src/libledger-core-static.a
+              build/core/src/libledger-core.so
+
+    test:
+      needs: build
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Run Unit Tests
+          run: ctest --timeout 240 -VV
+          continue-on-error: true
+          working-directory: build
+
+    coverage:
+      needs: test
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Get raw coverage
+          run: |
+            lcov -q --directory core/src/ \
+            --base-directory ../libcore/core/src/ \
+            --no-external \
+            --capture \
+            -o lcov.info
+
+        - name: Generate coverage HTML report
+          run: |
+            genhtml --ignore-errors \
+            source lcov.info \
+            --title "Libcore: Unit Test Coverage (Linux, Debug)" \
+            --frames \
+            --show-details \
+            --keep-descriptions \
+            --output-directory=lcov_html_report
+
+        - name : Upload coverage report
+          uses: actions/upload-artifact@v2
+          with:
+            name: coverage_report
+            path: |
+              ./lcov_html_report

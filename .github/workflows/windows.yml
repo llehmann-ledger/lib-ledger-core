@@ -1,0 +1,58 @@
+  name: Windows x64 (Debug)
+
+  on:
+    push:
+      branches:
+        - develop
+    pull_request:
+      branches:
+        - develop
+
+  jobs:
+    prepare:
+      runs-on: [self-hosted, windows]
+      steps:
+        - name: Clean workspace
+          run: |
+            echo "Cleaning up previous run"
+            Remove-Item -LiteralPath "${{ github.workspace }}/build" -Force -Recurse
+
+    build:
+      needs: prepare
+      runs-on: [self-hosted, windows]
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+          with:
+            path: libcore
+            clean: true
+            submodules: true
+
+        - name: Build - Cmake
+          run: |
+            mkdir build
+            cd build
+            cmake  -DBUILD_TESTS=ON ../libcore
+
+        - name: Build - Make
+          run: |          
+            cmake --build . --config Debug -- /m:1
+          working-directory: build
+
+        - name : Upload build files
+          uses: actions/upload-artifact@v2
+          with:
+            name: windows-build-files
+            path: |
+              build/core/src/build/Debug/ledger-core.dll
+              build/core/src/build/Debug/ledger-core.pdb
+
+    test:
+      needs: build
+      runs-on: [self-hosted, windows]
+      steps: 
+        - name: Run Unit Tests
+          run: |
+            ctest --timeout 240 -VV
+          continue-on-error: true
+          working-directory: build
