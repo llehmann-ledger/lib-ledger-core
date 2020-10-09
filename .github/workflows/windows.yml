@@ -16,7 +16,7 @@
           name: Clean workspace
           run: |
             echo "Cleaning up previous run"
-            Get-ChildItem -Path "${{ github.workspace }}" -Include * -File -Recurse | foreach { $_.Delete()}
+            Get-ChildItem -Path "${{ github.workspace }}/libcore-build" -Include * -File -Recurse | foreach { $_.Delete()}
 
     build:
       needs: prepare

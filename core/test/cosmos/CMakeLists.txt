@@ -38,5 +38,5 @@ target_include_directories(${COSMOS_TESTS_NAME} PUBLIC ../../../core/lib/leveldb
 include(CopyAndInstallImportedTargets)
 copy_install_imported_targets(${COSMOS_TESTS_NAME} crypto)
 
-include(GoogleTest)
-gtest_discover_tests(${COSMOS_TESTS_NAME})
+add_test (NAME ledger-core-cosmos-tests COMMAND ledger-core-cosmos-tests)
+
