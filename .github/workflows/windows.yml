@@ -9,14 +9,24 @@
         - develop
 
   jobs:
-    build-windows:
+    prepare:
       runs-on: [self-hosted, windows]
+      steps:
+        - 
+          name: Clean workspace
+          run: |
+            echo "Cleaning up previous run"
+            Get-ChildItem -Path "${{ github.workspace }}" -Include * -File -Recurse | foreach { $_.Delete()}
 
+    build:
+      needs: prepare
+      runs-on: [self-hosted, windows]
       steps:
         - name: Checkout
           uses: actions/checkout@v2
           with:
             path: libcore
+            clean: true
             submodules: true
 
         - name: Build libcore
@@ -26,15 +36,3 @@
             $CORE_COUNT=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
             cmake  -DBUILD_TESTS=ON ../libcore
             cmake --build . --config Debug -- /m:$CORE_COUNT
-
-        - name: Run tests
-          run: ctest --timeout 240 -VV
-          continue-on-error: true
-          working-directory: libcore-build
-
-        - name : Upload artifact
-          uses: actions/upload-artifact@v2
-          with:
-            name: linux-artifact
-            path: |
-              libcore-build

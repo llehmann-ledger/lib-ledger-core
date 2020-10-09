@@ -9,16 +9,19 @@
         - develop
 
   jobs:
-    build-linux:
+    prepare:
       runs-on: ubuntu-20.04
-
       steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-          with:
-            path: libcore
-            submodules: true
+        - 
+          name: Clean workspace
+          run: |
+            echo "Cleaning up previous run"
+            rm -rf "${{ github.workspace }}"
 
+    build:
+      needs: prepare
+      runs-on: ubuntu-20.04
+      steps:
         - name: Install dependencies
           run: |
             sudo apt-get install -qqy \
@@ -32,6 +35,13 @@
             libssl-dev \
             cmake \
             wget
+
+        - name: Checkout repository
+          uses: actions/checkout@v2
+          with:
+            path: libcore
+            clean: true
+            submodules: true
 
         - name: Build libcore
           run: |
@@ -61,11 +71,23 @@
             --output-directory=lcov_html_report
           working-directory: libcore-build
 
-        - name : Upload artifact
+        - name : Upload shared library
           uses: actions/upload-artifact@v2
           with:
-            name: linux-artifact
+            name: libledger-core.so
             path: |
               libcore-build/core/src/libledger-core.so
+
+        - name : Upload static library
+          uses: actions/upload-artifact@v2
+          with:
+            name: libledger-core-static.a
+            path: |
               libcore-build/core/src/libledger-core-static.a
+
+        - name : Upload coverage report
+          uses: actions/upload-artifact@v2
+          with:
+            name: lcov_html_report
+            path: |
               libcore-build/lcov_html_report
