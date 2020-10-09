@@ -37,6 +37,7 @@
         - name: Build - Make
           run: |          
             cmake --build . --config Debug -- /m:1
+          working-directory: build
 
         - name : Upload build files
           uses: actions/upload-artifact@v2
