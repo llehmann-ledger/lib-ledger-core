@@ -10,7 +10,7 @@
 
   jobs:
     build-windows:
-      runs-on: windows-latest
+      runs-on: [self-hosted, windows]
 
       steps:
         - name: Checkout
