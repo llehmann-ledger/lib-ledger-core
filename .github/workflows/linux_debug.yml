@@ -1,5 +1,9 @@
   name: Linux (Debug)
 
+  env:
+    source_path: 'libcore'
+    build_path: 'build'
+
   on:
     push:
       branches:
@@ -9,23 +13,21 @@
         - develop
 
   jobs:
-    prepare:
+    debug_workflow:
       runs-on: ubuntu-20.04
       steps:
         - name: Clean workspace
           run: |
             echo "Cleaning up previous run"
-            rm -rf "${{ github.workspace }}/build"
+            rm -rf "${{ github.workspace }}/${{env.build_path}}"
 
-    build:
-      needs: prepare
-      runs-on: ubuntu-20.04
-      steps:
         - name: Install dependencies
           run: |
             sudo apt-get install -qqy \
             build-essential \
             git \
+            lcov \
+            gcovr \
             qtbase5-dev \
             libqt5websockets5-dev \
             openssl \
@@ -36,52 +38,38 @@
         - name: Checkout code
           uses: actions/checkout@v2
           with:
-            path: libcore
+            path: ${{env.source_path}}
             clean: true
             submodules: true
 
         - name: Build - Cmake
           run: |
-            mkdir build
-            cd build
-            cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DBUILD_TESTS=ON ../libcore
+            mkdir ${{env.build_path}}
+            cd ${{env.build_path}}
+            cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -DBUILD_TESTS=ON ../${{env.source_path}}
 
         - name: Build - Make
           run: |
             make -j$(nproc)
-          working-directory: build
+          working-directory: ${{env.build_path}}
 
         - name : Upload build files
           uses: actions/upload-artifact@v2
           with:
             name: linux-build-files
             path: |
-              build/core/src/libledger-core-static.a
-              build/core/src/libledger-core.so
+              ${{env.build_path}}/core/src/libledger-core-static.a
+              ${{env.build_path}}/core/src/libledger-core.so
 
-    test:
-      needs: build
-      runs-on: ubuntu-20.04
-      steps:
         - name: Run Unit Tests
           run: ctest --timeout 240 -VV
           continue-on-error: true
-          working-directory: build
-
-    coverage:
-      needs: test
-      runs-on: ubuntu-20.04
-      steps:
-        - name: Install dependencies
-          run: |
-            sudo apt-get install -qqy \
-            lcov \
-            gcovr
+          working-directory: ${{env.build_path}}
 
         - name: Get raw coverage
           run: |
-            lcov -q --directory core/src/ \
-            --base-directory ../libcore/core/src/ \
+            lcov -q --directory ${{env.build_path}}/core/src/ \
+            --base-directory ${{env.source_path}}/core/src/ \
             --no-external \
             --capture \
             -o lcov.info

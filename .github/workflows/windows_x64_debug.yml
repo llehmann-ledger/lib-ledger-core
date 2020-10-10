@@ -1,5 +1,9 @@
   name: Windows x64 (Debug)
 
+  env:
+    source_path: 'libcore'
+    build_path: 'build'
+
   on:
     push:
       branches:
@@ -9,51 +13,43 @@
         - develop
 
   jobs:
-    prepare:
+    debug_workflow:
       runs-on: [self-hosted, windows]
       steps:
         - name: Clean workspace
           run: |
             echo "Cleaning up previous run"
-            Remove-Item -LiteralPath "${{ github.workspace }}/build" -Force -Recurse
+            Remove-Item -LiteralPath "${{ github.workspace }}/${{env.build_path}}" -Force -Recurse
           continue-on-error: true
 
-    build:
-      needs: prepare
-      runs-on: [self-hosted, windows]
-      steps:
         - name: Checkout code
           uses: actions/checkout@v2
           with:
-            path: libcore
+            path: ${{env.source_path}}
             clean: true
             submodules: true
 
         - name: Build - Cmake
           run: |
-            mkdir build
-            cd build
-            cmake  -DBUILD_TESTS=ON ../libcore
+            mkdir ${{env.build_path}}
+            cd ${{env.build_path}}
+            cmake  -DBUILD_TESTS=ON ../${{env.source_path}}
 
         - name: Build - Make
           run: |          
             cmake --build . --config Debug -- /m:1
-          working-directory: build
+          working-directory: ${{env.build_path}}
 
         - name : Upload build files
           uses: actions/upload-artifact@v2
           with:
             name: windows-build-files
             path: |
-              build/core/src/build/Debug/ledger-core.dll
-              build/core/src/build/Debug/ledger-core.pdb
+              ${{env.build_path}}/core/src/build/Debug/ledger-core.dll
+              ${{env.build_path}}/core/src/build/Debug/ledger-core.pdb
 
-    test:
-      needs: build
-      runs-on: [self-hosted, windows]
-      steps: 
         - name: Run Unit Tests
           run: |
             ctest --timeout 240 -VV -C Debug
           continue-on-error: true
-          working-directory: build
+          working-directory: ${{env.build_path}}
