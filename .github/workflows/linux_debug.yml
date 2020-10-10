@@ -26,8 +26,6 @@
             sudo apt-get install -qqy \
             build-essential \
             git \
-            lcov \
-            gcovr \
             qtbase5-dev \
             libqt5websockets5-dev \
             openssl \
@@ -74,6 +72,12 @@
       needs: test
       runs-on: ubuntu-20.04
       steps:
+        - name: Install dependencies
+          run: |
+            sudo apt-get install -qqy \
+            lcov \
+            gcovr
+
         - name: Get raw coverage
           run: |
             lcov -q --directory core/src/ \
