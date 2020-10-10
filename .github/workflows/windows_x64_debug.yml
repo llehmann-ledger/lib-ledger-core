@@ -54,6 +54,6 @@
       steps: 
         - name: Run Unit Tests
           run: |
-            ctest --timeout 240 -VV
+            ctest --timeout 240 -VV -C Debug
           continue-on-error: true
           working-directory: build
