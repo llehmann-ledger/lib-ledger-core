@@ -90,6 +90,7 @@
             working-directory: ${{env.build_path}}
 
         - name: Clean workspace
+          if: ${{ always() }}
           run: |
             echo "Cleaning up previous run"
             rm -rf "${{ github.workspace }}/${{env.build_path}}"

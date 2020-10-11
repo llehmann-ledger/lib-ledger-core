@@ -49,6 +49,7 @@
           working-directory: ${{env.build_path}}
 
         - name: Clean workspace
+          if: ${{ always() }}
           run: |
             echo "Cleaning up previous run"
             Remove-Item -LiteralPath "${{ github.workspace }}/${{env.build_path}}" -Force -Recurse
