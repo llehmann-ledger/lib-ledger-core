@@ -16,12 +16,6 @@
     debug_workflow:
       runs-on: [self-hosted, windows]
       steps:
-        - name: Clean workspace
-          run: |
-            echo "Cleaning up previous run"
-            Remove-Item -LiteralPath "${{ github.workspace }}/${{env.build_path}}" -Force -Recurse
-          continue-on-error: true
-
         - name: Checkout code
           uses: actions/checkout@v2
           with:
@@ -53,3 +47,9 @@
             ctest --timeout 240 -VV -C Debug
           continue-on-error: true
           working-directory: ${{env.build_path}}
+
+        - name: Clean workspace
+          run: |
+            echo "Cleaning up previous run"
+            Remove-Item -LiteralPath "${{ github.workspace }}/${{env.build_path}}" -Force -Recurse
+          continue-on-error: true

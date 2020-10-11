@@ -16,11 +16,6 @@
     debug_workflow:
       runs-on: ubuntu-20.04
       steps:
-        - name: Clean workspace
-          run: |
-            echo "Cleaning up previous run"
-            rm -rf "${{ github.workspace }}/${{env.build_path}}"
-
         - name: Install dependencies
           run: |
             sudo apt-get install -qqy \
@@ -68,11 +63,12 @@
 
         - name: Get raw coverage
           run: |
-            lcov -q --directory ${{env.build_path}}/core/src/ \
-            --base-directory ${{env.source_path}}/core/src/ \
+            lcov -q --directory core/src/ \
+            --base-directory ../${{env.source_path}}/core/src/ \
             --no-external \
             --capture \
             -o lcov.info
+          working-directory: ${{env.build_path}}
 
         - name: Generate coverage HTML report
           run: |
@@ -83,6 +79,7 @@
             --show-details \
             --keep-descriptions \
             --output-directory=lcov_html_report
+          working-directory: ${{env.build_path}}
 
         - name : Upload coverage report
           uses: actions/upload-artifact@v2
@@ -90,3 +87,9 @@
             name: coverage_report
             path: |
               ./lcov_html_report
+            working-directory: ${{env.build_path}}
+
+        - name: Clean workspace
+          run: |
+            echo "Cleaning up previous run"
+            rm -rf "${{ github.workspace }}/${{env.build_path}}"
