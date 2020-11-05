@@ -1,6 +1,8 @@
 #include "ProxyHttpClient.hpp"
 #include "api/HttpRequest.hpp"
+#include "api/HttpMethod.hpp"
 #include <memory>
+#include <sstream>
 #include "api/Error.hpp"
 
 namespace ledger {
@@ -11,18 +13,34 @@ namespace ledger {
             {}
 
             void ProxyHttpClient::execute(const std::shared_ptr<api::HttpRequest>& request) {
-                auto it = _cache.find(request->getUrl());
-                if (it != _cache.end()) {
-                    std::cout << "get response from cache : " << request->getUrl() << std::endl;
-                    request->complete(it->second, std::experimental::nullopt);
-                    return;
+
+                for (auto& cache : _cache ) {
+                    bool matching = (request->getUrl() == cache.url);
+                    if (matching && request->getMethod() == ledger::core::api::HttpMethod::POST) {
+                        std::string body;
+                        if (request->getBody().size() > 0) {
+                            std::stringstream bodyStream;
+                            for (auto byte : request->getBody()) {
+                                bodyStream << (char )byte;
+                            }
+                            body = bodyStream.str();
+                        }
+                        matching = (body == cache.parameter);
+                    }
+                    if(matching){
+                        std::cout << "get response from cache : " << request->getUrl() << std::endl;
+                        request->complete(cache.response, std::experimental::nullopt);
+                        return;
+                    }
                 }
                 _httpClient->execute(request);
             }
 
-            void ProxyHttpClient::addCache(const std::string& url, const std::string& body) {
-                _cache.emplace(url, FakeUrlConnection::fromString(body));
+            void ProxyHttpClient::addCache(const std::string& url, const std::string& parameter, const std::string& body) {
+                _cache.push_back(Cache(url, parameter, FakeUrlConnection::fromString(body)));
             }
+
+            
         }
     }
 }

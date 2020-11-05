@@ -59,16 +59,21 @@ namespace ledger {
                 std::string _body;
             };
 
-            void generateCacheFile(const std::string& url, const std::string& response)
+            void generateCacheFile(const std::string& url, const std::string& response, const std::string& parameter="")
             {
-                auto filename = fmt::format("http_cache_{}.hpp" ,std::chrono::system_clock::now().time_since_epoch().count());
+                auto filename = fmt::format("http_cache_{}.txt" ,std::chrono::system_clock::now().time_since_epoch().count());
                 std::ofstream output(filename);
                 if (output.is_open())
                 {
-                    output << "namespace HTTP_CACHE_XXXX {"<< std::endl;
+                    /*output << "struct HTTP_CACHE_XXXX {"<< std::endl;
                     output << "const std::string URL = R\"(" << url << ")\";" << std::endl;
+                    output << "const std::string PARAMETER = R\"(" << parameter << ")\";" << std::endl;
                     output << "const std::string BODY= R\"(" << response << ")\";" << std::endl;
-                    output << "}" << std::endl;
+                    output << "};" << std::endl;*/
+                    output << url << std::endl;
+                    output << parameter << std::endl;
+                    output << response << std::endl;
+
                 }
             }
 
@@ -160,7 +165,8 @@ namespace ledger {
                         res->body
                         );
                     if (_generateCacheFile) {
-                        generateCacheFile(url, res->body);
+                        generateCacheFile(url, res->body, 
+                        request->getMethod() == core::api::HttpMethod::POST ? body: "");
                     }
                     request->complete(connection, std::experimental::optional<core::api::Error>());
                 }

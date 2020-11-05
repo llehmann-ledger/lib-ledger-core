@@ -34,6 +34,8 @@
 #include "IntegrationEnvironment.h"
 #include <utils/hex.h>
 #include <debug/logger.hpp>
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem::v1;
 
 api::ExtendedKeyAccountCreationInfo P2PKH_MEDIUM_XPUB_INFO(
         0, {"main"}, {"44'/0'/0'"}, {"xpub6D4waFVPfPCpRvPkQd9A6n65z3hTp6TvkjnBHG5j2MCKytMuadKgfTUHqwRH77GQqCKTTsUXSZzGYxMGpWpJBdYAYVH75x7yMnwJvra1BUJ"}
@@ -207,7 +209,7 @@ void BaseFixture::SetUp() {
     resolver = std::make_shared<NativePathResolver>(IntegrationEnvironment::getInstance()->getApplicationDirPath());
     printer = std::make_shared<CoutLogPrinter>(dispatcher->getMainExecutionContext());
     auto client = std::make_shared<CppHttpLibClient>(dispatcher->getMainExecutionContext());
-    //client->setGenerateCacheFile(true);
+    client->setGenerateCacheFile(true);
     http = std::make_shared<ProxyHttpClient>(client);
     ws = std::make_shared<FakeWebSocketClient>();
     rng = std::make_shared<OpenSSLRandomNumberGenerator>();
@@ -358,6 +360,51 @@ void BaseFixture::resetDispatcher()
     dispatcher = std::make_shared<uv::UvThreadDispatcher>();
     printer = std::make_shared<CoutLogPrinter>(dispatcher->getMainExecutionContext());
     auto client = std::make_shared<CppHttpLibClient>(dispatcher->getMainExecutionContext());
-    //client->setGenerateCacheFile(true);
+    client->setGenerateCacheFile(true);
     http = std::make_shared<ProxyHttpClient>(client);
+}
+
+void BaseFixture::mockHttp(const std::string& testname) {
+    const char* env = std::getenv("MOCK_HTTP_FOLDER");
+    if (env != nullptr) { 
+        std::string path = env;
+        path += "/";
+        path += testname;
+        std::cout << "parsing "<< path << std::endl;
+        for (const auto& file : fs::recursive_directory_iterator(path)) {
+            std::string currentFile = file.path();
+            if (!fs::is_directory(currentFile) && currentFile.find(".txt") != std::string::npos) {
+                std::ifstream input(currentFile);    
+                std::string url, parameter, body;
+                std::getline(input, url);
+                std::cout << "reading "<< currentFile << ": " << url << std::endl;
+                std::getline(input, parameter);
+                std::getline(input, body);
+                http->addCache(url, parameter, body);
+            }
+        }
+    }
+
+
+
+
+
+
+        /*boost::filesystem::path path(folder);
+        path += testname;
+        if(boost::filesystem::is_directory(path)) {
+            boost::filesystem::directory_iterator endItr;
+            for (boost::filesystem::directory_iterator itr(path); itr != endItr; ++itr) {
+                const string currentFile = itr->path().string();
+                if (boost::filesystem::is_regular_file(itr->path()) && currentFile.find(".txt") != std::string::npos) {
+                    std::ifstream infile(currentFile);    
+                    std::string url, parameter, body;
+                    std::getline(infile, url);
+                    std::getline(infile, parameter);
+                    std::getline(infile, body);
+                    http->addCache(url, parameter, body);
+                }
+            }
+        }*/
+     
 }

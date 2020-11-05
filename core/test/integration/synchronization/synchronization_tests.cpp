@@ -38,8 +38,6 @@
 #include <wallet/bitcoin/transaction_builders/BitcoinLikeTransactionBuilder.h>
 #include "ExplorerStorage.hpp"
 #include "HttpClientOnFakeExplorer.hpp"
-#include "../../fixtures/http_cache_BitcoinLikeWalletSynchronization_MediumXpubSynchronization_1.h"
-#include "../../fixtures/http_cache_BitcoinLikeWalletSynchronization_MediumXpubSynchronization_2.h"
 
 
 #include <Uuid.hpp>
@@ -49,10 +47,7 @@ class BitcoinLikeWalletSynchronization : public BaseFixture {
 };
 
 TEST_F(BitcoinLikeWalletSynchronization, MediumXpubSynchronization) {
-    http->addCache(HTTP_CACHE_http_cache_BitcoinLikeWalletSynchronization_MediumXpubSynchronization_1::URL,
-        HTTP_CACHE_http_cache_BitcoinLikeWalletSynchronization_MediumXpubSynchronization_1::BODY);
-    http->addCache(HTTP_CACHE_http_cache_BitcoinLikeWalletSynchronization_MediumXpubSynchronization_2::URL,
-        HTTP_CACHE_http_cache_BitcoinLikeWalletSynchronization_MediumXpubSynchronization_2::BODY);
+    mockHttp("BitcoinLikeWalletSynchronization.MediumXpubSynchronization");
 
     auto configuration = DynamicObject::newInstance();
 #ifdef PG_SUPPORT
