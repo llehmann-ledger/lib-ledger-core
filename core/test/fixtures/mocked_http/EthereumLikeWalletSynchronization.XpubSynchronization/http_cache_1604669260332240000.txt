@@ -1,0 +1,3 @@
+https://explorers.api.live.ledger.com/blockchain/v3/eth/syncToken
+
+{"token":"fe860cc7-fc4f-4e05-90fd-e250027a28d1"}

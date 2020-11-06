@@ -46,7 +46,7 @@ class BitcoinLikeWalletSynchronization : public BaseFixture {
 
 };
 
-TEST_F(BitcoinLikeWalletSynchronization, MediumXpubSynchronization) {
+TEST_F(BitcoinLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
     mockHttp("BitcoinLikeWalletSynchronization.MediumXpubSynchronization");
 
     auto configuration = DynamicObject::newInstance();

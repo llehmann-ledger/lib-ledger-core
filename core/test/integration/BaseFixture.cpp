@@ -370,17 +370,17 @@ void BaseFixture::mockHttp(const std::string& testname) {
         std::string path = env;
         path += "/";
         path += testname;
-        std::cout << "parsing "<< path << std::endl;
-        for (const auto& file : fs::recursive_directory_iterator(path)) {
-            std::string currentFile = file.path();
-            if (!fs::is_directory(currentFile) && currentFile.find(".txt") != std::string::npos) {
-                std::ifstream input(currentFile);    
-                std::string url, parameter, body;
-                std::getline(input, url);
-                std::cout << "reading "<< currentFile << ": " << url << std::endl;
-                std::getline(input, parameter);
-                std::getline(input, body);
-                http->addCache(url, parameter, body);
+        if (fs::is_directory(path)) {
+            for (const auto& file : fs::recursive_directory_iterator(path)) {
+                std::string currentFile = file.path();
+                if (!fs::is_directory(currentFile) && currentFile.find(".txt") != std::string::npos) {
+                    std::ifstream input(currentFile);    
+                    std::string url, parameter, body;
+                    std::getline(input, url);
+                    std::getline(input, parameter);
+                    std::getline(input, body);
+                    http->addCache(url, parameter, body);
+                }
             }
         }
     }

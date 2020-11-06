@@ -1,0 +1,3 @@
+https://explorers.api.live.ledger.com/blockchain/v3/eth/erc20/balances
+[{"address":"0xabf06640f8ca8fC5e0Ed471b10BeFCDf65A33e43","contract":"0xE41d2489571d322189246DaFA5ebDe1F4699F498"}]
+[{"address":"0xabf06640f8ca8fc5e0ed471b10befcdf65a33e43","contract":"0xe41d2489571d322189246dafa5ebde1f4699f498","balance":2004166277198731770,"valid":true,"error":false}]
