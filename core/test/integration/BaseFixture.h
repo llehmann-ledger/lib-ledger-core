@@ -60,13 +60,13 @@
 #include <api/BigInt.hpp>
 #include <CppHttpLibClient.hpp>
 #include <ProxyHttpClient.hpp>
-#include <events/LambdaEventReceiver.hpp>
 #include <soci.h>
 #include <api/Account.hpp>
 #include <api/BitcoinLikeAccount.hpp>
 #include <FakeWebSocketClient.h>
 #include <OpenSSLRandomNumberGenerator.hpp>
 #include <utils/FilesystemUtils.hpp>
+#include <events/EventPublisher.hpp>
 
 using namespace ledger::core; // Only do that for testing
 using namespace ledger::core::test;
@@ -95,6 +95,20 @@ extern const std::string TX_2;
 extern const std::string TX_3;
 extern const std::string TX_4;
 
+class LambdaEventReceiver : public api::EventReceiver {
+public:
+    LambdaEventReceiver(std::function<void (const std::shared_ptr<api::Event> &)> f,
+                                            std::shared_ptr<uv::SequentialExecutionContext> &exec_context,
+                                            std::shared_ptr<NativePathResolver> &resolver,
+                                            std::shared_ptr<CoutLogPrinter> &printer);
+    void onEvent(const std::shared_ptr<api::Event> &event) override;
+
+private:
+    std::function<void (const std::shared_ptr<api::Event> &)> _function;
+    std::shared_ptr<uv::SequentialExecutionContext> _exec_context;
+    std::shared_ptr<NativePathResolver> _resolver;
+    std::shared_ptr<CoutLogPrinter> _printer;
+};
 
 class BaseFixture : public ::testing::Test {
 public:
@@ -144,6 +158,25 @@ public:
                                                              const api::AccountCreationInfo &info);
 
     std::shared_ptr<uv::SequentialExecutionContext> getTestExecutionContext();
+
+    std::shared_ptr<LambdaEventReceiver> make_receiver(std::function<void (const std::shared_ptr<api::Event> &)> f);
+
+    // If for some reasons, the default execution context is not/cannot be use, made it possible to specify another one there.
+    std::shared_ptr<LambdaEventReceiver> make_receiver(std::function<void (const std::shared_ptr<api::Event> &)> f,
+                                                       std::shared_ptr<uv::SequentialExecutionContext> exec_context);
+
+    /**
+     * Create a receiver which will resolve the current promise in case it is callback with one success or failure code.
+     * @param promise
+     * @param successCodes
+     * @param failureCodes
+     * @return
+     */
+    std::shared_ptr<LambdaEventReceiver> make_promise_receiver(
+            Promise<Unit>& promise,
+            const std::vector<api::EventCode> &successCodes,
+            const std::vector<api::EventCode> &failureCodes
+    );
 
     void resetDispatcher();
 

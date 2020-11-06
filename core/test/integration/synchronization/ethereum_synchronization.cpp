@@ -49,7 +49,8 @@
 using namespace std;
 
 class EthereumLikeWalletSynchronization : public BaseFixture {
-
+    public:
+        std::pair<std::shared_ptr<LambdaEventReceiver>, ledger::core::Future<bool>> createSyncReceiver();
 };
 
 TEST_F(EthereumLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
@@ -349,7 +350,7 @@ TEST_F(EthereumLikeWalletSynchronization, DISABLED_XpubETCSynchronization) {
     }
 }
 
-std::pair<std::shared_ptr<LambdaEventReceiver>, ledger::core::Future<bool>> createSyncReceiver() {
+std::pair<std::shared_ptr<LambdaEventReceiver>, ledger::core::Future<bool>> EthereumLikeWalletSynchronization::createSyncReceiver() {
     auto promise = std::make_shared<Promise<bool>>();
     return
         std::make_pair<std::shared_ptr<LambdaEventReceiver>, ledger::core::Future<bool>>(

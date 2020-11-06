@@ -23,7 +23,6 @@
 #include <api/RippleLikeTransaction.hpp>
 #include <api/BigInt.hpp>
 #include <CppHttpLibClient.hpp>
-#include <events/LambdaEventReceiver.hpp>
 #include <soci.h>
 #include <utils/hex.h>
 #include <api/Account.hpp>

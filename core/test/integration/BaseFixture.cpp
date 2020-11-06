@@ -33,6 +33,7 @@
 #include "BaseFixture.h"
 #include "IntegrationEnvironment.h"
 #include <utils/hex.h>
+#include <debug/logger.hpp>
 
 api::ExtendedKeyAccountCreationInfo P2PKH_MEDIUM_XPUB_INFO(
         0, {"main"}, {"44'/0'/0'"}, {"xpub6D4waFVPfPCpRvPkQd9A6n65z3hTp6TvkjnBHG5j2MCKytMuadKgfTUHqwRH77GQqCKTTsUXSZzGYxMGpWpJBdYAYVH75x7yMnwJvra1BUJ"}
@@ -142,6 +143,62 @@ const std::string TX_2 = "{\"hash\":\"a5fb8b23c1131850569874b8d8592800211b3d0392
 const std::string TX_3 = "{\"hash\":\"a5fb8b23c1131850569874b8d8592800211b3d0392753b84d2d5f9f53b7e09fc\",\"received_at\":\"2015-06-22T15:58:30Z\",\"lock_time\":0,\"block\":{\"hash\":\"00000000000000000198e024d936c87807b4198f9de7105015036ce785fa2bdc\",\"height\":362055,\"time\":\"2015-06-22T15:58:30Z\"},\"inputs\":[{\"input_index\":0,\"output_hash\":\"666613fd82459f94c74211974e74ffcb4a4b96b62980a6ecaee16af7702bbbe5\",\"output_index\":0,\"value\":182593500,\"address\":\"1DDBzjLyAmDr4qLRC2T2WJ831cxBM5v7G7\",\"script_signature\":\"473044022018ac8a44412d66f489138c3e8f9196b60dba1c24fb715dd8c3d66921bcc13f4702201f222fd3e25fe8f3807347650ae7b41451c078c9a8fc2e5b7d82d6a928a8c363012103da611b1fcacc0056ceb5489ee951b523e52de7ff1902fd1c6f9c212a542da297\"}],\"outputs\":[{\"output_index\":0,\"value\":182483500,\"address\":\"18BkSm7P2wQJfQhV7B5st14t13mzHRJ2o1\",\"script_hex\":\"76a9144ed14e321713e1c97056643a233b968d34b2231188ac\"},{\"output_index\":1,\"value\":100000,\"address\":\"1NMfmPC9yHBe5US2CUwWARPRM6cDP6N86m\",\"script_hex\":\"76a914ea4351fd2a0a2cd62ab264d9f0b1997696a632f488ac\"}],\"fees\":10000,\"amount\":182583500,\"confirmations\":110200}";
 const std::string TX_4 = "{\"hash\":\"4450e70656888bd7f5240a9b532eac54db7d72f3b48bfef09fb45a185bb9c570\",\"received_at\":\"2015-06-22T16:19:26Z\",\"lock_time\":0,\"block\":{\"hash\":\"0000000000000000037e0f13d498d13a0b08e7ecc069ed497d665b6927b4724d\",\"height\":362058,\"time\":\"2015-06-22T16:19:26Z\"},\"inputs\":[{\"input_index\":0,\"output_hash\":\"a5fb8b23c1131850569874b8d8592800211b3d0392753b84d2d5f9f53b7e09fc\",\"output_index\":0,\"value\":182483500,\"address\":\"18BkSm7P2wQJfQhV7B5st14t13mzHRJ2o1\",\"script_signature\":\"483045022100bb268c100d815e49db33b14426b894639e62f6ac6cabbe1ded0af045ed7b5ca502200e9828576212c5003058ff9e2a6ac507d956fbe9c2ee24687f12ed43902a77410121029a8a38f29bfadfd6b9fe2a41f0f079b8c0a39f7e9c0479c3ac49a091d2e9d550\"}],\"outputs\":[{\"output_index\":0,\"value\":182373500,\"address\":\"139dJmHhFuuhrgbNAPehpokjYHNEtvkxot\",\"script_hex\":\"76a9141791e2de9302ecc21f60ac0cd417538c49cb5c6b88ac\"},{\"output_index\":1,\"value\":100000,\"address\":\"16cqCPDSoBYkaKUkYw94k3CeoNcMDcTLYN\",\"script_hex\":\"76a9143d9f6b778193e20365b2e8a493f33c35886d630688ac\"}],\"fees\":10000,\"amount\":182473500,\"confirmations\":110197}";
 
+std::shared_ptr<LambdaEventReceiver> BaseFixture::make_receiver(std::function<void (const std::shared_ptr<api::Event> &)> f) {
+    auto exec_context = std::dynamic_pointer_cast<uv::SequentialExecutionContext>(dispatcher->getMainExecutionContext());
+    return std::make_shared<LambdaEventReceiver>(f, exec_context, resolver, printer);
+}
+
+std::shared_ptr<LambdaEventReceiver> BaseFixture::make_receiver(std::function<void (const std::shared_ptr<api::Event> &)> f, std::shared_ptr<uv::SequentialExecutionContext> exec_context) {
+    return std::make_shared<LambdaEventReceiver>(f, exec_context, resolver, printer);
+}
+
+LambdaEventReceiver::LambdaEventReceiver(std::function<void(const std::shared_ptr<api::Event> &)> f,
+                                              std::shared_ptr<uv::SequentialExecutionContext> &exec_context,
+                                              std::shared_ptr<NativePathResolver> &resolver,
+                                              std::shared_ptr<CoutLogPrinter> &printer) {
+    _function = f;
+    _exec_context = exec_context;
+    _resolver = resolver;
+    _printer = printer;
+}
+
+void LambdaEventReceiver::onEvent(const std::shared_ptr<api::Event> &event) {
+    try {
+        _function(event);
+    } catch (Exception& e) {
+        std::shared_ptr<spdlog::logger> logger = logger::create(
+            "lambdaevent-l",
+            _exec_context,
+            _resolver,
+            _printer,
+            logger::DEFAULT_MAX_SIZE,
+            true
+        );
+        logger->error(e.getMessage());
+        _exec_context->stop();
+    }
+}
+
+std::shared_ptr<LambdaEventReceiver> BaseFixture::make_promise_receiver(
+        Promise<Unit>& promise,
+        const std::vector<api::EventCode> &successCodes,
+        const std::vector<api::EventCode> &failureCodes
+) {
+    return make_receiver([=] (const std::shared_ptr<api::Event> &event) mutable {
+        for (const auto& code : successCodes) {
+            if (code == event->getCode()) {
+                promise.success(unit);
+                return;
+            }
+        }
+        for (const auto& code : failureCodes) {
+            if (code == event->getCode()) {
+                promise.failure(make_exception(api::ErrorCode::RUNTIME_ERROR, event->getPayload()->dump()));
+                return;
+            }
+        }
+    });
+}
 
 void BaseFixture::SetUp() {
     ::testing::Test::SetUp();

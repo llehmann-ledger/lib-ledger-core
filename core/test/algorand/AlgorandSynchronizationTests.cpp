@@ -95,7 +95,7 @@ public:
 
 };
 
-TEST_F(AlgorandSynchronizationTest, DISABLED_EmptyAccountSynchronizationTest) {
+TEST_F(AlgorandSynchronizationTest, EmptyAccountSynchronizationTest) {
     synchronizeAccount(EMPTY_ADDRESS);
 
     // Simulate the getLastBlock that Live does after an account sync
@@ -107,7 +107,7 @@ TEST_F(AlgorandSynchronizationTest, DISABLED_EmptyAccountSynchronizationTest) {
 
 }
 
-TEST_F(AlgorandSynchronizationTest, DISABLED_AccountSynchronizationTest) {
+TEST_F(AlgorandSynchronizationTest, AccountSynchronizationTest) {
     synchronizeAccount(OBELIX_ADDRESS);
 
     auto internalPreferences = _account->getInternalPreferences()->getSubPreferences("AlgorandAccountSynchronizer");

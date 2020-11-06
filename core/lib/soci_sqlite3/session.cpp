@@ -175,10 +175,17 @@ sqlite3_session_backend::sqlite3_session_backend(
         }
     }
 
+#ifdef RAM_DATABASE
+    connection_flags = SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_URI | SQLITE_OPEN_SHAREDCACHE;
+    int res = sqlite3_open_v2(("file:" + dbname + "?mode=memory").c_str(), &conn_, connection_flags, NULL);
+#else
     int res = sqlite3_open_v2(dbname.c_str(), &conn_, connection_flags, NULL);
+#endif
     check_sqlite_err(conn_, res, "Cannot establish connection to the database. ");
     post_connection(dbname, connection_flags, timeout, synchronous);
 
+// Encryption not supported when using in-memory database
+#ifndef RAM_DATABASE
     //Set password
     if (!passKey.empty() || !newPassKey.empty())
     {
@@ -219,6 +226,7 @@ sqlite3_session_backend::sqlite3_session_backend(
             sqlcipher_export(conn_, connection_flags, timeout, synchronous, query, dbname, dbnamePlain, errMsg, newPassKey);
         }
     }
+#endif
 }
 
 sqlite3_session_backend::~sqlite3_session_backend()

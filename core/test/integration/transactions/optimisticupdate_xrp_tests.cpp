@@ -50,8 +50,6 @@ class RippleLikeOptimisticTransactionUpdate : public BaseFixture
 {
 };
 
-std::pair<std::shared_ptr<LambdaEventReceiver>, ledger::core::Future<bool>> createSyncReceiver();
-
 TEST_F(RippleLikeOptimisticTransactionUpdate, BroadcastTransaction)
 {
 
@@ -80,7 +78,6 @@ TEST_F(RippleLikeOptimisticTransactionUpdate, BroadcastTransaction)
         auto wallet = uv::wait(pool->createWallet("my_wallet", "ripple", configuration));
         {
             auto account = createRippleLikeAccount(wallet, 0, XRP_KEYS_INFO);
-            auto waiter = createSyncReceiver();
 
             fakeHttp->setBehavior({{fmt::format("http://test.test:{}/", api::RippleConfigurationDefaults::RIPPLE_DEFAULT_PORT),
                                     test::FakeUrlConnection::fromString("{\"result\":{\"engine_result\":\"tesSUCCESS\",\"tx_json\":{\"hash\":\"AC0D84CB81E8ECA92E7EF9ABC3526FAED54DE07763A308296B28468D68D34991\"}}}")}});

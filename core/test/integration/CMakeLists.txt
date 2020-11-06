@@ -61,6 +61,7 @@ endif()
 #add_test (NAME ledger-core-integration-tests COMMAND ledger-core-integration-tests)
 
 # partial fix for LLC-77; dirty, but works and unlocks the CI
+add_test (NAME ledger-core-integration-DispatcherStopTest.InifiniteRunningTest COMMAND ledger-core-integration-tests --gtest_filter=DispatcherStopTest.InifiniteRunningTest)
 add_test (NAME ledger-core-integration-AccountBlockchainObservationTests.EmitNewTransaction COMMAND ledger-core-integration-tests --gtest_filter=AccountBlockchainObservationTests.EmitNewTransaction)
 add_test (NAME ledger-core-integration-AccountBlockchainObservationTests.EmitNewTransactionAndReceiveOnPool COMMAND ledger-core-integration-tests --gtest_filter=AccountBlockchainObservationTests.EmitNewTransactionAndReceiveOnPool)
 add_test (NAME ledger-core-integration-AccountBlockchainObservationTests.AutoReconnect COMMAND ledger-core-integration-tests --gtest_filter=AccountBlockchainObservationTests.AutoReconnect)
