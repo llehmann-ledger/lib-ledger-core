@@ -1,0 +1,16 @@
+https://cosmos.coin.staging.aws.ledger.com/staking/delegators/cosmos1sd4tl9aljmmezzudugs7zlaya7pg2895tyn79r/delegations
+
+{"height":"4012918","result":[
+  {
+    "delegator_address": "cosmos1sd4tl9aljmmezzudugs7zlaya7pg2895tyn79r",
+    "validator_address": "cosmosvaloper1sd4tl9aljmmezzudugs7zlaya7pg2895ws8tfs",
+    "shares": "2363727777.000000000000000000",
+    "balance": "2363727777"
+  },
+  {
+    "delegator_address": "cosmos1sd4tl9aljmmezzudugs7zlaya7pg2895tyn79r",
+    "validator_address": "cosmosvaloper1s6x9fy4wc49wj9jx4jv6czredqsmp46h7vnk2q",
+    "shares": "5000.000000000000000000",
+    "balance": "5000"
+  }
+]}

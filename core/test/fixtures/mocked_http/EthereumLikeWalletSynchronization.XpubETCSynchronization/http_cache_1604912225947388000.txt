@@ -1,0 +1,3 @@
+https://explorers.api.live.ledger.com/blockchain/v3/etc/addresses/0xc0Af12953A06Be2b9bEAf66Fb2BeC1aBE51594C0/balance
+
+[{"address":"0xc0Af12953A06Be2b9bEAf66Fb2BeC1aBE51594C0","balance":1858000000000000,"valid":true,"error":false}]

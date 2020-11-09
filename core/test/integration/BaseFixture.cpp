@@ -378,7 +378,10 @@ void BaseFixture::mockHttp(const std::string& testname) {
                     std::string url, parameter, body;
                     std::getline(input, url);
                     std::getline(input, parameter);
-                    std::getline(input, body);
+                    std::string line;
+                    while (std::getline(input, line)) {
+                        body += line;
+                    }
                     http->addCache(url, parameter, body);
                 }
             }

@@ -161,7 +161,8 @@ TEST_F(EthereumLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
     }
 }
 
-TEST_F(EthereumLikeWalletSynchronization, DISABLED_BalanceHistory) {
+TEST_F(EthereumLikeWalletSynchronization, BalanceHistory) {
+    mockHttp("EthereumLikeWalletSynchronization.BalanceHistory");
     auto walletName = uuid::generate_uuid_v4();
     auto poolName = uuid::generate_uuid_v4();
     auto erc20Count = 0;
@@ -283,7 +284,8 @@ TEST_F(EthereumLikeWalletSynchronization, XpubSynchronization) {
     }
 }
 
-TEST_F(EthereumLikeWalletSynchronization, DISABLED_XpubETCSynchronization) {
+TEST_F(EthereumLikeWalletSynchronization, XpubETCSynchronization) {
+    mockHttp("EthereumLikeWalletSynchronization.XpubETCSynchronization");
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
         auto configuration = DynamicObject::newInstance();

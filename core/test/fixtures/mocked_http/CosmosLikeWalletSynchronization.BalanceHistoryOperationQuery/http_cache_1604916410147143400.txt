@@ -1,0 +1,8 @@
+https://cosmos.coin.staging.aws.ledger.com/bank/balances/cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl
+
+{"height":"4013168","result":[
+  {
+    "denom": "uatom",
+    "amount": "38796"
+  }
+]}

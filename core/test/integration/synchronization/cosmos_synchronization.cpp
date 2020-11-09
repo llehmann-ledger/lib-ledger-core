@@ -324,7 +324,8 @@ TEST_F(CosmosLikeWalletSynchronization, GetCurrentBlockWithExplorer) {
     EXPECT_TRUE(block->height > 0);
 }
 
-TEST_F(CosmosLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
+TEST_F(CosmosLikeWalletSynchronization, MediumXpubSynchronization) {
+    mockHttp("CosmosLikeWalletSynchronization.MediumXpubSynchronization");
     auto walletName = uuid::generate_uuid_v4();
 #ifdef PG_SUPPORT
     const bool usePostgreSQL = true;
@@ -404,8 +405,8 @@ TEST_F(CosmosLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
     }
 }
 
-TEST_F(CosmosLikeWalletSynchronization, DISABLED_Balances)
-{
+TEST_F(CosmosLikeWalletSynchronization, Balances) {
+    mockHttp("CosmosLikeWalletSynchronization.Balances");
     std::string hexPubKey =
         "0388459b2653519948b12492f1a0b464720110c147a8155d23d423a5cc3c21d89a";  // Obelix
 
@@ -448,7 +449,9 @@ TEST_F(CosmosLikeWalletSynchronization, DISABLED_Balances)
     // Unbondings are moving too much to assert the amount.
 }
 
-TEST_F(CosmosLikeWalletSynchronization, DISABLED_AllTransactionsSynchronization) {
+TEST_F(CosmosLikeWalletSynchronization, AllTransactionsSynchronization) {
+    mockHttp("CosmosLikeWalletSynchronization.AllTransactionsSynchronization");
+
     // FIXME Use an account that has all expected types of transactions
     std::string hexPubKey = "0388459b2653519948b12492f1a0b464720110c147a8155d23d423a5cc3c21d89a"; // Obelix
 
@@ -558,6 +561,7 @@ TEST_F(CosmosLikeWalletSynchronization, ValidatorSet) {
 }
 
 TEST_F(CosmosLikeWalletSynchronization, DISABLED_ValidatorInfo) {
+    
     // This test assumes that HuobiPool and BinanceStaking are always in the validator set
     const auto bisonTrailsAddress = "cosmosvaloper1uxh465053nq3at4dn0jywgwq3s9sme3la3drx6";
     const auto bisonTrailsValConsPubAddress = "cosmosvalconspub1zcjduepqc5y2du793cjut0cn6v7thp3xlvphggk6rt2dhw9ekjla5wtkm7nstmv5vy";
@@ -606,7 +610,8 @@ TEST_F(CosmosLikeWalletSynchronization, DISABLED_ValidatorInfo) {
     EXPECT_GE(valInfo.signInfo.jailedUntil, DateUtils::fromJSON("1970-01-01T00:00:00Z")) << "This value cannot be before epoch";
 }
 
-TEST_F(CosmosLikeWalletSynchronization, DISABLED_BalanceHistoryOperationQuery) {
+TEST_F(CosmosLikeWalletSynchronization, BalanceHistoryOperationQuery) {
+    mockHttp("CosmosLikeWalletSynchronization.BalanceHistoryOperationQuery");
 
     std::string hexPubKey = "0388459b2653519948b12492f1a0b464720110c147a8155d23d423a5cc3c21d89a"; // Obelix
 
@@ -636,7 +641,8 @@ TEST_F(CosmosLikeWalletSynchronization, DISABLED_BalanceHistoryOperationQuery) {
     ASSERT_GE(operations.size(), 17) << "As of 2020-03-19, there are 17 operations picked up by the query";
 }
 
-TEST_F(CosmosLikeWalletSynchronization, DISABLED_GetAccountDelegations) {
+TEST_F(CosmosLikeWalletSynchronization, GetAccountDelegations) {
+    mockHttp("CosmosLikeWalletSynchronization.GetAccountDelegations");
 
     std::string hexPubKey = "0388459b2653519948b12492f1a0b464720110c147a8155d23d423a5cc3c21d89a"; // Obelix
 
@@ -656,7 +662,8 @@ TEST_F(CosmosLikeWalletSynchronization, DISABLED_GetAccountDelegations) {
 
 }
 
-TEST_F(CosmosLikeWalletSynchronization, DISABLED_GetAccountPendingRewards) {
+TEST_F(CosmosLikeWalletSynchronization, GetAccountPendingRewards) {
+    mockHttp("CosmosLikeWalletSynchronization.GetAccountPendingRewards");
 
     std::string hexPubKey = "0388459b2653519948b12492f1a0b464720110c147a8155d23d423a5cc3c21d89a"; // Obelix
 
