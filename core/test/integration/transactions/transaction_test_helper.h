@@ -86,7 +86,7 @@ struct BitcoinMakeBaseTransaction : public BaseFixture {
 
     void TearDown() override {
         BaseFixture::TearDown();
-        wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
+        uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
         pool = nullptr;
         wallet = nullptr;
         account = nullptr;
@@ -122,7 +122,7 @@ struct EthereumMakeBaseTransaction : public BaseFixture {
 
     void TearDown() override {
         BaseFixture::TearDown();
-        wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
+        uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
         pool = nullptr;
         wallet = nullptr;
         account = nullptr;
@@ -158,7 +158,7 @@ struct RippleMakeBaseTransaction : public BaseFixture {
 
     void TearDown() override {
         BaseFixture::TearDown();
-        wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
+        uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
         pool = nullptr;
         wallet = nullptr;
         account = nullptr;
@@ -194,7 +194,7 @@ struct TezosMakeBaseTransaction : public BaseFixture {
 
     void TearDown() override {
         BaseFixture::TearDown();
-        wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
+        uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
         pool = nullptr;
         wallet = nullptr;
         account = nullptr;

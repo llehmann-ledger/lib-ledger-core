@@ -153,9 +153,9 @@ TEST_F(TezosLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
             EXPECT_GT(gasLimit->toUint64(), 0);
         }
     };
-    test(uuid::generate_uuid_v4(), uuid::generate_uuid_v4(), kExplorerUrl);
+    test(uuid::generate_uuid_v4(), kExplorerUrl);
     resetDispatcher();
-    test(uuid::generate_uuid_v4(), uuid::generate_uuid_v4(), kExplorerUrl);
+    test(uuid::generate_uuid_v4(), kExplorerUrl);
 }
 
 TEST_F(TezosLikeWalletSynchronization, SynchronizeAccountWithMoreThan100OpsAndDeactivateSyncToken) {

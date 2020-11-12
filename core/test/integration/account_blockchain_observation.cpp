@@ -70,13 +70,8 @@ TEST_F(AccountBlockchainObservationTests, EmitNewTransaction) {
 }
 
 TEST_F(AccountBlockchainObservationTests, EmitNewTransactionAndReceiveOnPool) {
-<<<<<<< HEAD
-    auto pool = newDefaultPool();
-    auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", api::DynamicObject::newInstance()));
-=======
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
-    auto wallet = wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin", api::DynamicObject::newInstance()));
->>>>>>> 982a01732... Randomize uids in tests to allow parallelization
+    auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin", api::DynamicObject::newInstance()));
     auto account = createBitcoinLikeAccount(wallet, 0, P2PKH_MEDIUM_XPUB_INFO);
     auto receiver = make_receiver([&] (const std::shared_ptr<api::Event>& event) {
         if (event->getCode() == api::EventCode::NEW_OPERATION) {
@@ -95,13 +90,8 @@ TEST_F(AccountBlockchainObservationTests, EmitNewTransactionAndReceiveOnPool) {
 }
 
 TEST_F(AccountBlockchainObservationTests, AutoReconnect) {
-<<<<<<< HEAD
-    auto pool = newDefaultPool();
-    auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", api::DynamicObject::newInstance()));
-=======
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
-    auto wallet = wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin", api::DynamicObject::newInstance()));
->>>>>>> 982a01732... Randomize uids in tests to allow parallelization
+    auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin", api::DynamicObject::newInstance()));
     auto account = createBitcoinLikeAccount(wallet, 0, P2PKH_MEDIUM_XPUB_INFO);
     auto receiver = make_receiver([&] (const std::shared_ptr<api::Event>& event) {
 
@@ -131,13 +121,8 @@ TEST_F(AccountBlockchainObservationTests, AutoReconnect) {
 }
 
 TEST_F(AccountBlockchainObservationTests, EmitNewBlock) {
-<<<<<<< HEAD
-    auto pool = newDefaultPool();
-    auto wallet = uv::wait(pool->createWallet("my_wallet", "bitcoin", api::DynamicObject::newInstance()));
-=======
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
-    auto wallet = wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin", api::DynamicObject::newInstance()));
->>>>>>> 982a01732... Randomize uids in tests to allow parallelization
+    auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin", api::DynamicObject::newInstance()));
     auto account = createBitcoinLikeAccount(wallet, 0, P2PKH_MEDIUM_XPUB_INFO);
     auto receiver = make_receiver([&] (const std::shared_ptr<api::Event>& event) {
         if (event->getCode() == api::EventCode::NEW_BLOCK) {
@@ -172,11 +157,5 @@ TEST_F(AccountBlockchainObservationTests, EmitNewBlock) {
     EXPECT_EQ(uv::wait(account->getFreshPublicAddresses())[0]->toString(), "1DDBzjLyAmDr4qLRC2T2WJ831cxBM5v7G7");
     account->getEventBus()->subscribe(getTestExecutionContext(), receiver);
     account->startBlockchainObservation();
-<<<<<<< HEAD
     getTestExecutionContext()->waitUntilStopped();
-    uv::wait(pool->deleteWallet("my_wallet"));
 }
-=======
-    dispatcher->waitUntilStopped();
-}
->>>>>>> 982a01732... Randomize uids in tests to allow parallelization
