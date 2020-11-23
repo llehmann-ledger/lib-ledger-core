@@ -97,7 +97,9 @@ TEST_F(StellarFixture, GetLastLedger) {
 }
 
 
-TEST_F(StellarFixture, DISABLED_GetTransactions) {
+TEST_F(StellarFixture, GetTransactions) {
+    mockHttp("StellarFixture.GetTransactions");
+
     auto pool = newPool();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
@@ -121,7 +123,9 @@ TEST_F(StellarFixture, DISABLED_GetTransactions) {
     EXPECT_EQ(tx->pagingToken, "98448948301160448");
 }
 
-TEST_F(StellarFixture, DISABLED_GetOperations) {
+TEST_F(StellarFixture, GetOperations) {
+    mockHttp("StellarFixture.GetOperations");
+
     auto pool = newPool();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
@@ -160,7 +164,9 @@ TEST_F(StellarFixture, DISABLED_GetOperations) {
     }
 }
 
-TEST_F(StellarFixture, DISABLED_GetRecommendedFees) {
+TEST_F(StellarFixture, GetRecommendedFees) {
+    mockHttp("StellarFixture.GetRecommendedFees");
+
     auto pool = newPool();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),

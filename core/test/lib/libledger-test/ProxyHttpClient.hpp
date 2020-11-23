@@ -12,6 +12,7 @@ namespace ledger {
                 ProxyHttpClient(std::shared_ptr<api::HttpClient> httpClient);
                 void execute(const std::shared_ptr<api::HttpRequest>& request) override;
                 void addCache(const std::string& url, const std::string& parameter, const std::string& body);
+                void clearCache();
             private:
                 struct Cache {
                     Cache(const std::string& url_, const std::string& parameter_, std::shared_ptr<FakeUrlConnection> response_):

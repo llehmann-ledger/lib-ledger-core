@@ -40,6 +40,10 @@ namespace ledger {
                 _cache.push_back(Cache(url, parameter, FakeUrlConnection::fromString(body)));
             }
 
+            void ProxyHttpClient::clearCache() {
+                _cache.clear();
+            }
+
             
         }
     }

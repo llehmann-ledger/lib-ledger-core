@@ -56,6 +56,7 @@
 #include <api/BitcoinLikeOutput.hpp>
 #include <api/BigInt.hpp>
 #include <CppHttpLibClient.hpp>
+#include <ProxyHttpClient.hpp>
 #include <events/LambdaEventReceiver.hpp>
 #include <soci.h>
 #include <api/Account.hpp>
@@ -66,7 +67,9 @@
 #include <utils/hex.h>
 #include "../integration/IntegrationEnvironment.h"
 #include <MemPreferencesBackend.hpp>
+#include <experimental/filesystem>
 
+namespace fs = std::experimental::filesystem::v1;
 using namespace ledger::core; // don't do this at home. Only for testing contexts
 using namespace ledger::core::test;
 
@@ -82,7 +85,9 @@ public:
         resolver = std::make_shared<NativePathResolver>(IntegrationEnvironment::getInstance()->getApplicationDirPath());
         backend = std::static_pointer_cast<DatabaseBackend>(DatabaseBackend::getSqlite3Backend());
         printer = std::make_shared<CoutLogPrinter>(dispatcher->getMainExecutionContext());
-        http = std::make_shared<CppHttpLibClient>(dispatcher->getMainExecutionContext());
+        auto client = std::make_shared<CppHttpLibClient>(dispatcher->getMainExecutionContext());
+        client->setGenerateCacheFile(true);
+        http = std::make_shared<ProxyHttpClient>(client);
         ws = std::make_shared<FakeWebSocketClient>();
         rng = std::make_shared<OpenSSLRandomNumberGenerator>();
     }
@@ -168,11 +173,37 @@ public:
         return uv::wait(p.getFuture());
     }
 
+    void mockHttp(const std::string& testname) {
+        const char* env = std::getenv("MOCK_HTTP_FOLDER");
+        if (env != nullptr) { 
+            http->clearCache();
+            std::string path = env;
+            path += "/";
+            path += testname;
+            if (fs::is_directory(path)) {
+                for (const auto& file : fs::recursive_directory_iterator(path)) {
+                    std::string currentFile = file.path();
+                    if (!fs::is_directory(currentFile) && currentFile.find(".txt") != std::string::npos) {
+                        std::ifstream input(currentFile);    
+                        std::string url, parameter, body;
+                        std::getline(input, url);
+                        std::getline(input, parameter);
+                        std::string line;
+                        while (std::getline(input, line)) {
+                            body += line;
+                        }
+                        http->addCache(url, parameter, body);
+                    }
+                }
+            }
+        }
+    }
+
     std::shared_ptr<uv::UvThreadDispatcher> dispatcher;
     std::shared_ptr<NativePathResolver> resolver;
     std::shared_ptr<DatabaseBackend> backend;
     std::shared_ptr<CoutLogPrinter> printer;
-    std::shared_ptr<CppHttpLibClient> http;
+    std::shared_ptr<ProxyHttpClient> http;
     std::shared_ptr<FakeWebSocketClient> ws;
     std::shared_ptr<OpenSSLRandomNumberGenerator> rng;
 

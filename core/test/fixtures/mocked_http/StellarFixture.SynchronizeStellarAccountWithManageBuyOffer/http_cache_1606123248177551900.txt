@@ -1,0 +1,69 @@
+https://stellar.coin.ledger.com/accounts/GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2/transactions?limit=50&order=asc&cursor=123029376848683008
+
+{
+  "_links": {
+    "self": {
+      "href": "https://stellar.coin.ledger.com/accounts/GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2/transactions?cursor=123029376848683008\u0026limit=50\u0026order=asc"
+    },
+    "next": {
+      "href": "https://stellar.coin.ledger.com/accounts/GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2/transactions?cursor=123095042604343296\u0026limit=50\u0026order=asc"
+    },
+    "prev": {
+      "href": "https://stellar.coin.ledger.com/accounts/GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2/transactions?cursor=123095042604343296\u0026limit=50\u0026order=desc"
+    }
+  },
+  "_embedded": {
+    "records": [
+      {
+        "_links": {
+          "self": {
+            "href": "https://stellar.coin.ledger.com/transactions/c8f01e95f1a4b289d701f84f7cf97c8e469279a7014f0d6df368ecd6375b3884"
+          },
+          "account": {
+            "href": "https://stellar.coin.ledger.com/accounts/GA2S6CABCO4OBFX7PQSK6WQ3ZSX3WYF52TVBXQFLJAEPKKRFUXVFJUSD"
+          },
+          "ledger": {
+            "href": "https://stellar.coin.ledger.com/ledgers/28660298"
+          },
+          "operations": {
+            "href": "https://stellar.coin.ledger.com/transactions/c8f01e95f1a4b289d701f84f7cf97c8e469279a7014f0d6df368ecd6375b3884/operations{?cursor,limit,order}",
+            "templated": true
+          },
+          "effects": {
+            "href": "https://stellar.coin.ledger.com/transactions/c8f01e95f1a4b289d701f84f7cf97c8e469279a7014f0d6df368ecd6375b3884/effects{?cursor,limit,order}",
+            "templated": true
+          },
+          "precedes": {
+            "href": "https://stellar.coin.ledger.com/transactions?order=asc\u0026cursor=123095042604343296"
+          },
+          "succeeds": {
+            "href": "https://stellar.coin.ledger.com/transactions?order=desc\u0026cursor=123095042604343296"
+          },
+          "transaction": {
+            "href": "https://stellar.coin.ledger.com/transactions/c8f01e95f1a4b289d701f84f7cf97c8e469279a7014f0d6df368ecd6375b3884"
+          }
+        },
+        "id": "c8f01e95f1a4b289d701f84f7cf97c8e469279a7014f0d6df368ecd6375b3884",
+        "paging_token": "123095042604343296",
+        "successful": true,
+        "hash": "c8f01e95f1a4b289d701f84f7cf97c8e469279a7014f0d6df368ecd6375b3884",
+        "ledger": 28660298,
+        "created_at": "2020-03-13T09:50:43Z",
+        "source_account": "GA2S6CABCO4OBFX7PQSK6WQ3ZSX3WYF52TVBXQFLJAEPKKRFUXVFJUSD",
+        "source_account_sequence": "119387154387304453",
+        "fee_account": "GA2S6CABCO4OBFX7PQSK6WQ3ZSX3WYF52TVBXQFLJAEPKKRFUXVFJUSD",
+        "fee_charged": "100",
+        "max_fee": "100",
+        "operation_count": 1,
+        "envelope_xdr": "AAAAADUvCAETuOCW/3wkr1obzK+7YL3U6hvAq0gI9SolpepUAAAAZAGoJfwAAAAFAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAAx04c7RSzoKPEXKRVPk4K9TIHgN5TZwp6GhcFVTPIWycAAAAAAAAAAAAAA+gAAAAAAAAAASWl6lQAAABAWD9TPOxTENmd4qiAH/xJPS1R4ayyZLxr/t42NGZ+NyKH0wAtd3E51rF3oClkJhu+dZJ2DU68rO6wJbfqu7KsBg==",
+        "result_xdr": "AAAAAAAAAGQAAAAAAAAAAQAAAAAAAAABAAAAAAAAAAA=",
+        "result_meta_xdr": "AAAAAQAAAAIAAAADAbVSSgAAAAAAAAAANS8IARO44Jb/fCSvWhvMr7tgvdTqG8CrSAj1KiWl6lQAAAAAAcZadAGoJfwAAAAEAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAbVSSgAAAAAAAAAANS8IARO44Jb/fCSvWhvMr7tgvdTqG8CrSAj1KiWl6lQAAAAAAcZadAGoJfwAAAAFAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAABAAAABAAAAAMBtRaRAAAAAAAAAADHThztFLOgo8RcpFU+Tgr1MgeA3lNnCnoaFwVVM8hbJwAAAAADLX/vAWnhyAAAAHoAAAAFAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAPc3RlbGxhcnRlcm0uY29tAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBtVJKAAAAAAAAAADHThztFLOgo8RcpFU+Tgr1MgeA3lNnCnoaFwVVM8hbJwAAAAADLYPXAWnhyAAAAHoAAAAFAAAAAQAAAADEccZDcGLJUGqJNC5TihraQE0vQc8dOiVfQyH3xuDhdQAAAAAAAAAPc3RlbGxhcnRlcm0uY29tAAEAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMBtVJKAAAAAAAAAAA1LwgBE7jglv98JK9aG8yvu2C91OobwKtICPUqJaXqVAAAAAABxlp0Aagl/AAAAAUAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEBtVJKAAAAAAAAAAA1LwgBE7jglv98JK9aG8yvu2C91OobwKtICPUqJaXqVAAAAAABxlaMAagl/AAAAAUAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==",
+        "fee_meta_xdr": "AAAAAgAAAAMBs2UZAAAAAAAAAAA1LwgBE7jglv98JK9aG8yvu2C91OobwKtICPUqJaXqVAAAAAABxlrYAagl/AAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEBtVJKAAAAAAAAAAA1LwgBE7jglv98JK9aG8yvu2C91OobwKtICPUqJaXqVAAAAAABxlp0Aagl/AAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA==",
+        "memo_type": "none",
+        "signatures": [
+          "WD9TPOxTENmd4qiAH/xJPS1R4ayyZLxr/t42NGZ+NyKH0wAtd3E51rF3oClkJhu+dZJ2DU68rO6wJbfqu7KsBg=="
+        ]
+      }
+    ]
+  }
+}

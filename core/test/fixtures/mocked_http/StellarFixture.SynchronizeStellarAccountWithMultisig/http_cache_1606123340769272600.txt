@@ -1,0 +1,78 @@
+https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ
+
+{
+  "_links": {
+    "self": {
+      "href": "https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ"
+    },
+    "transactions": {
+      "href": "https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ/transactions{?cursor,limit,order}",
+      "templated": true
+    },
+    "operations": {
+      "href": "https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ/operations{?cursor,limit,order}",
+      "templated": true
+    },
+    "payments": {
+      "href": "https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ/payments{?cursor,limit,order}",
+      "templated": true
+    },
+    "effects": {
+      "href": "https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ/effects{?cursor,limit,order}",
+      "templated": true
+    },
+    "offers": {
+      "href": "https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ/offers{?cursor,limit,order}",
+      "templated": true
+    },
+    "trades": {
+      "href": "https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ/trades{?cursor,limit,order}",
+      "templated": true
+    },
+    "data": {
+      "href": "https://stellar.coin.ledger.com/accounts/GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ/data/{key}",
+      "templated": true
+    }
+  },
+  "id": "GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ",
+  "account_id": "GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ",
+  "sequence": "119859098278690819",
+  "subentry_count": 1,
+  "inflation_destination": "GDCHDRSDOBRMSUDKRE2C4U4KDLNEATJPIHHR2ORFL5BSD56G4DQXL4VW",
+  "last_modified_ledger": 28519933,
+  "last_modified_time": "2020-03-04T16:09:24Z",
+  "thresholds": {
+    "low_threshold": 20,
+    "med_threshold": 20,
+    "high_threshold": 20
+  },
+  "flags": {
+    "auth_required": false,
+    "auth_revocable": false,
+    "auth_immutable": false
+  },
+  "balances": [
+    {
+      "balance": "2.6905800",
+      "buying_liabilities": "0.0000000",
+      "selling_liabilities": "0.0000000",
+      "asset_type": "native"
+    }
+  ],
+  "signers": [
+    {
+      "weight": 10,
+      "key": "GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ",
+      "type": "ed25519_public_key"
+    },
+    {
+      "weight": 10,
+      "key": "GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2",
+      "type": "ed25519_public_key"
+    }
+  ],
+  "data": {},
+  "num_sponsoring": 0,
+  "num_sponsored": 0,
+  "paging_token": "GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ"
+}
