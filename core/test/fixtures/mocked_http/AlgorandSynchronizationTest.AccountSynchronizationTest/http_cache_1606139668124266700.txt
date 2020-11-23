@@ -1,0 +1,4 @@
+https://algorand.coin.staging.aws.ledger.com/ps2/v2/status
+
+{"catchpoint":"","catchpoint-acquired-blocks":0,"catchpoint-processed-accounts":0,"catchpoint-total-accounts":0,"catchpoint-total-blocks":0,"catchup-time":0,"last-catchpoint":"","last-round":10664228,"last-version":"https://github.com/algorandfoundation/specs/tree/3a83c4c743f8b17adfd73944b4319c25722a6782","next-version":"https://github.com/algorandfoundation/specs/tree/3a83c4c743f8b17adfd73944b4319c25722a6782","next-version-round":10664229,"next-version-supported":true,"stopped-at-unsupported-round":false,"time-since-last-round":2855124515}
+

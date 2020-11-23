@@ -1,0 +1,20 @@
+https://algorand.coin.staging.aws.ledger.com/ps2/v2/blocks/10664206?format=json
+
+{
+  "block": {
+    "earn": 25538,
+    "fees": "A7NMWS3NT3IUDMLVO26ULGXGIIOUQ3ND2TXSER6EBGRZNOBOUIQXHIBGDE",
+    "frac": 9518262732,
+    "gen": "testnet-v1.0",
+    "gh": "SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
+    "prev": "blk-774LDVXDLVDNPAUPNRXBBAGXLGXVA2Y2XI5XGBVRBNKJZZI63O2Q",
+    "proto": "https://github.com/algorandfoundation/specs/tree/3a83c4c743f8b17adfd73944b4319c25722a6782",
+    "rnd": 10664206,
+    "rwcalr": 11000000,
+    "rwd": "7777777777777777777777777777777777777777777777777774MSJUVU",
+    "seed": "GfNrDwpjUb06zJ/qK+qBn7AwzJPZ98ALhr1iy+eWQyU=",
+    "tc": 13192139,
+    "ts": 1606139569,
+    "txn": "tGWqr06HVvsHC2hFmu2EhwYBSiMkvIoo5nWxAkUxsLo="
+  }
+}

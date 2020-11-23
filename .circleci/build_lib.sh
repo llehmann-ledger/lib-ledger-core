@@ -159,6 +159,9 @@ if [ "$BUILD_CONFIG" == "Debug" ]; then
 	echo "======> Create PostgreSQL with name test_db, host localhost and port 5432"
 	export POSTGRES_USER=postgres
 	export POSTGRES_DB=test_db
+	export MOCK_HTTP_FOLDER=`pwd`/../lib-ledger-core/core/test/fixtures/mocked_http/
+	echo "mocked tests:"
+	ls $MOCK_HTTP_FOLDER  
 	if [ "$unamestr" == "Linux" ]; then
 		# This modification is done to avoid authentication
 		echo "======> Modify PostgreSQL configuration file ..."

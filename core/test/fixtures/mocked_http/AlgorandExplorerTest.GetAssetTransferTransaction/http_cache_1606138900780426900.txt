@@ -1,0 +1,4 @@
+https://algorand.coin.staging.aws.ledger.com/idx2/v2/transactions?txid=P3TBX7WYKO5SIZIHV2Z3GUCOD7B556RF6PSOPINFB6QN7EMTF6JQ
+
+{"current-round":10664048,"next-token":"HMFmAAAAAAAAAAAA","transactions":[{"asset-transfer-transaction":{"amount":1000,"asset-id":342836,"close-amount":0,"receiver":"6ENXFMQRRIF6KD7HXE47HUHCJXEUKGGRGR6LXSX7RRZBTMVI5NUDOQDTNE"},"close-rewards":0,"closing-amount":0,"confirmed-round":6734108,"fee":2000,"first-valid":6734094,"genesis-hash":"SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=","genesis-id":"testnet-v1.0","id":"P3TBX7WYKO5SIZIHV2Z3GUCOD7B556RF6PSOPINFB6QN7EMTF6JQ","intra-round-offset":0,"last-valid":6734193,"note":"T2JlbGl4IGNvaW4gdGVzdCB0cmFuc2Zlcg==","receiver-rewards":0,"round-time":1589448692,"sender":"RGX5XA7DWZOZ5SLG4WQSNIFKIG4CNX4VOH23YCEX56523DQEAL3QL56XZM","sender-rewards":0,"signature":{"sig":"46P2EDBZQhN+LIRJB5SPRhcFMYoRy+O/L5eUPAhKsi/iAvq+gQwPCIV9QCheUO2aQ/pai0fUoTp5eaTm4XH9Dg=="},"tx-type":"axfer"}]}
+
