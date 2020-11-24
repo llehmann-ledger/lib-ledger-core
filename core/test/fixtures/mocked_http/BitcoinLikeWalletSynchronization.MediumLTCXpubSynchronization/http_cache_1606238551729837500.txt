@@ -1,3 +1,3 @@
 https://explorers.api.live.ledger.com/blockchain/v2/ltc/syncToken
 
-{"token":"af204c66-476d-44e8-9de7-d4a2416ac67b"}
+{"token":"60856b63-7623-4079-a384-7388b108d423"}

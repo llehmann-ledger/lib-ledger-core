@@ -167,7 +167,7 @@ jobs:
         - run:
             name: Run_Tests
             command: |
-              . .circleci/run_tests.sh
+              . .circleci/run_tests.sh linux
   build_macos_release:
     macos:
       xcode: "10.0.0"
@@ -305,7 +305,7 @@ jobs:
       - run:
           name: Run_Tests
           command: |
-            . .circleci/run_tests.sh
+            . .circleci/run_tests.sh macos
   publish_jar:
     environment:
       CORE_SSL_1_1: arch_ssl_1_1
