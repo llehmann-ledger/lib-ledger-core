@@ -167,9 +167,7 @@ jobs:
         - run:
             name: Run_Tests
             command: |
-                cd ../lib-ledger-core-build
-
-                ~/cmake-3.16.5-Linux-x86_64/bin/ctest -j 5 --output-on-failure -timeout 120
+              . .circleci/run_tests.sh
   build_macos_release:
     macos:
       xcode: "10.0.0"
@@ -307,8 +305,7 @@ jobs:
       - run:
           name: Run_Tests
           command: |
-              cd ../lib-ledger-core-build
-              ctest -j 5 --output-on-failure -timeout 120
+            . .circleci/run_tests.sh
   publish_jar:
     environment:
       CORE_SSL_1_1: arch_ssl_1_1

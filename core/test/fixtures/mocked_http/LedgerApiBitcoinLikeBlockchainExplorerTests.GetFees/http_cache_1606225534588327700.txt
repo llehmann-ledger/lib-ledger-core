@@ -1,0 +1,3 @@
+http://api.ledgerwallet.com/blockchain/v2/btc/fees
+
+{"1":50913,"3":48431,"6":41723,"last_updated":1606225499}

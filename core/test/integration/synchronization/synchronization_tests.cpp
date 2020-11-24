@@ -126,6 +126,7 @@ TEST_F(BitcoinLikeWalletSynchronization, DISABLED_MediumXpubSynchronization) {
 }
 
 TEST_F(BitcoinLikeWalletSynchronization, MediumDGBXpubSynchronization) {
+    mockHttp("BitcoinLikeWalletSynchronization.MediumDGBXpubSynchronization");
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
         auto configuration = DynamicObject::newInstance();
@@ -168,6 +169,7 @@ TEST_F(BitcoinLikeWalletSynchronization, MediumDGBXpubSynchronization) {
 }
 
 TEST_F(BitcoinLikeWalletSynchronization, MediumLTCXpubSynchronization) {
+    mockHttp("BitcoinLikeWalletSynchronization.MediumLTCXpubSynchronization");
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
         auto configuration = DynamicObject::newInstance();
@@ -210,6 +212,7 @@ TEST_F(BitcoinLikeWalletSynchronization, MediumLTCXpubSynchronization) {
 }
 
 TEST_F(BitcoinLikeWalletSynchronization, SynchronizeOnceAtATime) {
+    mockHttp("BitcoinLikeWalletSynchronization.SynchronizeOnceAtATime");
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
         auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin",
@@ -242,6 +245,7 @@ TEST_F(BitcoinLikeWalletSynchronization, SynchronizeOnceAtATime) {
 }
 
 TEST_F(BitcoinLikeWalletSynchronization, SynchronizeAndFreshResetAll) {
+    mockHttp("BitcoinLikeWalletSynchronization.SynchronizeAndFreshResetAll");
     auto poolName = uuid::generate_uuid_v4();
     {
         auto pool = newDefaultPool(poolName);
@@ -282,6 +286,7 @@ TEST_F(BitcoinLikeWalletSynchronization, SynchronizeAndFreshResetAll) {
 }
 
 TEST_F(BitcoinLikeWalletSynchronization, SynchronizeFromLastBlock) {
+    mockHttp("BitcoinLikeWalletSynchronization.SynchronizeFromLastBlock");
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
         auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin",
@@ -380,6 +385,7 @@ TEST_F(BitcoinLikeWalletSynchronization, TestNetSynchronization) {
 }
 
 TEST_F(BitcoinLikeWalletSynchronization, MultipleSynchronization) {
+    mockHttp("BitcoinLikeWalletSynchronization.MultipleSynchronization");
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
     {
         auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin",
@@ -530,6 +536,7 @@ TEST_F(BitcoinLikeWalletSynchronization, XSTParsingAndSerialization) {
 }
 
 TEST_F(BitcoinLikeWalletSynchronization, GetSelfRecipients) {
+    mockHttp("BitcoinLikeWalletSynchronization.GetSelfRecipients");
     const api::ExtendedKeyAccountCreationInfo SELF_RECIPIENT_XPUB_INFO(
         0, {"main"}, {"44'/0'/0'"}, {"xpub6D4waFVPfPCpRvPkQd9A6n65z3hTp6TvkjnBHG5j2MCKytMuadKgfTUHqwRH77GQqCKTTsUXSZzGYxMGpWpJBdYAYVH75x7yMnwJvra1BUJ"}
 );
@@ -642,6 +649,7 @@ TEST_F(BitcoinLikeWalletSynchronization, SynchronizeOnFakeExplorer) {
 }
 
 TEST_F(BitcoinLikeWalletSynchronization, SynchronizeAndFilterOperationsByBlockHeight) {
+    mockHttp("BitcoinLikeWalletSynchronization.SynchronizeAndFilterOperationsByBlockHeight");
     auto pool = newDefaultPool();
     auto wallet = uv::wait(pool->createWallet("e847815f-488a-4301-b67c-378a5e9c8a62", "bitcoin",
                                           api::DynamicObject::newInstance()));

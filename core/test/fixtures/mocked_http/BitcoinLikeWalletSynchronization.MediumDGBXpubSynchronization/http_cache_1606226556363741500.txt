@@ -1,0 +1,3 @@
+https://explorers.api.live.ledger.com/blockchain/v2/dgb/syncToken
+
+{"token":"b9ebc280-4c82-4869-9dc0-e6fc74a74e14"}
