@@ -97,7 +97,7 @@ TEST_F(StellarFixture, GetLastLedger) {
 }
 
 
-TEST_F(StellarFixture, GetTransactions) {
+TEST_F(StellarFixture, DISABLED_GetTransactions) {
     mockHttp("StellarFixture.GetTransactions");
 
     auto pool = newPool();
@@ -123,7 +123,7 @@ TEST_F(StellarFixture, GetTransactions) {
     EXPECT_EQ(tx->pagingToken, "98448948301160448");
 }
 
-TEST_F(StellarFixture, GetOperations) {
+TEST_F(StellarFixture, DISABLED_GetOperations) {
     mockHttp("StellarFixture.GetOperations");
 
     auto pool = newPool();
@@ -164,7 +164,7 @@ TEST_F(StellarFixture, GetOperations) {
     }
 }
 
-TEST_F(StellarFixture, GetRecommendedFees) {
+TEST_F(StellarFixture, DISABLED_GetRecommendedFees) {
     mockHttp("StellarFixture.GetRecommendedFees");
 
     auto pool = newPool();
