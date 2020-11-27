@@ -1,3 +1,0 @@
-https://explorers.api.live.ledger.com/blockchain/v2/ltc/syncToken
-
-{"success":"Token was deleted"}
