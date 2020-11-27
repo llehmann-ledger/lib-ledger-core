@@ -35,32 +35,33 @@
 #include <wallet/algorand/AlgorandNetworks.hpp>
 #include <wallet/common/OperationQuery.h>
 #include <api/Configuration.hpp>
-
-#include "../integration/WalletFixture.hpp"
+#include <Uuid.hpp>
+#include <chrono>
+#include "../integration/BaseFixture.h"
 
 #include <functional>
 
 using namespace ledger::testing::algorand;
 using namespace ledger::core::algorand;
 
-class AlgorandSynchronizationTest : public WalletFixture<WalletFactory> {
+class AlgorandSynchronizationTest : public BaseFixture {
 public:
-    void SetUp() override {
-        WalletFixture::SetUp();
-        backend->enableQueryLogging(true);
-    }
-    void TearDown() override {
-        uv::wait(pool->deleteWallet("test-wallet"));
-        WalletFixture::TearDown();
-    }
-    void synchronizeAccount(const std::string & accountAddress) {
-        registerCurrency(currencies::ALGORAND);
 
+    void synchronizeAccount(const std::string & accountAddress) {
+#ifdef PG_SUPPORT
+        const bool usePostgreSQL = true;
+        auto poolConfig = DynamicObject::newInstance();
+        poolConfig->putString(
+            api::PoolConfiguration::DATABASE_NAME, "postgres://localhost:5432/test_db");
+        pool = newDefaultPool(uuid::generate_uuid_v4(), "", poolConfig, usePostgreSQL);
+#else
+        pool = newDefaultPool(uuid::generate_uuid_v4());
+#endif
         // NOTE: we run the tests on the staging environment which is on the TestNet
         auto configuration = DynamicObject::newInstance();
         configuration->putString(api::Configuration::BLOCKCHAIN_EXPLORER_API_ENDPOINT, "https://algorand.coin.staging.aws.ledger.com");
 
-        auto wallet = std::dynamic_pointer_cast<Wallet>(uv::wait(pool->createWallet("test-wallet", "algorand", configuration)));
+        auto wallet = std::dynamic_pointer_cast<Wallet>(uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "algorand", configuration)));
 
         auto nextIndex = uv::wait(wallet->getNextAccountIndex());
         EXPECT_EQ(nextIndex, 0);
@@ -91,6 +92,7 @@ public:
         getTestExecutionContext()->waitUntilStopped();
     }
 
+    std::shared_ptr<WalletPool> pool;
     std::shared_ptr<Account> _account;
 
 };
