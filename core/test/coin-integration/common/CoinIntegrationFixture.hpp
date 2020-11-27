@@ -57,7 +57,6 @@
 #include <api/BigInt.hpp>
 #include <CppHttpLibClient.hpp>
 #include <ProxyHttpClient.hpp>
-#include <events/LambdaEventReceiver.hpp>
 #include <soci.h>
 #include <api/Account.hpp>
 #include <api/BitcoinLikeAccount.hpp>
@@ -66,12 +65,49 @@
 #include <utils/FilesystemUtils.hpp>
 #include <utils/hex.h>
 #include "../integration/IntegrationEnvironment.h"
+#include <events/EventPublisher.hpp>
 #include <MemPreferencesBackend.hpp>
 #include <experimental/filesystem>
+#include <debug/logger.hpp>
 
 namespace fs = std::experimental::filesystem::v1;
 using namespace ledger::core; // don't do this at home. Only for testing contexts
 using namespace ledger::core::test;
+
+class LambdaEventReceiver : public api::EventReceiver {
+public:
+    LambdaEventReceiver(std::function<void (const std::shared_ptr<api::Event> &)> f,
+                                            std::shared_ptr<uv::SequentialExecutionContext> &exec_context,
+                                            std::shared_ptr<NativePathResolver> &resolver,
+                                            std::shared_ptr<CoutLogPrinter> &printer) {
+        _function = f;
+        _exec_context = exec_context;
+        _resolver = resolver;
+        _printer = printer;
+    }
+    void onEvent(const std::shared_ptr<api::Event> &event) override {
+        try {
+            _function(event);
+        } catch (Exception& e) {
+            std::shared_ptr<spdlog::logger> logger = logger::create(
+                "lambdaevent-l",
+                _exec_context,
+                _resolver,
+                _printer,
+                logger::DEFAULT_MAX_SIZE,
+                true
+            );
+            logger->error(e.getMessage());
+            _exec_context->stop();
+        }
+    }
+
+private:
+    std::function<void (const std::shared_ptr<api::Event> &)> _function;
+    std::shared_ptr<uv::SequentialExecutionContext> _exec_context;
+    std::shared_ptr<NativePathResolver> _resolver;
+    std::shared_ptr<CoutLogPrinter> _printer;
+};
 
 enum SynchronizationResult {OLD_ACCOUNT, NEW_ACCOUNT};
 
@@ -197,6 +233,36 @@ public:
                 }
             }
         }
+    }
+
+    std::shared_ptr<LambdaEventReceiver> make_receiver(std::function<void (const std::shared_ptr<api::Event> &)> f) {
+        auto exec_context = std::dynamic_pointer_cast<uv::SequentialExecutionContext>(dispatcher->getMainExecutionContext());
+        return std::make_shared<LambdaEventReceiver>(f, exec_context, resolver, printer);
+    }
+
+    std::shared_ptr<LambdaEventReceiver> make_receiver(std::function<void (const std::shared_ptr<api::Event> &)> f, std::shared_ptr<uv::SequentialExecutionContext> exec_context) {
+        return std::make_shared<LambdaEventReceiver>(f, exec_context, resolver, printer);
+    }
+
+    std::shared_ptr<LambdaEventReceiver> make_promise_receiver(
+            Promise<Unit>& promise,
+            const std::vector<api::EventCode> &successCodes,
+            const std::vector<api::EventCode> &failureCodes
+    ) {
+        return make_receiver([=] (const std::shared_ptr<api::Event> &event) mutable {
+            for (const auto& code : successCodes) {
+                if (code == event->getCode()) {
+                    promise.success(unit);
+                    return;
+                }
+            }
+            for (const auto& code : failureCodes) {
+                if (code == event->getCode()) {
+                    promise.failure(make_exception(api::ErrorCode::RUNTIME_ERROR, event->getPayload()->dump()));
+                    return;
+                }
+            }
+        });
     }
 
     std::shared_ptr<uv::UvThreadDispatcher> dispatcher;
