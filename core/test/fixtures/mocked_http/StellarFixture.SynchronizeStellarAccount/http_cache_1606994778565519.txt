@@ -6,10 +6,10 @@ https://stellar.coin.ledger.com/ledgers?order=desc&limit=1
       "href": "https://stellar.coin.ledger.com/ledgers?cursor=\u0026limit=1\u0026order=desc"
     },
     "next": {
-      "href": "https://stellar.coin.ledger.com/ledgers?cursor=141303427605987328\u0026limit=1\u0026order=desc"
+      "href": "https://stellar.coin.ledger.com/ledgers?cursor=141322810793394176\u0026limit=1\u0026order=desc"
     },
     "prev": {
-      "href": "https://stellar.coin.ledger.com/ledgers?cursor=141303427605987328\u0026limit=1\u0026order=asc"
+      "href": "https://stellar.coin.ledger.com/ledgers?cursor=141322810793394176\u0026limit=1\u0026order=asc"
     }
   },
   "_embedded": {
@@ -17,42 +17,42 @@ https://stellar.coin.ledger.com/ledgers?order=desc&limit=1
       {
         "_links": {
           "self": {
-            "href": "https://stellar.coin.ledger.com/ledgers/32899768"
+            "href": "https://stellar.coin.ledger.com/ledgers/32904281"
           },
           "transactions": {
-            "href": "https://stellar.coin.ledger.com/ledgers/32899768/transactions{?cursor,limit,order}",
+            "href": "https://stellar.coin.ledger.com/ledgers/32904281/transactions{?cursor,limit,order}",
             "templated": true
           },
           "operations": {
-            "href": "https://stellar.coin.ledger.com/ledgers/32899768/operations{?cursor,limit,order}",
+            "href": "https://stellar.coin.ledger.com/ledgers/32904281/operations{?cursor,limit,order}",
             "templated": true
           },
           "payments": {
-            "href": "https://stellar.coin.ledger.com/ledgers/32899768/payments{?cursor,limit,order}",
+            "href": "https://stellar.coin.ledger.com/ledgers/32904281/payments{?cursor,limit,order}",
             "templated": true
           },
           "effects": {
-            "href": "https://stellar.coin.ledger.com/ledgers/32899768/effects{?cursor,limit,order}",
+            "href": "https://stellar.coin.ledger.com/ledgers/32904281/effects{?cursor,limit,order}",
             "templated": true
           }
         },
-        "id": "f23b85ea5dd24782e320f22b98db90a2c5be0e0a82f8652383e60299f68eee5a",
-        "paging_token": "141303427605987328",
-        "hash": "f23b85ea5dd24782e320f22b98db90a2c5be0e0a82f8652383e60299f68eee5a",
-        "prev_hash": "8bc262a3ec40cc0d38fd3494f2534efb63408da438666daa4a5e1b887530b8ec",
-        "sequence": 32899768,
-        "successful_transaction_count": 43,
+        "id": "0dd5dfb07f350d655e28af510f4b06f26bdff0e3f5ac353607d53f5dbb8a07fc",
+        "paging_token": "141322810793394176",
+        "hash": "0dd5dfb07f350d655e28af510f4b06f26bdff0e3f5ac353607d53f5dbb8a07fc",
+        "prev_hash": "8f2ced68cdc3ac601c0f6636a32dbfe75fece686cba91f1c484321d2f62b553f",
+        "sequence": 32904281,
+        "successful_transaction_count": 36,
         "failed_transaction_count": 7,
-        "operation_count": 109,
-        "tx_set_operation_count": 116,
-        "closed_at": "2020-12-03T11:26:15Z",
+        "operation_count": 84,
+        "tx_set_operation_count": 91,
+        "closed_at": "2020-12-03T18:23:50Z",
         "total_coins": "105443902087.3472865",
-        "fee_pool": "1830385.7186851",
+        "fee_pool": "1830457.7953851",
         "base_fee_in_stroops": 100,
         "base_reserve_in_stroops": 5000000,
         "max_tx_set_size": 1000,
         "protocol_version": 15,
-        "header_xdr": "AAAAD4vCYqPsQMwNOP00lPJTTvtjQI2kOGZtqkpeG4h1MLjsWsRCZVRyTkrMDkA/gtcSTe1m/Nm3MTycuZRM1OENUIoAAAAAX8jLVwAAAAAAAAABAAAAAIrmk1sAf48LuMuYqijEm9AEg5B2Fy7VsuJOEyo5E/BxAAAAQOiTxW12v7FGzUdNZ52/l+tf0E9av9r5cBTEvlnQPNnT8zJhH7kyVljIBGmdXfoAUCFCs5cunJ3iXT5iXGEr6AflCYeZrplpXKuquDeP1mjmyTkS9CeuIvFZiPcj8BkdN41BVQBmrJD7om8mBuUx3pN5/Mr3om1Rr7v+yHN3kT/OAfYCuA6iHrPseVthAAAQpbLn2CMAAAEWAAAAABbDjJ8AAABkAExLQAAAA+jF/XHNg3shu+BxsHaaKzDG1orazSf8k5bQNhFYYNnV4ELW2PGeQ/4vX5925BqxmVRAGUs4CUqDOShVOx20ucUK+nyqrRzubnXvqO4cKTWOH+/krFCiAMnbbebJTcrcn/OvWY93JpDWkbB6RblFKlKvpsNM0xi5loRKWoh8hlCbuQAAAAA="
+        "header_xdr": "AAAAD48s7WjNw6xgHA9mNqMtv+df7OaGy6kfHEhDIdL2K1U/2fZFqMPH0qfPF5FXmpIXfbL67M4xq6CaXy2HrPWScf0AAAAAX8ktNgAAAAAAAAABAAAAAD8yPEEcFI+mC4b5mkYsVzg64Eg1bwhZsrAJCPlB4VggAAAAQBbZri8ggrGh3WmAimTiC+0oYvcN5ps/F4jiQuP4r8vNKDPEB7uI/8UPZmiJlcKePSoyJ1jzy0av3/h9dgCqmwwbYzfFMrgOWUzs1jjUbbPNq/1/tlIQilcs+TNsVjRqjI69jkapqRGlLprP8P1pT2qRkL3EogGNXe5fdvQRLoVgAfYUWQ6iHrPseVthAAAQpd3d4DsAAAEWAAAAABbHPk8AAABkAExLQAAAA+i+ZM3D3UmFEtFAbUHCVeuLHdtVlYDRlICtQ/rDENSI0pGBSG2FI45rkY+5NxhNCHspU3ttgqT0s0vuectW0cRZ+nyqrRzubnXvqO4cKTWOH+/krFCiAMnbbebJTcrcn/OvWY93JpDWkbB6RblFKlKvpsNM0xi5loRKWoh8hlCbuQAAAAA="
       }
     ]
   }
