@@ -1,36 +1,36 @@
-https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3
+https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3
 
 {
   "_links": {
     "self": {
-      "href": "https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3"
+      "href": "https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3"
     },
     "transactions": {
-      "href": "https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/transactions{?cursor,limit,order}",
+      "href": "https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/transactions{?cursor,limit,order}",
       "templated": true
     },
     "operations": {
-      "href": "https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/operations{?cursor,limit,order}",
+      "href": "https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/operations{?cursor,limit,order}",
       "templated": true
     },
     "payments": {
-      "href": "https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/payments{?cursor,limit,order}",
+      "href": "https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/payments{?cursor,limit,order}",
       "templated": true
     },
     "effects": {
-      "href": "https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/effects{?cursor,limit,order}",
+      "href": "https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/effects{?cursor,limit,order}",
       "templated": true
     },
     "offers": {
-      "href": "https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/offers{?cursor,limit,order}",
+      "href": "https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/offers{?cursor,limit,order}",
       "templated": true
     },
     "trades": {
-      "href": "https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/trades{?cursor,limit,order}",
+      "href": "https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/trades{?cursor,limit,order}",
       "templated": true
     },
     "data": {
-      "href": "https://stellar.coin.ledger.com/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/data/{key}",
+      "href": "https://horizon.stellar.org/accounts/GCQQQPIROIEFHIWEO2QH4KNWJYHZ5MX7RFHR4SCWFD5KPNR5455E6BR3/data/{key}",
       "templated": true
     }
   },

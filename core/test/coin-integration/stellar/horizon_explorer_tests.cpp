@@ -39,6 +39,7 @@ static const auto MAINNET_URL = "https://horizon.stellar.org";
 
 
 TEST_F(StellarFixture, GetAsset) {
+    mockHttp("StellarFixture.GetAsset");
     auto pool = newPool();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
@@ -58,6 +59,7 @@ TEST_F(StellarFixture, GetAsset) {
 }
 
 TEST_F(StellarFixture, GetAccount) {
+    mockHttp("StellarFixture.GetAccount");
     auto pool = newPool();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
@@ -83,6 +85,7 @@ TEST_F(StellarFixture, GetAccount) {
 
 
 TEST_F(StellarFixture, GetLastLedger) {
+    mockHttp("StellarFixture.GetLastLedger");
     auto pool = newPool();
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
