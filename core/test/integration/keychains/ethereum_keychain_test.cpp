@@ -229,12 +229,6 @@ const std::vector<DerivationSchemeTestData> derivationSchemeTestData = {
                 "04b82b5c9394ba9b3575e425f09955901a92c1bd2b9e301aede6a1ab9f118290030c6e093d70add73af6b29444d525aab35201e8806ad4dcd4924dedb5afabb9fa",
                 "224eb6e0384eb6193e355195bc76d5bbf2210eb1e9f61b9c826a3a2db18355f0",
                 "0x25Faa357D783C1A9B1eE9403f6969AC65E6F3ae3"
-        },
-        {
-                {"44'/<coin_type>'/<account>'/<node>'","44'/60'/<account>'/<node>'", "44'/60'/0'/<node>'","44'/60'/<account>'/0'","44'/60'/0'/0'"},
-                "04d2ee4bb49221f9f1662e4791748e68354c26d7d5290ad518c86c4d714c785e6533e0286d3803b0ddde3287eb6f31f77792fdf7323f76152c14069805f23121d2",
-                "ddf5a9cf1fdf4746a4495cf36328c7e2af31d18dd0a8f8302f3e13c900f4bfb9",
-                "0x390De614378307a6d85cD0e68460378A745295b1"
         }
 
 };

@@ -203,6 +203,7 @@ add_test (NAME ledger-core-integration-EthereumKeychains.EthereumChildAddressVal
 add_test (NAME ledger-core-integration-EthereumKeychains.EthereumExoticDerivationPaths COMMAND ledger-core-integration-tests --gtest_filter=EthereumKeychains.EthereumExoticDerivationPaths)
 add_test (NAME ledger-core-integration-EthereumKeychains.EthereumAddressValidationFromPubKeyAndChainCode COMMAND ledger-core-integration-tests --gtest_filter=EthereumKeychains.EthereumAddressValidationFromPubKeyAndChainCode)
 add_test (NAME ledger-core-integration-EthereumKeychains.EthereumDerivationSchemes COMMAND ledger-core-integration-tests --gtest_filter=EthereumKeychains.EthereumDerivationSchemes)
+add_test (NAME ledger-core-integration-EthereumKeychains2.EthereumDerivationSchemes COMMAND ledger-core-integration-tests --gtest_filter=EthereumKeychains2.EthereumDerivationSchemes)
 
 # add_test (NAME ledger-core-integration-RippleLikeWalletSynchronization.MediumXpubSynchronization COMMAND ledger-core-integration-tests --gtest_filter=RippleLikeWalletSynchronization.MediumXpubSynchronization)
 add_test (NAME ledger-core-integration-RippleLikeWalletSynchronization.EmitNewTransactionAndReceiveOnPool COMMAND ledger-core-integration-tests --gtest_filter=RippleLikeWalletSynchronization.EmitNewTransactionAndReceiveOnPool)
