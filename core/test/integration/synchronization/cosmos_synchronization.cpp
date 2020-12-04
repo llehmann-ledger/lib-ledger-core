@@ -335,7 +335,6 @@ TEST_F(CosmosLikeWalletSynchronization, MediumXpubSynchronization) {
 #else
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
 #endif
-    backend->enableQueryLogging(true);
 
     {
         auto configuration = DynamicObject::newInstance();

@@ -31,7 +31,6 @@ public:
 #else
      pool = newDefaultPool(uuid::generate_uuid_v4());
 #endif
-     backend->enableQueryLogging(true);
  }
 
  void setupTest(

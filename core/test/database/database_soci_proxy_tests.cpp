@@ -78,7 +78,6 @@ protected:
         Test::SetUp();
         auto engine = std::make_shared<MemoryDatabaseProxy>();
         _backend = std::make_shared<ProxyBackend>(engine);
-        _backend->enableQueryLogging(true);
         auto dbName = fmt::format( "test_db_{}", std::chrono::system_clock::now().time_since_epoch().count());
         std::cout << "initializing database " << dbName << std::endl;
         _backend->init(nullptr, dbName, DB_KEY, sql);
@@ -190,7 +189,6 @@ protected:
         Test::SetUp();
         auto engine = std::make_shared<MemoryDatabaseProxy>();
         _backend = std::make_shared<ProxyBackend>(engine);
-        _backend->enableQueryLogging(true);
         dbName = ":memory:";
         _backend->init(nullptr, dbName, DB_KEY, sql);
     }

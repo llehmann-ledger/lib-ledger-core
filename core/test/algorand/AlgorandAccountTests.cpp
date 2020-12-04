@@ -40,13 +40,13 @@
 #include <api/AccountCreationInfo.hpp>
 
 #include "../integration/WalletFixture.hpp"
-
 #include <gtest/gtest.h>
 
 #include <cstdint>
 #include <string>
 
 using namespace ledger::core;
+#include <Uuid.hpp>
 
 const auto OBELIX = std::string("RGX5XA7DWZOZ5SLG4WQSNIFKIG4CNX4VOH23YCEX56523DQEAL3QL56XZM");
 const auto ADDR1 = std::string("6ENXFMQRRIF6KD7HXE47HUHCJXEUKGGRGR6LXSX7RRZBTMVI5NUDOQDTNE");
@@ -216,7 +216,6 @@ public:
         WalletFixture::SetUp();
 
         const auto currency = currencies::ALGORAND;
-        registerCurrency(currency);
 
         accountInfo = api::AccountCreationInfo(1, {}, {}, { algorand::Address::toPublicKey(OBELIX) }, {});
 
@@ -224,7 +223,7 @@ public:
         auto configuration = DynamicObject::newInstance();
         configuration->putString(api::Configuration::BLOCKCHAIN_EXPLORER_API_ENDPOINT, "https://algorand.coin.staging.aws.ledger.com");
 
-        wallet = std::dynamic_pointer_cast<algorand::Wallet>(uv::wait(pool->createWallet("algorand", currency.name, configuration)));
+        wallet = std::dynamic_pointer_cast<algorand::Wallet>(uv::wait(pool->createWallet(uuid::generate_uuid_v4(), currency.name, configuration)));
         account = createAlgorandAccount(wallet, accountInfo.index, accountInfo);
 
         accountUid = algorand::AccountDatabaseHelper::createAccountUid(wallet->getWalletUid(), accountInfo.index);

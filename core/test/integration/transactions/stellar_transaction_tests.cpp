@@ -43,7 +43,7 @@
 
 #include <Uuid.hpp>
 
-class StellarLikeWalletSynchronization3 : public BaseFixture {
+class StellarLikeWalletTransaction : public BaseFixture {
 
 };
 
@@ -62,8 +62,8 @@ static api::Currency STELLAR =
 api::AccountCreationInfo accountInfo(const std::string &pubKey);
 api::AccountCreationInfo accountInfoFromAddress(const std::string& address);
 
-TEST_F(StellarLikeWalletSynchronization3, PaymentTransaction) {
-    mockHttp("StellarLikeWalletSynchronization3.PaymentTransaction");
+TEST_F(StellarLikeWalletTransaction, PaymentTransaction) {
+    mockHttp("StellarLikeWalletTransaction.PaymentTransaction");
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
     auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "stellar", api::DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());

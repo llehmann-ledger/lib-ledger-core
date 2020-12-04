@@ -45,9 +45,8 @@ struct CosmosAccounts : public BaseFixture {
 TEST_F(CosmosAccounts, DISABLED_FirstATOMAccountInfo) {
     auto const currency = currencies::ATOM;
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
-    backend->enableQueryLogging(true);
 
-    auto wallet = uv::wait(pool->createWallet("my_wallet", currency.name, api::DynamicObject::newInstance()));
+    auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), currency.name, api::DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
 
     EXPECT_EQ(info.index, 0);

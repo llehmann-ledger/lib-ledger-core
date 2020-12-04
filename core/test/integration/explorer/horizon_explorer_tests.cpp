@@ -29,18 +29,23 @@
  *
  */
 
-#include "StellarFixture.hpp"
+#include "../BaseFixture.h"
 #include <wallet/stellar/explorers/HorizonBlockchainExplorer.hpp>
 #include <collections/DynamicObject.hpp>
 #include <utils/DateUtils.hpp>
+#include <Uuid.hpp>
 
 static const auto BASE_URL = "https://horizon-testnet.stellar.org";
 static const auto MAINNET_URL = "https://horizon.stellar.org";
 
+class StellarExplorer : public BaseFixture {
 
-TEST_F(StellarFixture, GetAsset) {
-    mockHttp("StellarFixture.GetAsset");
-    auto pool = newPool();
+};
+
+
+TEST_F(StellarExplorer, GetAsset) {
+    mockHttp("StellarExplorer.GetAsset");
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
             pool->getHttpClient(BASE_URL),
@@ -58,9 +63,9 @@ TEST_F(StellarFixture, GetAsset) {
      */
 }
 
-TEST_F(StellarFixture, GetAccount) {
-    mockHttp("StellarFixture.GetAccount");
-    auto pool = newPool();
+TEST_F(StellarExplorer, GetAccount) {
+    mockHttp("StellarExplorer.GetAccount");
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
             pool->getHttpClient(MAINNET_URL),
@@ -84,9 +89,9 @@ TEST_F(StellarFixture, GetAccount) {
 }
 
 
-TEST_F(StellarFixture, GetLastLedger) {
-    mockHttp("StellarFixture.GetLastLedger");
-    auto pool = newPool();
+TEST_F(StellarExplorer, GetLastLedger) {
+    mockHttp("StellarExplorer.GetLastLedger");
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
             pool->getHttpClient(BASE_URL),
@@ -100,10 +105,10 @@ TEST_F(StellarFixture, GetLastLedger) {
 }
 
 
-TEST_F(StellarFixture, DISABLED_GetTransactions) {
-    mockHttp("StellarFixture.GetTransactions");
+TEST_F(StellarExplorer, GetTransactions) {
+    mockHttp("StellarExplorer.GetTransactions");
 
-    auto pool = newPool();
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
             pool->getHttpClient(MAINNET_URL),
@@ -126,10 +131,10 @@ TEST_F(StellarFixture, DISABLED_GetTransactions) {
     EXPECT_EQ(tx->pagingToken, "98448948301160448");
 }
 
-TEST_F(StellarFixture, DISABLED_GetOperations) {
-    mockHttp("StellarFixture.GetOperations");
+TEST_F(StellarExplorer, GetOperations) {
+    mockHttp("StellarExplorer.GetOperations");
 
-    auto pool = newPool();
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
             pool->getHttpClient(MAINNET_URL),
@@ -167,10 +172,10 @@ TEST_F(StellarFixture, DISABLED_GetOperations) {
     }
 }
 
-TEST_F(StellarFixture, DISABLED_GetRecommendedFees) {
-    mockHttp("StellarFixture.GetRecommendedFees");
+TEST_F(StellarExplorer, GetRecommendedFees) {
+    mockHttp("StellarExplorer.GetRecommendedFees");
 
-    auto pool = newPool();
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
     auto explorer = std::make_shared<HorizonBlockchainExplorer>(
             pool->getDispatcher()->getSerialExecutionContext("explorer"),
             pool->getHttpClient(MAINNET_URL),

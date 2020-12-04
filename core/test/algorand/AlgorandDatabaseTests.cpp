@@ -41,7 +41,7 @@
 #include <api/Address.hpp>
 
 #include "../integration/WalletFixture.hpp" // No equivalent in v1 ?
-
+#include <Uuid.hpp>
 #include <utility>
 
 using namespace ledger::testing::algorand;
@@ -55,7 +55,6 @@ class AlgorandDatabaseTest : public WalletFixture<WalletFactory> {
         WalletFixture::SetUp();
 
         auto const currency = currencies::ALGORAND;
-        registerCurrency(currency);
 
         accountInfo = api::AccountCreationInfo(1, {}, {}, { algorand::Address::toPublicKey(OBELIX_ADDRESS) }, {});
 
@@ -63,7 +62,7 @@ class AlgorandDatabaseTest : public WalletFixture<WalletFactory> {
         auto configuration = DynamicObject::newInstance();
         configuration->putString(api::Configuration::BLOCKCHAIN_EXPLORER_API_ENDPOINT, "https://algorand.coin.staging.aws.ledger.com");
 
-        wallet = std::dynamic_pointer_cast<algorand::Wallet>(uv::wait(pool->createWallet("algorand", currency.name, configuration)));
+        wallet = std::dynamic_pointer_cast<algorand::Wallet>(uv::wait(pool->createWallet(uuid::generate_uuid_v4(), currency.name, configuration)));
         account = createAlgorandAccount(wallet, accountInfo.index, accountInfo);
 
         accountUid = algorand::AccountDatabaseHelper::createAccountUid(wallet->getWalletUid(), accountInfo.index);
