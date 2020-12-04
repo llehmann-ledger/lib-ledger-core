@@ -27,7 +27,7 @@
  *
  */
 
-#include "AlgorandTestFixtures.hpp"
+#include "../algorand/AlgorandTestFixtures.hpp"
 #include <wallet/algorand/database/AlgorandTransactionDatabaseHelper.hpp>
 #include <wallet/algorand/database/AlgorandAccountDatabaseHelper.hpp>
 #include <wallet/algorand/operations/AlgorandOperation.hpp>
@@ -40,20 +40,29 @@
 #include <api/AccountCreationInfo.hpp>
 #include <api/Address.hpp>
 
-#include "../integration/WalletFixture.hpp" // No equivalent in v1 ?
+#include "../BaseFixture.h"
 #include <Uuid.hpp>
+#include <chrono>
 #include <utility>
 
 using namespace ledger::testing::algorand;
 using namespace ledger::core::algorand;
 
-class AlgorandDatabaseTest : public WalletFixture<WalletFactory> {
+class AlgorandDatabaseTest : public BaseFixture {
 
     public:
 
     void SetUp() override {
-        WalletFixture::SetUp();
-
+        BaseFixture::SetUp();
+#ifdef PG_SUPPORT
+        const bool usePostgreSQL = true;
+        auto poolConfig = DynamicObject::newInstance();
+        poolConfig->putString(
+            api::PoolConfiguration::DATABASE_NAME, "postgres://localhost:5432/test_db");
+        pool = newDefaultPool(uuid::generate_uuid_v4(), "", poolConfig, usePostgreSQL);
+#else
+        pool = newDefaultPool(uuid::generate_uuid_v4());
+#endif
         auto const currency = currencies::ALGORAND;
 
         accountInfo = api::AccountCreationInfo(1, {}, {}, { algorand::Address::toPublicKey(OBELIX_ADDRESS) }, {});
@@ -69,11 +78,14 @@ class AlgorandDatabaseTest : public WalletFixture<WalletFactory> {
     }
 
     void TearDown() override {
-        WalletFixture::TearDown();
+        BaseFixture::TearDown();
+        uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
+        pool.reset();
         wallet.reset();
         account.reset();
     }
 
+    std::shared_ptr<WalletPool> pool;
     std::shared_ptr<Wallet> wallet;
     std::shared_ptr<Account> account;
 
@@ -81,7 +93,7 @@ class AlgorandDatabaseTest : public WalletFixture<WalletFactory> {
     std::string accountUid;
 };
 
-TEST_F(AlgorandDatabaseTest, DISABLED_AccountDBTest) {
+TEST_F(AlgorandDatabaseTest, AccountDBTest) {
 
     // Test reading from DB
     {
@@ -96,7 +108,7 @@ TEST_F(AlgorandDatabaseTest, DISABLED_AccountDBTest) {
     }
 }
 
-TEST_F(AlgorandDatabaseTest, DISABLED_TransactionsDBTest) {
+TEST_F(AlgorandDatabaseTest, TransactionsDBTest) {
 
     auto paymentTxRef = paymentTransaction();
     auto assetConfigTxRef = assetConfigTransaction();
@@ -131,7 +143,7 @@ TEST_F(AlgorandDatabaseTest, DISABLED_TransactionsDBTest) {
     }
 }
 
-TEST_F(AlgorandDatabaseTest, DISABLED_OperationsDBTest) {
+TEST_F(AlgorandDatabaseTest, OperationsDBTest) {
 
     auto txRef = paymentTransaction();
 
@@ -169,7 +181,7 @@ TEST_F(AlgorandDatabaseTest, DISABLED_OperationsDBTest) {
     }
 }
 
-TEST_F(AlgorandDatabaseTest, DISABLED_queryTransactions)
+TEST_F(AlgorandDatabaseTest, queryTransactions)
 {
     soci::session sql(pool->getDatabaseSessionPool()->getPool());
     auto payment = paymentTransaction();

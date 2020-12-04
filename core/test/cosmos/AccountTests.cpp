@@ -42,7 +42,7 @@ struct CosmosAccounts : public BaseFixture {
 
 };
 
-TEST_F(CosmosAccounts, DISABLED_FirstATOMAccountInfo) {
+TEST_F(CosmosAccounts, FirstATOMAccountInfo) {
     auto const currency = currencies::ATOM;
     auto pool = newDefaultPool(uuid::generate_uuid_v4());
 

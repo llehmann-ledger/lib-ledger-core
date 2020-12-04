@@ -17,7 +17,6 @@ add_executable(${COSMOS_TESTS_NAME}
   main.cpp
   Fixtures.cpp
   address_test.cpp
-  db_test.cpp
   transactions_test.cpp
   AccountTests.cpp
   parsers_test.cpp

@@ -1,0 +1,3 @@
+https://cosmos.coin.staging.aws.ledger.com/staking/delegators/cosmos102hty0jv2s29lyc4u0tv97z9v298e24t3vwtpl/redelegations
+{"base_req":{"from":"cosmos102hty0jv2s29lyc4u0tv97z9v298e24t3vwtpl","memo":"Sent from Ledger","chain_id":"cosmoshub-3","account_number":"6571","sequence":"0","gas":"200000","gas_adjustment":"1.0","fees":[{"amount":"5000","denom":"uatom"}],"simulate":true},"delegator_address":"cosmos102hty0jv2s29lyc4u0tv97z9v298e24t3vwtpl","validator_src_address":"cosmosvaloper1grgelyng2v6v3t8z87wu3sxgt9m5s03xfytvz7","validator_dst_address":"cosmosvaloper1sd4tl9aljmmezzudugs7zlaya7pg2895ws8tfs","amount":{"amount":"1000000","denom":"uatom"}}
+{"gas_estimate":"28046"}

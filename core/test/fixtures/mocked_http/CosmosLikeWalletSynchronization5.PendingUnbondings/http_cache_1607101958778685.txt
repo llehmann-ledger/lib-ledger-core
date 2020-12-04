@@ -1,0 +1,58 @@
+https://cosmos.coin.staging.aws.ledger.com/staking/delegators/cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl/delegations
+
+{"height":"4309100","result":[
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper1grgelyng2v6v3t8z87wu3sxgt9m5s03xfytvz7",
+    "shares": "10000.000000000000000000",
+    "balance": "10000"
+  },
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper1vf44d85es37hwl9f4h9gv0e064m0lla60j9luj",
+    "shares": "1093000.000000000000000000",
+    "balance": "1093000"
+  },
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper1sd4tl9aljmmezzudugs7zlaya7pg2895ws8tfs",
+    "shares": "3000.000000000000000000",
+    "balance": "3000"
+  },
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper1sjllsnramtg3ewxqwwrwjxfgc4n4ef9u2lcnj0",
+    "shares": "51000.000000000000000000",
+    "balance": "51000"
+  },
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper156gqf9837u7d4c4678yt3rl4ls9c5vuursrrzf",
+    "shares": "202500.000000000000000000",
+    "balance": "202500"
+  },
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper1kn3wugetjuy4zetlq6wadchfhvu3x740ae6z6x",
+    "shares": "550888.000000000000000000",
+    "balance": "550888"
+  },
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper1hjct6q7npsspsg3dgvzk3sdf89spmlpfdn6m9d",
+    "shares": "27500.000000000000000000",
+    "balance": "27500"
+  },
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper1crqm3598z6qmyn2kkcl9dz7uqs4qdqnr6s8jdn",
+    "shares": "200000.000000000000000000",
+    "balance": "200000"
+  },
+  {
+    "delegator_address": "cosmos1g84934jpu3v5de5yqukkkhxmcvsw3u2ajxvpdl",
+    "validator_address": "cosmosvaloper1clpqr4nrk4khgkxj78fcwwh6dl3uw4epsluffn",
+    "shares": "1350.000000000000000000",
+    "balance": "1350"
+  }
+]}

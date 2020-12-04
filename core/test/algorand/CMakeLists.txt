@@ -13,7 +13,6 @@ add_executable(ledger-core-algorand-tests
     AlgorandAccountTests.cpp
     AlgorandAddressTests.cpp
     AlgorandExplorerTests.cpp
-    AlgorandDatabaseTests.cpp
     AlgorandSerializationTests.cpp
   ../integration/BaseFixture.cpp
   ../integration/IntegrationEnvironment.cpp
