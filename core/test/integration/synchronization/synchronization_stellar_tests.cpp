@@ -29,19 +29,55 @@
  *
  */
 
-#include "StellarFixture.hpp"
+#include "../BaseFixture.h"
 #include <wallet/common/OperationQuery.h>
 #include <math/BigInt.h>
 #include <api/StellarLikeMemo.hpp>
 #include <api/StellarLikeMemoType.hpp>
+#include <wallet/stellar/StellarLikeWallet.hpp>
+#include <wallet/stellar/StellarLikeAccount.hpp>
+#include <wallet/stellar/StellarLikeOperation.hpp>
+#include <api/Account.hpp>
+#include <api/AccountCreationInfo.hpp>
 
-TEST_F(StellarFixture, SynchronizeStellarAccount) {
-    mockHttp("StellarFixture.SynchronizeStellarAccount");
+#include <Uuid.hpp>
 
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet_stellar", "stellar", api::DynamicObject::newInstance());
+class StellarLikeWalletSynchronization : public BaseFixture {
+
+};
+
+static api::StellarLikeNetworkParameters STELLAR_PARAMS {
+    "xlm", {6 << 3}, {12 << 3}, 5000000, 100, {}, "Public Global Stellar Network ; September 2015"
+};
+
+static api::Currency STELLAR =
+        Currency("stellar")
+        .forkOfStellar(STELLAR_PARAMS)
+        .bip44(148)
+        .paymentUri("web+stellar")
+        .unit("stroops", 0, "stroops")
+        .unit("lumen", 7, "XLM");
+
+api::AccountCreationInfo accountInfo(const std::string &pubKey)  {
+    return api::AccountCreationInfo(0, {"main"}, {"44'/148'/0'"}, { ledger::core::hex::toByteArray(pubKey)}, {});
+}
+
+api::AccountCreationInfo accountInfoFromAddress(const std::string& address)  {
+    StellarLikeAddress addr(
+            address,
+            STELLAR,
+            Option<std::string>::NONE
+    );
+    return accountInfo(ledger::core::hex::toString(addr.toPublicKey()));
+}
+
+TEST_F(StellarLikeWalletSynchronization, SynchronizeStellarAccount) {
+    mockHttp("StellarLikeWalletSynchronization.SynchronizeStellarAccount");
+
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "stellar", api::DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, defaultAccount());
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(uv::wait(wallet->newAccountWithInfo(accountInfo("a1083d11720853a2c476a07e29b64e0f9eb2ff894f1e485628faa7b63de77a4f"))));
     auto exists = uv::wait(account->exists());
     EXPECT_TRUE(exists);
     auto bus = account->synchronize();
@@ -106,13 +142,19 @@ TEST_F(StellarFixture, SynchronizeStellarAccount) {
     EXPECT_TRUE(txFound);
 }
 
-TEST_F(StellarFixture, SynchronizeEmptyStellarAccount) {
-    mockHttp("StellarFixture.SynchronizeEmptyStellarAccount");
+TEST_F(StellarLikeWalletSynchronization, SynchronizeEmptyStellarAccount) {
+    mockHttp("StellarLikeWalletSynchronization.SynchronizeEmptyStellarAccount");
 
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet_stellar_empty", "stellar", api::DynamicObject::newInstance());
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "stellar", api::DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, emptyAccount());
+StellarLikeAddress addr(
+            "GCDCR6S7JAYWA3DCD2QOQX7MSHX5BZT2HUFYEMK4R76NXFQ7QQA4TF7W",
+            STELLAR,
+            Option<std::string>::NONE
+            );
+     accountInfo(ledger::core::hex::toString(addr.toPublicKey()));
+     auto account = std::dynamic_pointer_cast<StellarLikeAccount>(uv::wait(wallet->newAccountWithInfo(accountInfo(ledger::core::hex::toString(addr.toPublicKey())))));
 
     auto exists = uv::wait(account->exists());
     EXPECT_FALSE(exists);
@@ -146,14 +188,15 @@ TEST_F(StellarFixture, SynchronizeEmptyStellarAccount) {
     }
 }
 
-TEST_F(StellarFixture, SynchronizeStellarAccountWithSubEntry) {
-    mockHttp("StellarFixture.SynchronizeStellarAccountWithSubEntry");
+TEST_F(StellarLikeWalletSynchronization, SynchronizeStellarAccountWithSubEntry) {
+    mockHttp("StellarLikeWalletSynchronization.SynchronizeStellarAccountWithSubEntry");
 
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet_stellar_subentry", "stellar", api::DynamicObject::newInstance());
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "stellar", api::DynamicObject::newInstance()));
     auto info = uv::wait(wallet->getNextAccountCreationInfo());
-    StellarLikeAddress addr("GAT4LBXYJGJJJRSNK74NPFLO55CDDXSYVMQODSEAAH3M6EY4S7LPH5GV", getCurrency(), Option<std::string>::NONE);
-    auto account = newAccount(wallet, 0, accountInfo(hex::toString(addr.toPublicKey())));
+    StellarLikeAddress addr("GAT4LBXYJGJJJRSNK74NPFLO55CDDXSYVMQODSEAAH3M6EY4S7LPH5GV", STELLAR, Option<std::string>::NONE);
+    auto account = std::dynamic_pointer_cast<StellarLikeAccount>(uv::wait(wallet->newAccountWithInfo(accountInfo(hex::toString(addr.toPublicKey())))));
+
     auto exists = uv::wait(account->exists());
     EXPECT_TRUE(exists);
     auto bus = account->synchronize();
@@ -171,115 +214,4 @@ TEST_F(StellarFixture, SynchronizeStellarAccountWithSubEntry) {
     getTestExecutionContext()->waitUntilStopped();
     auto reserve = uv::wait(account->getBaseReserve());
     EXPECT_TRUE(reserve->toLong() > 2 * 5000000);
-}
-
-TEST_F(StellarFixture, SynchronizeStellarAccountWithManageBuyOffer) {
-    mockHttp("StellarFixture.SynchronizeStellarAccountWithManageBuyOffer");
-
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet_1", "stellar", api::DynamicObject::newInstance());
-    auto info = uv::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, accountInfoFromAddress("GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2"));
-    auto exists = uv::wait(account->exists());
-    EXPECT_TRUE(exists);
-    auto bus = account->synchronize();
-    bus->subscribe(getTestExecutionContext(),
-            make_receiver([=](const std::shared_ptr<api::Event> &event) {
-        fmt::print("Received event {}\n", api::to_string(event->getCode()));
-        if (event->getCode() == api::EventCode::SYNCHRONIZATION_STARTED)
-            return;
-        EXPECT_NE(event->getCode(), api::EventCode::SYNCHRONIZATION_FAILED);
-        EXPECT_EQ(event->getCode(),
-                  api::EventCode::SYNCHRONIZATION_SUCCEED);
-        getTestExecutionContext()->stop();
-    }));
-    EXPECT_EQ(bus, account->synchronize());
-    getTestExecutionContext()->waitUntilStopped();
-    auto balance = uv::wait(account->getBalance());
-    auto operations = uv::wait(std::dynamic_pointer_cast<OperationQuery>(account->queryOperations()->addOrder(api::OperationOrderKey::DATE, false)->complete())->execute());
-    EXPECT_TRUE(balance->toBigInt()->compare(api::BigInt::fromLong(0)) > 0);
-    EXPECT_TRUE(operations.size() >= 5);
-}
-
-TEST_F(StellarFixture, SynchronizeStellarAccountWithMultisig) {
-    mockHttp("StellarFixture.SynchronizeStellarAccountWithMultisig");
-
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet_2", "stellar", api::DynamicObject::newInstance());
-    auto info = uv::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, accountInfoFromAddress("GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ"));
-    auto exists = uv::wait(account->exists());
-    EXPECT_TRUE(exists);
-    auto bus = account->synchronize();
-    bus->subscribe(getTestExecutionContext(),
-                   make_receiver([=](const std::shared_ptr<api::Event> &event) {
-                       fmt::print("Received event {}\n", api::to_string(event->getCode()));
-                       if (event->getCode() == api::EventCode::SYNCHRONIZATION_STARTED)
-                           return;
-                       EXPECT_NE(event->getCode(), api::EventCode::SYNCHRONIZATION_FAILED);
-                       EXPECT_EQ(event->getCode(),
-                                 api::EventCode::SYNCHRONIZATION_SUCCEED);
-                       getTestExecutionContext()->stop();
-                   }));
-    EXPECT_EQ(bus, account->synchronize());
-    getTestExecutionContext()->waitUntilStopped();
-    auto signers = uv::wait(account->getSigners());
-    EXPECT_EQ(signers.size(), 2);
-    const auto& signer_1 = std::find_if(signers.begin(), signers.end(), [] (const stellar::AccountSigner& s) {
-        return s.key == "GAJTWW4OGH5BWFTH24C7SGIDALKI2HUVC2LXHFD533A5FIMSXE5AB3TJ";
-    });
-    const auto& signer_2 = std::find_if(signers.begin(), signers.end(), [] (const stellar::AccountSigner& s) {
-        return s.key == "GDDU4HHNCSZ2BI6ELSSFKPSOBL2TEB4A3ZJWOCT2DILQKVJTZBNSOZA2";
-    });
-    EXPECT_NE(signer_1, signers.end());
-    EXPECT_NE(signer_2, signers.end());
-
-    EXPECT_EQ(signer_1->type, "ed25519_public_key");
-    EXPECT_EQ(signer_1->weight, 10);
-
-    EXPECT_EQ(signer_2->type, "ed25519_public_key");
-    EXPECT_EQ(signer_2->weight, 10);
-}
-
-// Synchronize an account with protocol 13 upgrade object
-TEST_F(StellarFixture, SynchronizeProtocol13) {
-    mockHttp("StellarFixture.SynchronizeProtocol13");
-
-    // GBV4NH4G5SWYM6OQJKZKG2PA2O2VQ2W6K5S43WLMLJRWU4XTG5EST5QP
-    auto pool = newPool();
-    auto wallet = newWallet(pool, "my_wallet_proto_13", "stellar", api::DynamicObject::newInstance());
-    auto info = uv::wait(wallet->getNextAccountCreationInfo());
-    auto account = newAccount(wallet, 0, accountInfoFromAddress("GBSEXVEU2WBBLIUCWIWFDPV5I4HLBSOWRNJVKLNXZFVNITFPKQIVO3YI"));
-    auto exists = uv::wait(account->exists());
-    EXPECT_TRUE(exists);
-    auto bus = account->synchronize();
-    bus->subscribe(getTestExecutionContext(),
-                   make_receiver([=](const std::shared_ptr<api::Event> &event) {
-                       fmt::print("Received event {}\n", api::to_string(event->getCode()));
-                       if (event->getCode() == api::EventCode::SYNCHRONIZATION_STARTED)
-                           return;
-                       EXPECT_NE(event->getCode(), api::EventCode::SYNCHRONIZATION_FAILED);
-                       EXPECT_EQ(event->getCode(),
-                                 api::EventCode::SYNCHRONIZATION_SUCCEED);
-                       getTestExecutionContext()->stop();
-                   }));
-    EXPECT_EQ(bus, account->synchronize());
-    getTestExecutionContext()->waitUntilStopped();
-    auto balance = uv::wait(account->getBalance());
-    auto address = uv::wait(account->getFreshPublicAddresses()).front();
-    auto operations = uv::wait(std::dynamic_pointer_cast<OperationQuery>(account->queryOperations()->complete())->execute());
-    EXPECT_GT(balance->toLong(), 0);
-    EXPECT_TRUE(operations.size() >= 11);
-
-    // Fetch the first send operation
-    for (const auto& op: operations) {
-        fmt::print("{} {} {}\n", api::to_string(op->getOperationType()), op->getAmount()->toString(), op->asStellarLikeOperation()->getRecord().transactionHash);
-        if (op->getOperationType() == api::OperationType::SEND) {
-            const auto& sop = op->asStellarLikeOperation();
-            ASSERT_EQ(sop->getTransaction()->getSourceAccount()->toString(), address->toString());
-            ASSERT_TRUE(sop->getTransaction()->getFee()->toLong() > 0);
-            auto sequence = std::dynamic_pointer_cast<api::BigIntImpl>(sop->getTransaction()->getSourceAccountSequence())->backend();
-            ASSERT_TRUE(sequence > BigInt::ZERO);
-        }
-    }
 }

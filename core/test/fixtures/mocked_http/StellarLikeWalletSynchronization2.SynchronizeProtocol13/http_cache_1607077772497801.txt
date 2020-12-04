@@ -1,0 +1,59 @@
+https://stellar.coin.ledger.com/ledgers?order=desc&limit=1
+
+{
+  "_links": {
+    "self": {
+      "href": "https://stellar.coin.ledger.com/ledgers?cursor=\u0026limit=1\u0026order=desc"
+    },
+    "next": {
+      "href": "https://stellar.coin.ledger.com/ledgers?cursor=141368908677382144\u0026limit=1\u0026order=desc"
+    },
+    "prev": {
+      "href": "https://stellar.coin.ledger.com/ledgers?cursor=141368908677382144\u0026limit=1\u0026order=asc"
+    }
+  },
+  "_embedded": {
+    "records": [
+      {
+        "_links": {
+          "self": {
+            "href": "https://stellar.coin.ledger.com/ledgers/32915014"
+          },
+          "transactions": {
+            "href": "https://stellar.coin.ledger.com/ledgers/32915014/transactions{?cursor,limit,order}",
+            "templated": true
+          },
+          "operations": {
+            "href": "https://stellar.coin.ledger.com/ledgers/32915014/operations{?cursor,limit,order}",
+            "templated": true
+          },
+          "payments": {
+            "href": "https://stellar.coin.ledger.com/ledgers/32915014/payments{?cursor,limit,order}",
+            "templated": true
+          },
+          "effects": {
+            "href": "https://stellar.coin.ledger.com/ledgers/32915014/effects{?cursor,limit,order}",
+            "templated": true
+          }
+        },
+        "id": "9bbc5261ae84265da541f74c52fba80f998691e8530535764ad5d2672f5315aa",
+        "paging_token": "141368908677382144",
+        "hash": "9bbc5261ae84265da541f74c52fba80f998691e8530535764ad5d2672f5315aa",
+        "prev_hash": "1a6a3b7618f6b5e5e255d4284f1d6cc24aa1353758061c561ebdd7b3e46ec517",
+        "sequence": 32915014,
+        "successful_transaction_count": 45,
+        "failed_transaction_count": 12,
+        "operation_count": 117,
+        "tx_set_operation_count": 151,
+        "closed_at": "2020-12-04T10:29:26Z",
+        "total_coins": "105443902087.3472865",
+        "fee_pool": "1830507.3882951",
+        "base_fee_in_stroops": 100,
+        "base_reserve_in_stroops": 5000000,
+        "max_tx_set_size": 1000,
+        "protocol_version": 15,
+        "header_xdr": "AAAADxpqO3YY9rXl4lXUKE8dbMJKoTU3WAYcVh6917PkbsUXyb6bq1EgTPqitohjPSB0WQRZgJYQBh6J7gZhl70nx0cAAAAAX8oPhgAAAAAAAAABAAAAAAaweClXqq3sjNIHBm/r6o1RY6yR5HqkHJCaZtEEdMUfAAAAQD6G4LKjZI27Rn4dpQj+bEwAYRYTLXYEdYj8QS5tcF2i1T9cp7Z1eZC1MCnFoEqjawmMoPlcXd2PaXCdzyKx+Am+4VDar2DT0y8NIyMsKoKtG0oBbuy2gEbGyT+BF6GCrHk94ezlXlDi7USlBWxrcQrsGH8mDM43lDcI2qqHmiHZAfY+Rg6iHrPseVthAAAQpfttJ0cAAAEWAAAAABbOxUsAAABkAExLQAAAA+gANteNtwVImUSSA4lUFbrVGMqQ8EBfu/9lvzZqLcvzKiqHI30vxG0CxGPMyMGHi/MGnAyRYgEBp2UsGM7RWHk5kYFIbYUjjmuRj7k3GE0IeylTe22CpPSzS+55y1bRxFmvWY93JpDWkbB6RblFKlKvpsNM0xi5loRKWoh8hlCbuQAAAAA="
+      }
+    ]
+  }
+}

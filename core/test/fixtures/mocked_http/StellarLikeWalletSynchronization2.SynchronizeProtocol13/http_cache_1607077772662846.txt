@@ -36,10 +36,10 @@ https://stellar.coin.ledger.com/accounts/GBSEXVEU2WBBLIUCWIWFDPV5I4HLBSOWRNJVKLN
   },
   "id": "GBSEXVEU2WBBLIUCWIWFDPV5I4HLBSOWRNJVKLNXZFVNITFPKQIVO3YI",
   "account_id": "GBSEXVEU2WBBLIUCWIWFDPV5I4HLBSOWRNJVKLNXZFVNITFPKQIVO3YI",
-  "sequence": "129649721043058789",
+  "sequence": "129649721043058790",
   "subentry_count": 0,
-  "last_modified_ledger": 32630170,
-  "last_modified_time": "2020-11-16T10:05:05Z",
+  "last_modified_ledger": 32868701,
+  "last_modified_time": "2020-12-01T12:22:36Z",
   "thresholds": {
     "low_threshold": 0,
     "med_threshold": 0,
@@ -52,7 +52,7 @@ https://stellar.coin.ledger.com/accounts/GBSEXVEU2WBBLIUCWIWFDPV5I4HLBSOWRNJVKLN
   },
   "balances": [
     {
-      "balance": "1.1472891",
+      "balance": "1.1472781",
       "buying_liabilities": "0.0000000",
       "selling_liabilities": "0.0000000",
       "asset_type": "native"

@@ -61,6 +61,13 @@ endif()
 #add_test (NAME ledger-core-integration-tests COMMAND ledger-core-integration-tests)
 
 # partial fix for LLC-77; dirty, but works and unlocks the CI
+add_test (NAME ledger-core-integration-StellarLikeWalletSynchronization.SynchronizeStellarAccount COMMAND ledger-core-integration-tests --gtest_filter=StellarLikeWalletSynchronization.SynchronizeStellarAccount)
+add_test (NAME ledger-core-integration-StellarLikeWalletSynchronization.SynchronizeEmptyStellarAccount COMMAND ledger-core-integration-tests --gtest_filter=StellarLikeWalletSynchronization.SynchronizeEmptyStellarAccount)
+add_test (NAME ledger-core-integration-StellarLikeWalletSynchronization.SynchronizeStellarAccountWithSubEntry COMMAND ledger-core-integration-tests --gtest_filter=StellarLikeWalletSynchronization.SynchronizeStellarAccountWithSubEntry)
+add_test (NAME ledger-core-integration-StellarLikeWalletSynchronization2.SynchronizeStellarAccountWithManageBuyOffer COMMAND ledger-core-integration-tests --gtest_filter=StellarLikeWalletSynchronization2.SynchronizeStellarAccountWithManageBuyOffer)
+add_test (NAME ledger-core-integration-StellarLikeWalletSynchronization2.SynchronizeStellarAccountWithMultisig COMMAND ledger-core-integration-tests --gtest_filter=StellarLikeWalletSynchronization2.SynchronizeStellarAccountWithMultisig)
+add_test (NAME ledger-core-integration-StellarLikeWalletSynchronization2.SynchronizeProtocol13 COMMAND ledger-core-integration-tests --gtest_filter=StellarLikeWalletSynchronization2.SynchronizeProtocol13)
+add_test (NAME ledger-core-integration-StellarLikeWalletSynchronization3.PaymentTransaction COMMAND ledger-core-integration-tests --gtest_filter=StellarLikeWalletSynchronization3.PaymentTransaction)
 add_test (NAME ledger-core-integration-AlgorandSynchronizationTest.EmptyAccountSynchronizationTest COMMAND ledger-core-integration-tests --gtest_filter=AlgorandSynchronizationTest.EmptyAccountSynchronizationTest)
 add_test (NAME ledger-core-integration-AlgorandSynchronizationTest.AccountSynchronizationTest COMMAND ledger-core-integration-tests --gtest_filter=AlgorandSynchronizationTest.AccountSynchronizationTest)
 add_test (NAME ledger-core-integration-DispatcherStopTest.InifiniteRunningTest COMMAND ledger-core-integration-tests --gtest_filter=DispatcherStopTest.InifiniteRunningTest)
