@@ -1,3 +1,3 @@
 https://explorers.api.live.ledger.com/blockchain/v3/eth/addresses/0xabf06640f8ca8fC5e0Ed471b10BeFCDf65A33e43/nonce
 
-[{"address":"0xabf06640f8ca8fC5e0Ed471b10BeFCDf65A33e43","nonce":973,"valid":true,"error":false}]
+[{"address":"0xabf06640f8ca8fC5e0Ed471b10BeFCDf65A33e43","nonce":976,"valid":true,"error":false}]

@@ -1,3 +1,3 @@
 https://explorers.api.live.ledger.com/blockchain/v3/eth/addresses/0xabf06640f8ca8fC5e0Ed471b10BeFCDf65A33e43/balance
 
-[{"address":"0xabf06640f8ca8fC5e0Ed471b10BeFCDf65A33e43","balance":352987762076390896,"valid":true,"error":false}]
+[{"address":"0xabf06640f8ca8fC5e0Ed471b10BeFCDf65A33e43","balance":133539660076390896,"valid":true,"error":false}]

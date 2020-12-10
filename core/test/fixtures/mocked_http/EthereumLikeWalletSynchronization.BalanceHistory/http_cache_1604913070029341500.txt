@@ -1,3 +1,0 @@
-https://explorers.api.live.ledger.com/blockchain/v3/eth/syncToken
-
-{"success":"Token 9c8fb709-3325-4765-95f1-db6f208814a1 was deleted"}
