@@ -1,0 +1,3 @@
+https://explorers.api.live.ledger.com/blockchain/v2/btc_testnet/syncToken
+
+{"token":"f1867ba3-8d5f-45ee-a4d1-3303623c22ca"}

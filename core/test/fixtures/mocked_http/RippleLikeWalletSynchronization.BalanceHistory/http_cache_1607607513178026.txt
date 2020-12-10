@@ -1,0 +1,5 @@
+https://s2.ripple.com:51234/
+{"method":"account_info","params":[{"account":"rageXHB6Q4VbvvWdTzKANwjeCT4HXFCKX7","ledger_index":"validated"}]}
+{"result":{"account_data":{"Account":"rageXHB6Q4VbvvWdTzKANwjeCT4HXFCKX7","Balance":"143775310","Flags":0,"LedgerEntryType":"AccountRoot","OwnerCount":0,"PreviousTxnID":"78C0D06541C85E9831F32E11AE44D62BD17C01B73FBF77DCDCC4ADA8C4491132","PreviousTxnLgrSeq":60115603,"Sequence":42,"index":"ECC3C36905D306B924DADC25A9D57E7BB613E9F4B714324978BAF73BDA979670"},"ledger_hash":"D31C3A522FF325CD7295E892D08B8339FF5AE75988FC1FEA39E31FD10D7658F9","ledger_index":60123913,"status":"success","validated":true}}
+
+

@@ -34,6 +34,7 @@
 #include "transaction_test_helper.h"
 #include <utils/hex.h>
 #include <api/KeychainEngines.hpp>
+#include <Uuid.hpp>
 using namespace std;
 
 struct BitcoinMakeP2WPKHTransaction : public BitcoinMakeBaseTransaction {
@@ -42,7 +43,7 @@ struct BitcoinMakeP2WPKHTransaction : public BitcoinMakeBaseTransaction {
         testData.configuration->putString(api::Configuration::KEYCHAIN_ENGINE,api::KeychainEngines::BIP173_P2WPKH);
         //https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki
         testData.configuration->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME,"84'/<coin_type>'/<account>'/<node>/<address>");
-        testData.walletName = "my_wallet";
+        testData.walletName = uuid::generate_uuid_v4();
         testData.currencyName = "bitcoin";
         testData.inflate_btc = ledger::testing::medium_xpub::inflate;
     }

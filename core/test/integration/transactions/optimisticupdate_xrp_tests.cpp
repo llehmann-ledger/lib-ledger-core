@@ -43,7 +43,7 @@
 #include <api/RippleConfigurationDefaults.hpp>
 #include <iostream>
 #include "FakeHttpClient.hpp"
-
+#include <Uuid.hpp>
 using namespace std;
 
 class RippleLikeOptimisticTransactionUpdate : public BaseFixture
@@ -58,7 +58,7 @@ TEST_F(RippleLikeOptimisticTransactionUpdate, BroadcastTransaction)
     backend = std::static_pointer_cast<DatabaseBackend>(DatabaseBackend::getSqlite3Backend());
 
     auto pool = WalletPool::newInstance(
-        "my_pool",
+        uuid::generate_uuid_v4(),
         "",
         fakeHttp,
         ws,

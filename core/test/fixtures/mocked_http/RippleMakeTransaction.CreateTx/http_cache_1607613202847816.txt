@@ -1,0 +1,5 @@
+https://s2.ripple.com:51234/
+{"method":"account_info","params":[{"account":"r4j2WKcuL3iRJ25QfKLv1JHQXmxM5Zhxuo","ledger_index":"validated"}]}
+{"result":{"account":"r4j2WKcuL3iRJ25QfKLv1JHQXmxM5Zhxuo","error":"actNotFound","error_code":19,"error_message":"Account not found.","ledger_hash":"1F91B131C36F793D7FFAA6B6098335EA1B76330575A85C8643B09889F9773B37","ledger_index":60125365,"request":{"account":"r4j2WKcuL3iRJ25QfKLv1JHQXmxM5Zhxuo","command":"account_info","ledger_index":"validated"},"status":"error","validated":true}}
+
+

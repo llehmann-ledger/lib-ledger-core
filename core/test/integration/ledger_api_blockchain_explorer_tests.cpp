@@ -172,16 +172,19 @@ public:
 
 
 TEST_F(LedgerApiEthereumLikeBlockchainExplorerTests, GetGasPrice) {
+    mockHttp("LedgerApiEthereumLikeBlockchainExplorerTests.GetGasPrice");
     auto result = uv::wait(explorer->getGasPrice());
     EXPECT_NE(result->toUint64(), 0);
 }
 
 TEST_F(LedgerApiEthereumLikeBlockchainExplorerTests, GetEstimatedGasLimit) {
+    mockHttp("LedgerApiEthereumLikeBlockchainExplorerTests.GetEstimatedGasLimit");
     auto result = uv::wait(explorer->getEstimatedGasLimit("0x57e8ba2a915285f984988282ab9346c1336a4e11"));
     EXPECT_GE(result->toUint64(), 10000);
 }
 
 TEST_F(LedgerApiEthereumLikeBlockchainExplorerTests, PostEstimatedGasLimit) {
+    mockHttp("LedgerApiEthereumLikeBlockchainExplorerTests.PostEstimatedGasLimit");
   auto request = api::EthereumGasLimitRequest(
       optional<std::string>(),
       optional<std::string>(),

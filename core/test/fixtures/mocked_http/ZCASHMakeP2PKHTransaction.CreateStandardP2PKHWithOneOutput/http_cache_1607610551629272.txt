@@ -1,0 +1,3 @@
+https://explorers.api.live.ledger.com/blockchain/v2/zec/blocks/current
+
+{"hash":"00000000000aff5a1c7634dd8eac8cf63c348441f4746a95295a9308046d7bba","height":1071696,"time":"2020-12-10T14:28:28Z","txs":["c6170d2e7bc1bb81bd99f81bba4c0c40bf26d3b54dcf74e4919f9c4fcbee3cba","6cc371f44a986614afb7bc44fe27ff436bc4bdab5a1ddb4d654e04f7d7bfff34"]}

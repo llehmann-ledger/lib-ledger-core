@@ -1,0 +1,5 @@
+https://s2.ripple.com:51234/
+{"method":"account_tx","params":[{"account":"r4j2WKcuL3iRJ25QfKLv1JHQXmxM5Zhxuo"}]}
+{"result":{"account":"r4j2WKcuL3iRJ25QfKLv1JHQXmxM5Zhxuo","ledger_index_max":60125364,"ledger_index_min":32570,"limit":0,"status":"success","transactions":[],"validated":true}}
+
+

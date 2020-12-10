@@ -1,0 +1,4 @@
+https://mainnet.tezrpc.me/chains/main/blocks/head/context/contracts/tz1cmN7N6rV9ULVqbL2BxSUZgeL5wnWyoBUE/manager_key
+
+"edpkuySiX9Qi89G5aRaynPxLMqtrrjsMGZAGCUn7u2kBgYH5uxCwEy"
+

@@ -42,6 +42,7 @@
 #include <wallet/tezos/api_impl/TezosLikeTransactionApi.h>
 #include <wallet/currencies.hpp>
 #include <iostream>
+#include <Uuid.hpp>
 using namespace std;
 
 struct TezosMakeTransaction : public TezosMakeBaseTransaction {
@@ -50,13 +51,14 @@ struct TezosMakeTransaction : public TezosMakeBaseTransaction {
         configuration->putString(api::Configuration::BLOCKCHAIN_EXPLORER_ENGINE, api::BlockchainExplorerEngines::TZSTATS_API);
         configuration->putString(api::TezosConfiguration::TEZOS_XPUB_CURVE, api::TezosConfigurationDefaults::TEZOS_XPUB_CURVE_ED25519);
         testData.configuration = configuration;
-        testData.walletName = "my_wallet";
+        testData.walletName = uuid::generate_uuid_v4();
         testData.currencyName = "tezos";
         testData.inflate_xtz = ledger::testing::xtz::inflate;
     }
 };
 
 TEST_F(TezosMakeTransaction, CreateTx) {
+    mockHttp("TezosMakeTransaction.CreateTx");
     auto builder = tx_builder();
 
     auto receiver = make_receiver([=](const std::shared_ptr<api::Event> &event) {

@@ -39,7 +39,7 @@
 #include <utils/hex.h>
 #include <utils/DateUtils.hpp>
 #include <crypto/HASH160.hpp>
-
+#include <Uuid.hpp>
 #include <iostream>
 using namespace std;
 struct BitcoinMakeP2SHTransaction : public BitcoinMakeBaseTransaction {
@@ -47,7 +47,7 @@ struct BitcoinMakeP2SHTransaction : public BitcoinMakeBaseTransaction {
         testData.configuration = DynamicObject::newInstance();
         testData.configuration->putString(api::Configuration::KEYCHAIN_ENGINE,api::KeychainEngines::BIP49_P2SH);
         testData.configuration->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME,"49'/<coin_type>'/<account>'/<node>/<address>");
-        testData.walletName = "my_wallet";
+        testData.walletName = uuid::generate_uuid_v4();
         testData.currencyName = "bitcoin_testnet";
         testData.inflate_btc = ledger::testing::testnet_xpub::inflate;
     }
@@ -106,7 +106,7 @@ struct BTGMakeP2SHTransaction : public BitcoinMakeBaseTransaction {
         testData.configuration = DynamicObject::newInstance();
         testData.configuration->putString(api::Configuration::KEYCHAIN_ENGINE,api::KeychainEngines::BIP49_P2SH);
         testData.configuration->putString(api::Configuration::KEYCHAIN_DERIVATION_SCHEME,"49'/<coin_type>'/<account>'/<node>/<address>");
-        testData.walletName = "my_wallet";
+        testData.walletName = uuid::generate_uuid_v4();
         testData.currencyName = "bitcoin_gold";
         testData.inflate_btc = ledger::testing::btg_xpub::inflate;
     }

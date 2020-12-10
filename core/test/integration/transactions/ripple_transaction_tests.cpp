@@ -38,19 +38,21 @@
 #include <wallet/ripple/api_impl/RippleLikeTransactionApi.h>
 #include <wallet/currencies.hpp>
 #include <iostream>
+#include <Uuid.hpp>
 using namespace std;
 
 struct RippleMakeTransaction : public RippleMakeBaseTransaction {
     void SetUpConfig() override {
         auto configuration = DynamicObject::newInstance();
         testData.configuration = configuration;
-        testData.walletName = "my_wallet";
+        testData.walletName = uuid::generate_uuid_v4();
         testData.currencyName = "ripple";
         testData.inflate_xrp = ledger::testing::xrp::inflate;
     }
 };
 
 TEST_F(RippleMakeTransaction, CreateTx) {
+    mockHttp("RippleMakeTransaction.CreateTx");
     auto builder = tx_builder();
 
     auto receiver = make_receiver([=](const std::shared_ptr<api::Event> &event) {
@@ -165,24 +167,4 @@ TEST_F(RippleMakeTransaction, ParseSignedRawTransactionWithMemo) {
 
     EXPECT_EQ(memo.data, "rm-1.2.4");
     EXPECT_EQ(memo.ty,  "client");
-}
-
-TEST_F(RippleMakeTransaction, ParseSignedRawTransactionWithDestinationTag) {
-    // round-trip
-    // TX hash 9A52BD8B76BE2FADCEEE9AFFA6413689F47C82EE9A39DC641AAD26F468533459
-    auto strTx = "1200002280000000240004aa082ea2de6f1f201b02cb941361400000004e21388068400000000000000c732102ecc1e3a8a7dd1f1bb768a1d59749e543669afabbe50c9e488aec70501c58f629744630440220382671f591917c2d626769d78af18b7aaca96c064cf83ca8d9184d1689fbab05022054c98645eb4a7a26244663418482728822e0a5242977d82690fd8c2193a5b8d88114d5edb1787948d73ce6dc97887a7426043c3134a08314d3a0f1993876211f413d4edf0a70cee0c8212db8";
-    auto txBytes = hex::toByteArray(strTx);
-    auto tx = api::RippleLikeTransactionBuilder::parseRawSignedTransaction(ledger::core::currencies::RIPPLE, txBytes);
-
-    EXPECT_EQ(hex::toString(tx->serialize()), strTx);
-
-    // ensure the values are correct
-    EXPECT_EQ(tx->getLedgerSequence()->intValue(), 46896147); // Corresponding to LastLedgerSequence field
-    EXPECT_EQ(tx->getSequence()->intValue(), 305672);
-    EXPECT_EQ(tx->getHash(), "9a52bd8b76be2fadceee9affa6413689f47c82ee9a39dc641aad26f468533459");
-    EXPECT_EQ(tx->getSender()->toBase58(), "rLW9gnQo7BQhU6igk5keqYnH3TVrCxGRzm");
-    EXPECT_EQ(tx->getReceiver()->toBase58(), "rLHzPsX6oXkzU2qL12kHCH8G8cnZv1rBJh");
-    EXPECT_EQ(tx->getValue()->toLong(), 1310800000L);
-    EXPECT_EQ(tx->getFees()->toLong(), 12L);
-    EXPECT_EQ(tx->getDestinationTag().value_or(0), 2732486431);
 }
