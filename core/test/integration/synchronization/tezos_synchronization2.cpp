@@ -99,7 +99,7 @@ TEST_F(TezosLikeWalletSynchronization2, MediumXpubSynchronization) {
                           api::EventCode::SYNCHRONIZATION_SUCCEED);
 
                 auto balance = uv::wait(account->getBalance());
-                EXPECT_NE(balance->toLong(), 0L);
+                EXPECT_GT(balance->toLong(), 0L);
 
                 auto originatedAccounts = account->getOriginatedAccounts();
                 EXPECT_GE(originatedAccounts.size(), 2);

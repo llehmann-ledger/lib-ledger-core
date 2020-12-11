@@ -179,8 +179,8 @@ add_test (NAME ledger-core-integration-BitcoinMakeP2PKHTransaction.CreateStandar
 add_test (NAME ledger-core-integration-BCHMakeP2PKHTransaction.CreateStandardP2SHWithOneOutput COMMAND ledger-core-integration-tests --gtest_filter=BCHMakeP2PKHTransaction.CreateStandardP2SHWithOneOutput)
 add_test (NAME ledger-core-integration-ZCASHMakeP2PKHTransaction.CreateStandardP2PKHWithOneOutput COMMAND ledger-core-integration-tests --gtest_filter=ZCASHMakeP2PKHTransaction.CreateStandardP2PKHWithOneOutput)
 add_test (NAME ledger-core-integration-ZCASHMakeP2PKHTransaction.ParseSignedRawTransaction COMMAND ledger-core-integration-tests --gtest_filter=ZCASHMakeP2PKHTransaction.ParseSignedRawTransaction)
-add_test (NAME ledger-core-integration-BitcoinMakeP2PKHTransaction2.Toto COMMAND ledger-core-integration-tests --gtest_filter=BitcoinMakeP2PKHTransaction2.Toto)
-add_test (NAME ledger-core-integration-BitcoinMakeP2PKHTransaction2.OptimizeSize COMMAND ledger-core-integration-tests --gtest_filter=BitcoinMakeP2PKHTransaction2.OptimizeSize)
+add_test (NAME ledger-core-integration-BitcoinMakeP2PKHTransaction.Toto COMMAND ledger-core-integration-tests --gtest_filter=BitcoinMakeP2PKHTransaction.Toto)
+add_test (NAME ledger-core-integration-BitcoinMakeP2PKHTransaction.OptimizeSize COMMAND ledger-core-integration-tests --gtest_filter=BitcoinMakeP2PKHTransaction.OptimizeSize)
 add_test (NAME ledger-core-integration-BitcoinStardustTransaction.FilterDustUtxo COMMAND ledger-core-integration-tests --gtest_filter=BitcoinStardustTransaction.FilterDustUtxo)
 add_test (NAME ledger-core-integration-BCHMakeP2SHTransaction.CreateStandardP2SHWithOneOutput COMMAND ledger-core-integration-tests --gtest_filter=BCHMakeP2SHTransaction.CreateStandardP2SHWithOneOutput)
 add_test (NAME ledger-core-integration-ZCASHMakeP2SHTransaction.CreateStandardP2SHWithOneOutput COMMAND ledger-core-integration-tests --gtest_filter=ZCASHMakeP2SHTransaction.CreateStandardP2SHWithOneOutput)
@@ -259,7 +259,7 @@ add_test (NAME ledger-core-integration-TezosMakeTransaction.ParseSignedRawDelega
 
 add_test (NAME ledger-core-integration-TezosLikeWalletSynchronization.SynchronizeAccountWithMoreThan100OpsAndDeactivateSyncToken COMMAND ledger-core-integration-tests --gtest_filter=TezosLikeWalletSynchronization.SynchronizeAccountWithMoreThan100OpsAndDeactivateSyncToken)
 add_test (NAME ledger-core-integration-TezosLikeWalletSynchronization.NonActivated COMMAND ledger-core-integration-tests --gtest_filter=TezosLikeWalletSynchronization.NonActivated)
-add_test (NAME ledger-core-integration-TezosLikeWalletSynchronization2.MediumXpubSynchronization COMMAND ledger-core-integration-tests --gtest_filter=TezosLikeWalletSynchronization2.MediumXpubSynchronization)
+add_test (NAME ledger-core-integration-TezosLikeWalletSynchronization.MediumXpubSynchronization COMMAND ledger-core-integration-tests --gtest_filter=TezosLikeWalletSynchronization2.MediumXpubSynchronization)
 
 add_test (NAME ledger-core-integration-CosmosLikeWalletSynchronization.GetAccountWithExplorer COMMAND ledger-core-integration-tests --gtest_filter=CosmosLikeWalletSynchronization.GetAccountWithExplorer)
 add_test (NAME ledger-core-integration-CosmosLikeWalletSynchronization.InternalFeesMessageInTransaction COMMAND ledger-core-integration-tests --gtest_filter=CosmosLikeWalletSynchronization.InternalFeesMessageInTransaction)
