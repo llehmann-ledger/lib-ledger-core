@@ -111,7 +111,7 @@ TEST_F(TezosLikeWalletSynchronization2, MediumXpubSynchronization) {
                     EXPECT_GE(origOps.size(), 3);
                     std::cout << ">>> Nb of originated ops: " << origOps.size() << std::endl;
                     auto origBalance = uv::wait(std::dynamic_pointer_cast<TezosLikeOriginatedAccount>(origAccount)->getBalance(dispatcher->getMainExecutionContext()));
-                    EXPECT_NE(origBalance->toLong(), 0L);
+                    EXPECT_GT(origBalance->toLong(), 0L);
                     std::cout << ">>> Originated Balance: " << origBalance->toString() << std::endl;
 
                     auto fromDate = DateUtils::fromJSON("2019-02-01T13:38:23Z");
