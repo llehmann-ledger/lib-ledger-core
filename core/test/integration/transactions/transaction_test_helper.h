@@ -74,7 +74,8 @@ struct BitcoinMakeBaseTransaction : public BaseFixture {
     void SetUp() override {
         BaseFixture::SetUp();
         SetUpConfig();
-        recreate();
+        if (!wallet || !pool || !account)
+            recreate();
     }
 
     virtual void recreate() {
@@ -87,6 +88,9 @@ struct BitcoinMakeBaseTransaction : public BaseFixture {
     void TearDown() override {
         BaseFixture::TearDown();
         uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
+    }
+
+    static void TearDownTestSuite() {
         pool = nullptr;
         wallet = nullptr;
         account = nullptr;
@@ -95,11 +99,11 @@ struct BitcoinMakeBaseTransaction : public BaseFixture {
     std::shared_ptr<BitcoinLikeTransactionBuilder> tx_builder() {
         return std::dynamic_pointer_cast<BitcoinLikeTransactionBuilder>(account->buildTransaction(false));
     }
-    std::shared_ptr<WalletPool> pool;
-    std::shared_ptr<AbstractWallet> wallet;
-    std::shared_ptr<BitcoinLikeAccount> account;
-    api::Currency currency;
-    TransactionTestData testData;
+    static  std::shared_ptr<WalletPool> pool;
+    static  std::shared_ptr<AbstractWallet> wallet;
+    static  std::shared_ptr<BitcoinLikeAccount> account;
+    static  api::Currency currency;
+    static  TransactionTestData testData;
 
 protected:
     virtual void SetUpConfig() = 0;

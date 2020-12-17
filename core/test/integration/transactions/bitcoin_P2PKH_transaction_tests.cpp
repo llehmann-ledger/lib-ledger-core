@@ -45,6 +45,12 @@
 #include <Uuid.hpp>
 using namespace std;
 
+std::shared_ptr<WalletPool> BitcoinMakeBaseTransaction::pool = nullptr;
+std::shared_ptr<AbstractWallet> BitcoinMakeBaseTransaction::wallet = nullptr;
+std::shared_ptr<BitcoinLikeAccount> BitcoinMakeBaseTransaction::account = nullptr;
+api::Currency BitcoinMakeBaseTransaction::currency;
+TransactionTestData BitcoinMakeBaseTransaction::testData;
+
 struct BitcoinStardustTransaction : public BitcoinMakeBaseTransaction {
     // A Bitcoin clone with a very, very high DustAmount to test filtering
     api::Currency bitcoinStardust;
@@ -84,15 +90,6 @@ struct BitcoinStardustTransaction : public BitcoinMakeBaseTransaction {
     }
 };
 
-struct BitcoinMakeP2PKHTransaction : public BitcoinMakeBaseTransaction {
-    void SetUpConfig() override {
-        testData.configuration = DynamicObject::newInstance();
-        testData.walletName = uuid::generate_uuid_v4();
-        testData.currencyName = "bitcoin";
-        testData.inflate_btc = ledger::testing::medium_xpub::inflate;
-    }
-};
-
 TEST_F(BitcoinStardustTransaction, FilterDustUtxo) {
     ASSERT_EQ(
         currency.bitcoinLikeNetworkParameters->DustAmount,
@@ -113,6 +110,16 @@ TEST_F(BitcoinStardustTransaction, FilterDustUtxo) {
         ASSERT_STREQ("There is no UTXO on this account.", err.what());
     }
 }
+
+struct BitcoinMakeP2PKHTransaction : public BitcoinMakeBaseTransaction {
+    void SetUpConfig() override {
+        testData.configuration = DynamicObject::newInstance();
+        testData.walletName = uuid::generate_uuid_v4();
+        testData.currencyName = "bitcoin";
+        testData.inflate_btc = ledger::testing::medium_xpub::inflate;
+    }
+};
+
 
 TEST_F(BitcoinMakeP2PKHTransaction, CreateStandardP2PKHWithOneOutput) {
     mockHttp("BitcoinMakeP2PKHTransaction.CreateStandardP2PKHWithOneOutput");
