@@ -32,6 +32,7 @@
 #include "BaseFixture.h"
 #include "../fixtures/medium_xpub_fixtures.h"
 #include "../fixtures/testnet_xpub_fixtures.h"
+#include "transactions/transaction_test_helper.h"
 #include <wallet/common/OperationQuery.h>
 #include <api/KeychainEngines.hpp>
 #include <utils/DateUtils.hpp>
@@ -61,6 +62,18 @@ public:
     std::shared_ptr<AbstractWallet> wallet;
 };
 
+struct AccountsPublicInterfaceTestInflate : public BitcoinMakeBaseTransaction {
+    void SetUpConfig() override {
+        testData.configuration = DynamicObject::newInstance();
+        testData.walletName = uuid::generate_uuid_v4();
+        testData.currencyName = "bitcoin";
+        testData.inflate_btc = ledger::testing::medium_xpub::inflate;
+    }
+    void TearDown() override {
+        BaseFixture::TearDown();
+    }
+};
+
 TEST_F(AccountsPublicInterfaceTest, GetAddressOnEmptyAccount) {
     auto account = createBitcoinLikeAccount(wallet, 0, P2PKH_MEDIUM_XPUB_INFO);
     auto addresses = uv::wait(account->getFreshPublicAddresses());
@@ -74,8 +87,7 @@ TEST_F(AccountsPublicInterfaceTest, GetBalanceOnEmptyAccount) {
     EXPECT_EQ(balance->toMagnitude(0)->toLong(), 0);
 }
 
-TEST_F(AccountsPublicInterfaceTest, GetBalanceOnAccountWithSomeTxs) {
-    auto account = ledger::testing::medium_xpub::inflate(pool, wallet);
+TEST_F(AccountsPublicInterfaceTestInflate, GetBalanceOnAccountWithSomeTxs) {
     auto balance = uv::wait(account->getBalance());
     auto utxos = uv::wait(account->getUTXO());
     auto uxtoCount = uv::wait(account->getUTXOCount());
@@ -84,8 +96,7 @@ TEST_F(AccountsPublicInterfaceTest, GetBalanceOnAccountWithSomeTxs) {
     EXPECT_EQ(uxtoCount, 8);
 }
 
-TEST_F(AccountsPublicInterfaceTest, GetBalanceHistoryOnAccountWithSomeTxs) {
-    auto account = ledger::testing::medium_xpub::inflate(pool, wallet);
+TEST_F(AccountsPublicInterfaceTestInflate, GetBalanceHistoryOnAccountWithSomeTxs) {
     auto fromDate = "2017-10-12T13:38:23Z";
     auto toDate = DateUtils::toJSON(DateUtils::now());
     auto balanceHistory = uv::wait(account->getBalanceHistory(fromDate, toDate, api::TimePeriod::MONTH));
@@ -93,8 +104,7 @@ TEST_F(AccountsPublicInterfaceTest, GetBalanceHistoryOnAccountWithSomeTxs) {
     EXPECT_EQ(balanceHistory[balanceHistory.size() - 1]->toLong(), balance->toLong());
 }
 
-TEST_F(AccountsPublicInterfaceTest, QueryOperations) {
-    auto account = ledger::testing::medium_xpub::inflate(pool, wallet);
+TEST_F(AccountsPublicInterfaceTestInflate, QueryOperations) {
     auto query = std::dynamic_pointer_cast<ledger::core::OperationQuery>(account->queryOperations()->limit(100)->partial());
     auto operations = uv::wait(query->execute());
     EXPECT_EQ(operations.size(), 100);

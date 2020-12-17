@@ -1,0 +1,3 @@
+https://explorers.api.live.ledger.com/blockchain/v2/btg/blocks/current
+
+{"hash":"0000000191ebf312eec6d11c093c70badafca996652f6665cc2cfba74e1816b1","height":664809,"time":"2020-12-17T14:55:51Z","txs":["cfee6db6845ede0cbd6b2e96fdb9aaf35d3d0933a5f8957622145e4d7fafd1fb","ab06356ee33e505f4a6956ad83a2c2a6018b9bca393e6bfd8f20141332367e6e","2608f112d772c451ad7e803abb9a43b04862cc9be75bca2d69b1d7064f9b1bdb","13f2fdaf2be9e04134c0d1e58b039cd61b9bb9bb905c7f7594851ec9f893528e"]}
