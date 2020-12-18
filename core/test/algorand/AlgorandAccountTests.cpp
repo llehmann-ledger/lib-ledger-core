@@ -209,7 +209,7 @@ namespace {
 
 } // namespace
 
-class AlgorandAccountTest : public WalletFixture<WalletFactory>
+class AlgorandAccountTest : public WalletFixture
 {
 public:
     void SetUp() override {

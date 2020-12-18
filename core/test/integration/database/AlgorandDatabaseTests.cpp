@@ -40,7 +40,7 @@
 #include <api/AccountCreationInfo.hpp>
 #include <api/Address.hpp>
 
-#include "../BaseFixture.h"
+#include "../WalletFixture.hpp"
 #include <Uuid.hpp>
 #include <chrono>
 #include <utility>
@@ -48,21 +48,13 @@
 using namespace ledger::testing::algorand;
 using namespace ledger::core::algorand;
 
-class AlgorandDatabaseTest : public BaseFixture {
+class AlgorandDatabaseTest : public WalletFixture {
 
     public:
 
     void SetUp() override {
-        BaseFixture::SetUp();
-#ifdef PG_SUPPORT
-        const bool usePostgreSQL = true;
-        auto poolConfig = DynamicObject::newInstance();
-        poolConfig->putString(
-            api::PoolConfiguration::DATABASE_NAME, "postgres://localhost:5432/test_db");
-        pool = newDefaultPool(uuid::generate_uuid_v4(), "", poolConfig, usePostgreSQL);
-#else
-        pool = newDefaultPool(uuid::generate_uuid_v4());
-#endif
+        WalletFixture::SetUp();
+
         auto const currency = currencies::ALGORAND;
 
         accountInfo = api::AccountCreationInfo(1, {}, {}, { algorand::Address::toPublicKey(OBELIX_ADDRESS) }, {});
@@ -78,14 +70,11 @@ class AlgorandDatabaseTest : public BaseFixture {
     }
 
     void TearDown() override {
-        BaseFixture::TearDown();
-        uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
-        pool.reset();
+        WalletFixture::TearDown();
         wallet.reset();
         account.reset();
     }
 
-    std::shared_ptr<WalletPool> pool;
     std::shared_ptr<Wallet> wallet;
     std::shared_ptr<Account> account;
 

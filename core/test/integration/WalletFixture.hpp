@@ -37,11 +37,10 @@
 #include <collections/DynamicObject.hpp>
 #include <api/ErrorCode.hpp>
 #include <api/PoolConfiguration.hpp>
-
+#include <Uuid.hpp>
 #include <fmt/format.h>
 
 
-template <class WalletFactory>
 class WalletFixture : public BaseFixture {
 public:
 
@@ -51,47 +50,19 @@ public:
 #ifdef PG_SUPPORT
         const bool usePostgreSQL = true;
         auto poolConfig = DynamicObject::newInstance();
-        poolConfig->putString(api::PoolConfiguration::DATABASE_NAME, "postgres://localhost:5432/test_db");
-        const auto dbName = randomDBName();
-        pool = newDefaultPool(dbName, "", poolConfig, usePostgreSQL);
+        poolConfig->putString(
+            api::PoolConfiguration::DATABASE_NAME, "postgres://localhost:5432/test_db");
+        pool = newDefaultPool(uuid::generate_uuid_v4(), "", poolConfig, usePostgreSQL);
 #else
-        pool = newDefaultPool();
+        pool = newDefaultPool(uuid::generate_uuid_v4());
 #endif
-      //  walletStore = newWalletStore(services);
     }
 
     void TearDown() override {
         BaseFixture::TearDown();
-        uv::wait(pool->freshResetAll());
+        uv::wait(pool->eraseDataSince(std::chrono::time_point<std::chrono::system_clock>{}));
         pool.reset();
-     //   walletStore.reset();
-    }
-
-    void registerCurrency(api::Currency const &currency) {
-        //auto walletFactory = std::make_shared<WalletFactory>(currency, pool);
-
-       // wait(pool->addCurrency(currency));
-       // walletStore->registerFactory(currency, walletFactory);
     }
 
     std::shared_ptr<WalletPool> pool;
-  //  std::shared_ptr<WalletStore> walletStore;
-
-private:
-    std::string randomDBName() {
-        static const char alphanum[] =
-            "0123456789"
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            "abcdefghijklmnopqrstuvwxyz";
-
-        static const auto randomSuffixLenght = 10;
-
-        std::stringstream dbName;
-        dbName << "postgres-";
-        for (auto i = 0; i < randomSuffixLenght; ++i) {
-            dbName << alphanum[rand() % (sizeof(alphanum) - 1)];
-        }
-
-        return dbName.str();
-    }
 };

@@ -41,6 +41,7 @@
 #include "HttpClientOnFakeExplorer.hpp"
 #include <boost/algorithm/string/join.hpp>
 #include <algorithm>
+#include <Uuid.hpp>
 
 struct BitcoinLikeWalletBtcRbfSynchronization : public BaseFixture {
 
@@ -182,9 +183,14 @@ static std::string mockTransaction(const std::string& hash, const std::vector<In
     return ss.str();
 }
 
+#ifdef __linux__ 
 TEST_F(BitcoinLikeWalletBtcRbfSynchronization, SimpleRbfScenario) {
-    auto pool = newPool();
-    auto wallet = uv::wait(pool->createWallet("e857815f-488a-4301-b67c-378a5e9c8a63", "bitcoin",
+#else
+// For some reasons, doesn't work on MacOS (not tested on Windows), so only activating it in Linux
+TEST_F(BitcoinLikeWalletBtcRbfSynchronization, DISABLED_SimpleRbfScenario) {
+#endif
+    auto pool = newDefaultPool(uuid::generate_uuid_v4());
+    auto wallet = uv::wait(pool->createWallet(uuid::generate_uuid_v4(), "bitcoin",
                                           api::DynamicObject::newInstance()));
     auto account = createBitcoinLikeAccount(wallet, 0, P2PKH_MEDIUM_XPUB_INFO);
 
